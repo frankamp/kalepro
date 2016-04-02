@@ -1,0 +1,14 @@
+wordpress:
+  image: wordpress
+  links:
+    - db:mysql
+  ports:
+    - 8080:80
+  volumes:
+    - ./plugin/:/var/www/html/wp-content/plugins/kale-pro/
+db:
+  image: mariadb
+  environment:
+    MYSQL_ROOT_PASSWORD: example
+  volumes:
+    - ./basicdata/:/docker-entrypoint-initdb.d/
