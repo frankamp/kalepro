@@ -10,18 +10,18 @@
  *
  * @link              http://www.joshuafrankamp.com
  * @since             1.0.0
- * @package           Kale_Pro
+ * @package           Recipe_Pro
  *
  * @wordpress-plugin
- * Plugin Name:       KalePro
- * Plugin URI:        kalepro.com
+ * Plugin Name:       RecipePro
+ * Plugin URI:        recipepro.com
  * Description:       The best recipe plugin for Wordpress.
  * Version:           1.0.0
  * Author:            Josh Frankamp
  * Author URI:        http://www.joshuafrankamp.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       kale-pro
+ * Text Domain:       recipe-pro
  * Domain Path:       /languages
  */
 
@@ -32,30 +32,30 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-kale-pro-activator.php
+ * This action is documented in includes/class-recipe-pro-activator.php
  */
-function activate_kale_pro() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-kale-pro-activator.php';
-	Kale_Pro_Activator::activate();
+function activate_recipe_pro() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro-activator.php';
+	Recipe_Pro_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-kale-pro-deactivator.php
+ * This action is documented in includes/class-recipe-pro-deactivator.php
  */
-function deactivate_kale_pro() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-kale-pro-deactivator.php';
-	Kale_Pro_Deactivator::deactivate();
+function deactivate_recipe_pro() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro-deactivator.php';
+	Recipe_Pro_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_kale_pro' );
-register_deactivation_hook( __FILE__, 'deactivate_kale_pro' );
+register_activation_hook( __FILE__, 'activate_recipe_pro' );
+register_deactivation_hook( __FILE__, 'deactivate_recipe_pro' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-kale-pro.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro.php';
 
 /**
  * Begins execution of the plugin.
@@ -66,10 +66,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-kale-pro.php';
  *
  * @since    1.0.0
  */
-function run_kale_pro() {
+function run_recipe_pro() {
 
-	$plugin = new Kale_Pro();
+	$plugin = new Recipe_Pro();
 	$plugin->run();
 
 }
-run_kale_pro();
+run_recipe_pro();

@@ -6,8 +6,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Kale_Pro
- * @subpackage Kale_Pro/public
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/public
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Kale_Pro
- * @subpackage Kale_Pro/public
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/public
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
-class Kale_Pro_Public {
+class Recipe_Pro_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Kale_Pro_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Kale_Pro_Loader as all of the hooks are defined
+		 * defined in Recipe_Pro_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Kale_Pro_Loader will then create the relationship
+		 * The Recipe_Pro_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kale-pro-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/recipe-pro-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +88,15 @@ class Kale_Pro_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Kale_Pro_Loader as all of the hooks are defined
+		 * defined in Recipe_Pro_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Kale_Pro_Loader will then create the relationship
+		 * The Recipe_Pro_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kale-pro-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 

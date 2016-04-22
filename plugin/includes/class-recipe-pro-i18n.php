@@ -9,8 +9,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Kale_Pro
- * @subpackage Kale_Pro/includes
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Kale_Pro
- * @subpackage Kale_Pro/includes
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/includes
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
-class Kale_Pro_i18n {
+class Recipe_Pro_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Kale_Pro_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'kale-pro',
+			'recipe-pro',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

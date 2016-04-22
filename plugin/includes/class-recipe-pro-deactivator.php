@@ -6,8 +6,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Kale_Pro
- * @subpackage Kale_Pro/includes
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Kale_Pro
- * @subpackage Kale_Pro/includes
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/includes
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
-class Kale_Pro_Deactivator {
+class Recipe_Pro_Deactivator {
 
 	/**
 	 * Short Description. (use period)

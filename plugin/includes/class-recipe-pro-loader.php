@@ -6,8 +6,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Kale_Pro
- * @subpackage Kale_Pro/includes
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Kale_Pro
- * @subpackage Kale_Pro/includes
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/includes
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
-class Kale_Pro_Loader {
+class Recipe_Pro_Loader {
 
     /**
      * The array of actions registered with WordPress.

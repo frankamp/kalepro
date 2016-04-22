@@ -8,8 +8,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Kale_Pro
- * @subpackage Kale_Pro/admin/partials
+ * @package    Recipe_Pro
+ * @subpackage Recipe_Pro/admin/partials
  */
 ?>
 

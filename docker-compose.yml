@@ -5,7 +5,7 @@ wordpress:
   ports:
     - 8080:80
   volumes:
-    - ./plugin/:/var/www/html/wp-content/plugins/kale-pro/
+    - ./plugin/:/var/www/html/wp-content/plugins/recipe-pro/
 db:
   image: mariadb
   environment:

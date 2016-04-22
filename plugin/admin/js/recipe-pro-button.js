@@ -1,6 +1,6 @@
 (function() {
     console.log("getting tinymce loaded up");
-    tinymce.create('tinymce.plugins.kalepro', {
+    tinymce.create('tinymce.plugins.recipepro', {
         /**
          * Initializes the plugin, this will be executed after the plugin has been created.
          * This call is done before the editor instance has finished it's initialization so use the onInit event
@@ -10,11 +10,11 @@
          * @param {string} url Absolute URL to where the plugin is located.
          */
         init : function(ed, url) {
-            console.log("initializing KalePro at " + url)
+            console.log("initializing RecipePro at " + url)
             ed.addButton('showrecent', {
                 title : 'Add Recipe',
                 cmd : 'showrecent',
-                icon: 'kale_carrot'
+                icon: 'recipe_pro_carrot'
             });
             ed.addCommand('showrecent', function() {
                 var number = prompt("How many posts you want to show ? "),
@@ -22,7 +22,7 @@
                 if (number !== null) {
                     number = parseInt(number);
                     if (number > 0 && number <= 20) {
-                        shortcode = '[kalepro number="' + number + '"/]';
+                        shortcode = '[recipepro number="' + number + '"/]';
                         ed.execCommand('mceInsertContent', 0, shortcode);
                     }
                     else {
@@ -54,7 +54,7 @@
          */
         getInfo : function() {
             return {
-                longname : 'KalePro Buttons',
+                longname : 'RecipePro Buttons',
                 author : '',
                 authorurl : '',
                 infourl : '',
@@ -64,5 +64,5 @@
     });
  
     // Register plugin
-    tinymce.PluginManager.add( 'kalepro', tinymce.plugins.kalepro );
+    tinymce.PluginManager.add( 'recipepro', tinymce.plugins.recipepro );
 })();

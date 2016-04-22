@@ -2,7 +2,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
- i.mce-i-kale_carrot {
+ i.mce-i-recipe_pro_carrot {
  	font: 400 20px/1 dashicons;
     padding: 0 2px 0 0;
     vertical-align: top;
@@ -11,7 +11,7 @@
     -moz-osx-font-smoothing: grayscale;
     margin-left: -2px;
  }
- i.mce-i-kale_carrot:before {
+ i.mce-i-recipe_pro_carrot:before {
     content: "\f511";
 
 }
