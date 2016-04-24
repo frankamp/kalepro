@@ -71,14 +71,14 @@ class Recipe_Pro_Admin {
 
         add_settings_section(
             'recipepro_pluginPage_section', 
-            __( 'Your section description', 'wordpress' ), 
+            __( 'Labels', 'wordpress' ), 
             array(&$this, 'recipepro_settings_section_callback'), 
             'pluginPage'
         );
 
         add_settings_field( 
             'recipepro_text_field_0', 
-            __( 'Settings field description1', 'wordpress' ), 
+            __( 'Recipes', 'wordpress' ), 
             array(&$this, 'recipepro_text_field_0_render'), 
             'pluginPage', 
             'recipepro_pluginPage_section' 
@@ -86,7 +86,7 @@ class Recipe_Pro_Admin {
 
         add_settings_field( 
             'recipepro_text_field_1', 
-            __( 'Settings field description2', 'wordpress' ), 
+            __( 'Rating', 'wordpress' ), 
             array(&$this, 'recipepro_text_field_1_render'), 
             'pluginPage', 
             'recipepro_pluginPage_section' 
@@ -110,11 +110,10 @@ class Recipe_Pro_Admin {
         ?>
         <input type='text' name='recipepro_settings[recipepro_text_field_1]' value='<?php echo $options['recipepro_text_field_1']; ?>'>
         <?php
-
     }
 
     public function recipepro_settings_section_callback(  ) { 
-        echo __( 'This section description', 'wordpress' );
+        echo __( 'Label overrides', 'wordpress' );
     }
 
     public function menu_page_display () {

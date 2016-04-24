@@ -6,6 +6,7 @@ wordpress:
     - 8080:80
   volumes:
     - ./plugin/:/var/www/html/wp-content/plugins/recipe-pro/
+    - ./blankopcache/opcache-recommended.ini:/usr/local/etc/php/conf.d/opcache-recommended.ini
 db:
   image: mariadb
   environment:
