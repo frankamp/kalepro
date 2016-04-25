@@ -156,6 +156,8 @@ class Recipe_Pro {
         $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
         $this->loader->add_action( 'admin_menu', $plugin_admin, 'create_menu' );
         $this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
+        $this->loader->add_action( 'edit_form_after_editor', $plugin_admin, 'render_editor_markup' );
+         
 
         $this->loader->add_shortcode( 'recipepro', $plugin_admin, 'render_recipe');
         $this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_button' );

@@ -132,6 +132,14 @@ class Recipe_Pro_Admin {
         <?php
     }
 
+    public function render_editor_markup( ) {
+        ?>
+        <div id="recipeproeditor" style="display:none;">
+            <h3>Tabs</h3>
+        </div>
+        <?php
+    }
+
     public function render_recipe( $atts ) {
         $html = '<h3>oh look its a recipe</h3>';
         return $html;
@@ -145,7 +153,7 @@ class Recipe_Pro_Admin {
     }
 
     public function register_button( $buttons ) {
-        array_push( $buttons, 'showrecent' ); // dropcap', 'recentposts
+        array_push( $buttons, 'addeditrecipe' ); // dropcap', 'recentposts
         return $buttons;
     }
 
@@ -167,7 +175,7 @@ class Recipe_Pro_Admin {
          * between the defined hooks and the functions defined in this
          * class.
          */
-
+        wp_enqueue_style( $this->plugin_name . "jquerymodal", plugin_dir_url( __FILE__ ) . 'css/jquery.modal.css', array(), $this->version, 'all' );
         wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/recipe-pro-admin.css', array(), $this->version, 'all' );
 
     }
@@ -190,7 +198,7 @@ class Recipe_Pro_Admin {
          * between the defined hooks and the functions defined in this
          * class.
          */
-
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jquery.modal.min.js', array( 'jquery' ), $this->version, false );
         wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-admin.js', array( 'jquery' ), $this->version, false );
 
     }

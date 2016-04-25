@@ -1,4 +1,4 @@
-(function() {
+(function($) {
     console.log("getting tinymce loaded up");
     tinymce.create('tinymce.plugins.recipepro', {
         /**
@@ -11,24 +11,28 @@
          */
         init : function(ed, url) {
             console.log("initializing RecipePro at " + url)
-            ed.addButton('showrecent', {
+            ed.addButton('addeditrecipe', {
                 title : 'Add Recipe',
-                cmd : 'showrecent',
+                cmd : 'addeditrecipe',
                 icon: 'recipe_pro_carrot'
             });
-            ed.addCommand('showrecent', function() {
-                var number = prompt("How many posts you want to show ? "),
-                    shortcode;
-                if (number !== null) {
-                    number = parseInt(number);
-                    if (number > 0 && number <= 20) {
-                        shortcode = '[recipepro number="' + number + '"/]';
-                        ed.execCommand('mceInsertContent', 0, shortcode);
-                    }
-                    else {
-                        alert("The number value is invalid. It should be from 0 to 20.");
-                    }
-                }
+            ed.addCommand('addeditrecipe', function() {
+                console.log("attempting to modal");
+                $('#recipeproeditor').modal();
+                $('#recipeproeditor').attr("tabindex",-1).focus();
+                // var number = prompt("How many posts you want to show ? ");
+                // var shortcode;
+                // if (number !== null) {
+                //     number = parseInt(number);
+                //     if (number > 0 && number <= 20) {
+                //         shortcode = '[recipepro number="' + number + '"/]';
+                //         ed.execCommand('mceInsertContent', 0, shortcode);
+                //     }
+                //     else {
+                //         alert("The number value is invalid. It should be from 0 to 20.");
+                //     }
+                // }
+                console.log("attempted to modal");
             });
         },
  
@@ -65,4 +69,4 @@
  
     // Register plugin
     tinymce.PluginManager.add( 'recipepro', tinymce.plugins.recipepro );
-})();
+})(jQuery);
