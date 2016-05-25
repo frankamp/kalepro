@@ -131,12 +131,14 @@ class Recipe_Pro_Admin {
 		</div>
 		<?php
 	}
+	
+	public function add_meta_box ( ) {
+		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'wordpress' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
+	}
 
 	public function render_editor_markup( ) {
 		?>
-		<div id="recipeproeditor" style="display:none;">
-			<h3>Tabs</h3>
-		</div>
+		Metabox
 		<?php
 	}
 
@@ -198,7 +200,6 @@ class Recipe_Pro_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jquery.modal.min.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
