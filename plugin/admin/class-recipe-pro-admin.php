@@ -136,10 +136,16 @@ class Recipe_Pro_Admin {
 		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'wordpress' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
 	}
 
-	public function render_editor_markup( ) {
-		?>
-		Metabox
-		<?php
+	public function render_editor_markup ( $post ) {
+		$post_id = $post->ID;
+		$hits_from = ( $hits = get_post_meta( $post_id, '_hits', true ) ) ? $hits: '';
+
+		echo 'hits are ' . $hits_from . ' while hits are ' . $hits;
+
+	}
+
+	public function save_meta_box ( $post_id, $post ) {
+		add_post_meta( $post_id, '_hits', '1', true );
 	}
 
 	public function render_recipe( $atts ) {
