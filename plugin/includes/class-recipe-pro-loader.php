@@ -83,18 +83,6 @@ class Recipe_Pro_Loader {
 	}
 
 	/**
-	 * Add a new shortcode to the collection to be registered with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @param    string               $hook             The name of the WordPress shortcode that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the shortcode is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 */
-	public function add_shortcode( $hook, $component, $callback) {
-		$this->shortcodes = $this->add( $this->shortcodes, $hook, $component, $callback, NULL, NULL);
-	}
-
-	/**
 	 * A utility function that is used to register the actions and hooks into a single
 	 * collection.
 	 *
@@ -137,9 +125,6 @@ class Recipe_Pro_Loader {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
 
-		foreach ( $this->shortcodes as $hook ) {
-			add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ));
-		}
 	}
 
 }

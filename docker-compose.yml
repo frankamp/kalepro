@@ -6,6 +6,8 @@ wordpress:
     - 8080:80
   volumes:
     - ./plugin/:/var/www/html/wp-content/plugins/recipe-pro/
+  environment:
+    WORDPRESS_DEBUG: 'true'
 db:
   image: mariadb
   environment:

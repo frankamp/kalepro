@@ -152,14 +152,14 @@ class Recipe_Pro {
 
 		$plugin_admin = new Recipe_Pro_Admin( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'init', $plugin_admin, 'register_shortcodes' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'create_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
 		$this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin,  'save_meta_box', 10, 2);
-
-		$this->loader->add_shortcode( 'recipepro', $plugin_admin, 'render_recipe');
+		$this->loader->add_action( 'wp_ajax_recipepro_recipe', $plugin_admin,  'ajax_get_recipe' );
 		$this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_button' );
 		$this->loader->add_filter( 'mce_buttons', $plugin_admin, 'register_button' );
 	}

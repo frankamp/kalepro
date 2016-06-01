@@ -54,6 +54,10 @@ class Recipe_Pro_Admin {
 
 	}
 
+	public function register_shortcodes() {
+		add_shortcode('recipepro', array($this, 'render_recipe'));
+	}
+
 	public function create_menu() {
 		add_menu_page(
 			'Recipe Pro',          // The title to be displayed on the corresponding page for this menu
@@ -136,16 +140,55 @@ class Recipe_Pro_Admin {
 		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'wordpress' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
 	}
 
+	public function ajax_get_recipe ( ) {
+		header ( "Content-Type: application/json" );
+		$payload = array();
+		$payload['title'] = 'mything';
+		$payload['ingredients'] = array(
+			array('quantity' => 1, 'unit' => 'cup', 'name' => 'banana'),
+			array('quantity' => 3, 'unit' => 'shots', 'name' => 'tequila')
+		);
+		echo json_encode( $payload );
+		wp_die();
+	}
+
 	public function render_editor_markup ( $post ) {
-		$post_id = $post->ID;
-		$hits_from = ( $hits = get_post_meta( $post_id, '_hits', true ) ) ? $hits: '';
-
-		echo 'hits are ' . $hits_from . ' while hits are ' . $hits;
-
+//		$post_id = $post->ID;
+//		$hits = get_post_meta( $post_id, 'hits2', true );
+//		echo 'hits while hits are ' . $hits;
+		?>
+		<script type="text/template" id="recipe-pro-recipe-template">
+			<p><input type="text" value="<%= _.escape(title) %>" /></p>
+			<ul>
+				<% _.each(ingredients, function(ing){ %>
+				<li>
+					<input type="text" value="<%= _.escape(ing.quantity) %>" />
+					<input type="text" value="<%= _.escape(ing.unit) %>" />
+					<input type="text" value="<%= _.escape(ing.name) %>" />
+				</li>
+				<% }); %>
+				<button type="button" id="add-ingredient">Add Ingredient</button>
+			</ul>
+		</script>
+		<div id="recipe-pro-admin-container" data-post="<?= $post->ID ?>"></div>
+		<?php
 	}
 
 	public function save_meta_box ( $post_id, $post ) {
-		add_post_meta( $post_id, '_hits', '1', true );
+//		error_log( "save meta called" );
+//		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
+//		error_log( "hits are " . $hits . " but type is " . gettype($hits));
+//		$hits += 1;
+//		error_log( "hits are " . $hits . " after incrementing type is " . gettype($hits));
+//		$success = update_post_meta( (int) $post_id, (string) 'hits2', (string) $hits );
+//		if ($success) {
+//			error_log( "you are successful" );
+//		} else {
+//			error_log( "you not successful" );
+//		}
+//		error_log( "some success metrics for your update are: " . strval($success) . "type is " . gettype($success));
+//		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
+//		error_log( "after update hits are " . $hits . " but type is " . gettype($hits));
 	}
 
 	public function render_recipe( $atts ) {
@@ -206,7 +249,7 @@ class Recipe_Pro_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-admin.js', array( 'jquery', 'backbone', 'underscore' ), $this->version, false );
 
 	}
 
