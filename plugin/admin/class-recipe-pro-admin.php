@@ -69,6 +69,31 @@ class Recipe_Pro_Admin {
 		);
 	}
 
+	public function GUIDv4 ()
+	{
+		// Windows
+		if (function_exists('com_create_guid') === true) {
+			return trim(com_create_guid(), '{}');
+		}
+
+		// OSX/Linux
+		if (function_exists('openssl_random_pseudo_bytes') === true) {
+			$data = openssl_random_pseudo_bytes(16);
+			$data[6] = chr(ord($data[6]) & 0x0f | 0x40);    // set version to 0100
+			$data[8] = chr(ord($data[8]) & 0x3f | 0x80);    // set bits 6-7 to 10
+			return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+		}
+
+		// Fallback (PHP 4.2+)
+		mt_srand((double)microtime() * 10000);
+		$charid = strtolower(md5(uniqid(rand(), true)));
+		return substr($charid,  0,  8).chr(45).
+		          substr($charid,  8,  4).chr(45).
+		          substr($charid, 12,  4).chr(45).
+		          substr($charid, 16,  4).chr(45).
+		          substr($charid, 20, 12);
+	}
+
 	public function settings_init(  ) { 
 
 		register_setting( 'pluginPage', 'recipepro_settings' );
@@ -142,13 +167,21 @@ class Recipe_Pro_Admin {
 
 	public function ajax_get_recipe ( ) {
 		header ( "Content-Type: application/json" );
-		$payload = array();
-		$payload['title'] = 'mything';
-		$payload['ingredients'] = array(
-			array('quantity' => 1, 'unit' => 'cup', 'name' => 'banana'),
-			array('quantity' => 3, 'unit' => 'shots', 'name' => 'tequila')
-		);
-		echo json_encode( $payload );
+		$postid = str_replace('/', '', $_GET['postid']);
+		error_log( "getting recipe for " . $postid  );
+		$payload = get_post_meta( (int) $postid, (string) 'recipepro_recipe', true );
+		if( ! $payload ) {
+			error_log("defaulting, no payload");
+			$payload = array();
+			$payload['id'] = $this->GUIDv4();
+			$payload['title'] = 'mything';
+			$payload['ingredients'] = array(
+				array('id' => $this->GUIDv4(), 'quantity' => 1, 'unit' => 'cup', 'name' => 'banana'),
+				array('id' => $this->GUIDv4(), 'quantity' => 3, 'unit' => 'shots', 'name' => 'tequila')
+			);
+			$payload = json_encode( $payload );
+		}
+		echo $payload;
 		wp_die();
 	}
 
@@ -158,34 +191,36 @@ class Recipe_Pro_Admin {
 //		echo 'hits while hits are ' . $hits;
 		?>
 		<script type="text/template" id="recipe-pro-recipe-template">
-			<p><input type="text" value="<%= _.escape(title) %>" /></p>
+			<p><input name="title" type="text" value="<%= _.escape(title) %>" /></p>
 			<ul>
 				<% _.each(ingredients, function(ing){ %>
 				<li>
-					<input type="text" value="<%= _.escape(ing.quantity) %>" />
-					<input type="text" value="<%= _.escape(ing.unit) %>" />
-					<input type="text" value="<%= _.escape(ing.name) %>" />
+					<input name="quantity" type="text" value="<%= _.escape(ing.quantity) %>" />
+					<input name="unit" type="text" value="<%= _.escape(ing.unit) %>" />
+					<input name="name" type="text" value="<%= _.escape(ing.name) %>" />
 				</li>
 				<% }); %>
 				<button type="button" id="add-ingredient">Add Ingredient</button>
 			</ul>
+			<input type="hidden" name="doc" value="<%= _.escape(doc) %>" />
 		</script>
 		<div id="recipe-pro-admin-container" data-post="<?= $post->ID ?>"></div>
 		<?php
 	}
 
 	public function save_meta_box ( $post_id, $post ) {
-//		error_log( "save meta called" );
+		$success = update_post_meta( (int) $post_id, (string) 'recipepro_recipe', $_POST['doc']);
+		error_log( "save meta called" );
 //		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
 //		error_log( "hits are " . $hits . " but type is " . gettype($hits));
 //		$hits += 1;
 //		error_log( "hits are " . $hits . " after incrementing type is " . gettype($hits));
 //		$success = update_post_meta( (int) $post_id, (string) 'hits2', (string) $hits );
-//		if ($success) {
-//			error_log( "you are successful" );
-//		} else {
-//			error_log( "you not successful" );
-//		}
+		if ($success) {
+			error_log( "you are successful" );
+		} else {
+			error_log( "you not successful" );
+		}
 //		error_log( "some success metrics for your update are: " . strval($success) . "type is " . gettype($success));
 //		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
 //		error_log( "after update hits are " . $hits . " but type is " . gettype($hits));
