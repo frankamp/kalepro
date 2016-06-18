@@ -8,8 +8,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Recipe_Pro
- * @subpackage Recipe_Pro/public/partials
+ * @package    recipe-pro
+ * @subpackage recipe-pro/public/partials
  */
 ?>
 

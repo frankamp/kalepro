@@ -6,8 +6,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Recipe_Pro
- * @subpackage Recipe_Pro/includes
+ * @package    recipe-pro
+ * @subpackage recipe-pro/includes
  */
 
 /**
@@ -17,8 +17,8 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Recipe_Pro
- * @subpackage Recipe_Pro/includes
+ * @package    recipe-pro
+ * @subpackage recipe-pro/includes
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
 class Recipe_Pro_Loader {

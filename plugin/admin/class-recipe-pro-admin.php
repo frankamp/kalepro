@@ -6,8 +6,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Recipe_Pro
- * @subpackage Recipe_Pro/admin
+ * @package    recipe-pro
+ * @subpackage recipe-pro/admin
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Recipe_Pro
- * @subpackage Recipe_Pro/admin
+ * @package    recipe-pro
+ * @subpackage recipe-pro/admin
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
 class Recipe_Pro_Admin {
@@ -51,7 +51,64 @@ class Recipe_Pro_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->get_labels();
 
+	}
+
+	private $_labels;
+
+	private function get_labels() {
+		if (!$this->_labels) {
+			$this->_labels = array(
+				'ingredients' => __('Ingredients', 'recipe-pro'),
+				'instructions' => __('Instructions', 'recipe-pro'),
+				'notes' => __('Notes', 'recipe-pro'),
+				'nutrition information' => __('Nutrition Information', 'recipe-pro'),
+				'prep_time' => __('Prep time', 'recipe-pro'),
+				'cook_time' => __('Cook time', 'recipe-pro'),
+				'total_time' => __('Total time', 'recipe-pro'),
+				'serving_size' => __('Serving size', 'recipe-pro'),
+				'hour' => __('Hour', 'recipe-pro'),
+				'hours' => __('Hours', 'recipe-pro'),
+				'minute' => __('Minute', 'recipe-pro'),
+				'minutes' => __('Minutes', 'recipe-pro'),
+				'author' => __('Author', 'recipe-pro'),
+				'recipe_type' => __('Recipe Type', 'recipe-pro'),
+				'cuisine' => __('Cuisine', 'recipe-pro'),
+				'yield' => __('Yield', 'recipe-pro'),
+				'calories' => __('Calories', 'recipe-pro'),
+				'total_fat' => __('Total Fat', 'recipe-pro'),
+				'saturated_fat' => __('Saturated fat', 'recipe-pro'),
+				'unsaturated fat' => __('Unsaturated fat', 'recipe-pro'),
+				'trans_fat' => __('Trans fat', 'recipe-pro'),
+				'cholesterol' => __('Cholesterol', 'recipe-pro'),
+				'sodium' => __('Sodium', 'recipe-pro'),
+				'carbohydrates' => __('Carbohydrates', 'recipe-pro'),
+				'fiber' => __('Fiber', 'recipe-pro'),
+				'sugars' => __('Sugars', 'recipe-pro'),
+				'protein' => __('Protein', 'recipe-pro'),
+				'rate_this_recipe' => __('Rate this recipe', 'recipe-pro')
+			);
+		}
+		return $this->_labels;
+	}
+
+	/**
+	 * Gets a label value. This will be i18n default, or if the user
+	 * has overridden the label in the admin, it will be that value.
+	 *
+	 * @since    1.0.0
+	 */
+	public function get_label( $key ) {
+		$options = get_option( 'recipepro_settings', null );
+		if ( isset($options) && array_key_exists('recipepro_text_label_' . $key, $options) ) {
+			return $options['recipepro_text_label_' . $key];
+		}
+		$options = $this->get_labels();
+		if ( array_key_exists($key, $options) ) {
+			return $options[$key];
+		};
+		return "";
 	}
 
 	public function register_shortcodes() {
@@ -100,49 +157,34 @@ class Recipe_Pro_Admin {
 
 		add_settings_section(
 			'recipepro_pluginPage_section', 
-			__( 'Labels', 'wordpress' ), 
+			__( 'Labels', 'recipe-pro' ),
 			array(&$this, 'recipepro_settings_section_callback'), 
 			'pluginPage'
 		);
 
-		add_settings_field( 
-			'recipepro_text_field_0', 
-			__( 'Recipes', 'wordpress' ), 
-			array(&$this, 'recipepro_text_field_0_render'), 
-			'pluginPage', 
-			'recipepro_pluginPage_section' 
-		);
-
-		add_settings_field( 
-			'recipepro_text_field_1', 
-			__( 'Rating', 'wordpress' ), 
-			array(&$this, 'recipepro_text_field_1_render'), 
-			'pluginPage', 
-			'recipepro_pluginPage_section' 
-		);
+		foreach ( $this->get_labels() as $key => $value ) {
+			add_settings_field(
+				'recipepro_text_label_' . $key,
+				$value,
+				array(&$this, 'recipepro_text_label_render'),
+				'pluginPage',
+				'recipepro_pluginPage_section',
+				array('label' => $key)
+			);
+		}
 	}
 
-
-	public function recipepro_text_field_0_render(  ) { 
-
+	public function recipepro_text_label_render( $args ) {
 		$options = get_option( 'recipepro_settings' );
 		?>
-		<input type='text' name='recipepro_settings[recipepro_text_field_0]' value='<?php echo $options['recipepro_text_field_0']; ?>'>
+		<input type='text' name='recipepro_settings[recipepro_text_label_<?php echo $args['label'] ?>]' value='<?php echo $options['recipepro_text_label_' . $args['label']]; ?>'>
 		<?php
 
 	}
 
-
-	public function recipepro_text_field_1_render(  ) { 
-
-		$options = get_option( 'recipepro_settings' );
-		?>
-		<input type='text' name='recipepro_settings[recipepro_text_field_1]' value='<?php echo $options['recipepro_text_field_1']; ?>'>
-		<?php
-	}
 
 	public function recipepro_settings_section_callback(  ) { 
-		echo __( 'Label overrides', 'wordpress' );
+		echo __( 'Label overrides', 'recipe-pro' );
 	}
 
 	public function menu_page_display () {
@@ -162,7 +204,7 @@ class Recipe_Pro_Admin {
 	}
 	
 	public function add_meta_box ( ) {
-		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'wordpress' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
+		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
 	}
 
 	public function ajax_get_recipe ( ) {
@@ -192,6 +234,7 @@ class Recipe_Pro_Admin {
 		?>
 		<script type="text/template" id="recipe-pro-recipe-template">
 			<p><input name="title" type="text" value="<%= _.escape(title) %>" /></p>
+			<span><?= $this->get_label('ingredients') ?></span>
 			<ul>
 				<% _.each(ingredients, function(ing){ %>
 				<li>
@@ -249,21 +292,8 @@ class Recipe_Pro_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Recipe_Pro_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Recipe_Pro_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		wp_enqueue_style( $this->plugin_name . "jquerymodal", plugin_dir_url( __FILE__ ) . 'css/jquery.modal.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/recipe-pro-admin.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -272,20 +302,7 @@ class Recipe_Pro_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Recipe_Pro_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Recipe_Pro_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-admin.js', array( 'jquery', 'backbone', 'underscore' ), $this->version, false );
-
 	}
 
 }

@@ -6,8 +6,8 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Recipe_Pro
- * @subpackage Recipe_Pro/public
+ * @package    recipe-pro
+ * @subpackage recipe-pro/public
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Recipe_Pro
- * @subpackage Recipe_Pro/public
+ * @package    recipe-pro
+ * @subpackage recipe-pro/public
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
 class Recipe_Pro_Public {

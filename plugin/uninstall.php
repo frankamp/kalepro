@@ -22,7 +22,7 @@
  * @link       http://www.joshuafrankamp.com
  * @since      1.0.0
  *
- * @package    Recipe_Pro
+ * @package    recipe-pro
  */
 
 // If uninstall not called from WordPress, then exit.
