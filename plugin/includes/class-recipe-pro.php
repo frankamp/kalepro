@@ -120,6 +120,11 @@ class Recipe_Pro {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-recipe-pro-public.php';
 
+		/**
+		 * The models
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-recipe-model.php';
+
 		$this->loader = new Recipe_Pro_Loader();
 
 	}

@@ -214,14 +214,7 @@ class Recipe_Pro_Admin {
 		$payload = get_post_meta( (int) $postid, (string) 'recipepro_recipe', true );
 		if( ! $payload ) {
 			error_log("defaulting, no payload");
-			$payload = array();
-			$payload['id'] = $this->GUIDv4();
-			$payload['title'] = 'mything';
-			$payload['ingredients'] = array(
-				array('id' => $this->GUIDv4(), 'quantity' => 1, 'unit' => 'cup', 'name' => 'banana'),
-				array('id' => $this->GUIDv4(), 'quantity' => 3, 'unit' => 'shots', 'name' => 'tequila')
-			);
-			$payload = json_encode( $payload );
+			$payload = json_encode( new Recipe_Pro_Recipe() );
 		}
 		echo $payload;
 		wp_die();
@@ -252,6 +245,10 @@ class Recipe_Pro_Admin {
 	}
 
 	public function save_meta_box ( $post_id, $post ) {
+		// todo: sanitize and validate the input
+		// todo: nonce
+
+
 		$success = update_post_meta( (int) $post_id, (string) 'recipepro_recipe', $_POST['doc']);
 		error_log( "save meta called" );
 //		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
