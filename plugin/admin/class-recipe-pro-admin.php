@@ -63,7 +63,7 @@ class Recipe_Pro_Admin {
 				'ingredients' => __('Ingredients', 'recipe-pro'),
 				'instructions' => __('Instructions', 'recipe-pro'),
 				'notes' => __('Notes', 'recipe-pro'),
-				'nutrition information' => __('Nutrition Information', 'recipe-pro'),
+				'nutrition_information' => __('Nutrition Information', 'recipe-pro'),
 				'prep_time' => __('Prep time', 'recipe-pro'),
 				'cook_time' => __('Cook time', 'recipe-pro'),
 				'total_time' => __('Total time', 'recipe-pro'),
@@ -79,7 +79,7 @@ class Recipe_Pro_Admin {
 				'calories' => __('Calories', 'recipe-pro'),
 				'total_fat' => __('Total Fat', 'recipe-pro'),
 				'saturated_fat' => __('Saturated fat', 'recipe-pro'),
-				'unsaturated fat' => __('Unsaturated fat', 'recipe-pro'),
+				'unsaturated_fat' => __('Unsaturated fat', 'recipe-pro'),
 				'trans_fat' => __('Trans fat', 'recipe-pro'),
 				'cholesterol' => __('Cholesterol', 'recipe-pro'),
 				'sodium' => __('Sodium', 'recipe-pro'),
@@ -226,18 +226,27 @@ class Recipe_Pro_Admin {
 //		echo 'hits while hits are ' . $hits;
 		?>
 		<script type="text/template" id="recipe-pro-recipe-template">
-			<p><input name="title" type="text" value="<%= _.escape(title) %>" /></p>
-			<span><?= $this->get_label('ingredients') ?></span>
-			<ul>
-				<% _.each(ingredients, function(ing){ %>
-				<li>
-					<input name="quantity" type="text" value="<%= _.escape(ing.quantity) %>" />
-					<input name="unit" type="text" value="<%= _.escape(ing.unit) %>" />
-					<input name="name" type="text" value="<%= _.escape(ing.name) %>" />
-				</li>
-				<% }); %>
-				<button type="button" id="add-ingredient">Add Ingredient</button>
+			<ul id="recipe-pro-tabs">
+				<li><label for="recipe-pro-tab-ingredient"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('ingredients') ?></button></label></li>
+				<li><label for="recipe-pro-tab-nutrition"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('nutrition_information') ?></button></label></li>
 			</ul>
+			<div id="recipe-pro-tab-ingredient" class="recipe-pro-tab" style="display: block;">
+				<p><input name="title" type="text" value="<%= _.escape(title) %>" /></p>
+				<span><?= $this->get_label('ingredients') ?></span>
+				<ul>
+					<% _.each(ingredients, function(ing){ %>
+					<li>
+						<input name="quantity" type="text" value="<%= _.escape(ing.quantity) %>" />
+						<input name="unit" type="text" value="<%= _.escape(ing.unit) %>" />
+						<input name="name" type="text" value="<%= _.escape(ing.name) %>" />
+					</li>
+					<% }); %>
+					<button type="button" id="add-ingredient">Add Ingredient</button>
+				</ul>
+			</div>
+			<div id="recipe-pro-tab-nutrition" class="recipe-pro-tab" style="display: none;">
+				matrix
+			</div>
 			<input type="hidden" name="doc" value="<%= _.escape(doc) %>" />
 		</script>
 		<div id="recipe-pro-admin-container" data-post="<?= $post->ID ?>"></div>
