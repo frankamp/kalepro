@@ -2,7 +2,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
- i.mce-i-recipe_pro_carrot {
+i.mce-i-recipe_pro_carrot {
      background: url(icon.svg);
      padding: 0 2px 0 0;
     vertical-align: top;
@@ -11,3 +11,44 @@
     -moz-osx-font-smoothing: grayscale;
     margin-left: -2px;
  }
+
+ul#recipe-pro-tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul#recipe-pro-tabs li {
+    display: inline-block;
+    border: dotted;
+    border-width: 0 1px 0 0;
+    border-color: #aaa;
+    margin-bottom: 0;
+}
+
+ul#recipe-pro-tabs li.active {
+    border-bottom-color: #fff;
+    z-index: 3;
+}
+
+ul#recipe-pro-tabs li button {
+    background-color: inherit;
+    color: #0073aa;
+}
+
+ul#recipe-pro-tabs li.active button {
+    color: #32373c;
+    position: relative;
+    top: 1px;
+    background-color: #fff;
+}
+
+ul#recipe-pro-tabs button {
+    border: hidden;
+}
+
+#recipe-pro-content {
+    border: dotted;
+    border-width: 1px 0 0 0;
+    border-color: #aaa;
+}

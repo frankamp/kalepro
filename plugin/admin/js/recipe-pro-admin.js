@@ -28,6 +28,7 @@
 			model: Ingredient
 		});
 		var BaseNestedModel = Backbone.Model.extend({
+			blacklist: [],
 			model: {},
 			parse: function(response) {
 				for(var key in this.model)
@@ -52,10 +53,12 @@
 			return json;
 		};
 		var Recipe = BaseNestedModel.extend({
+			blacklist: ['currentTab'],
 			model: {
 				ingredients: Ingredients
 			},
 			defaults : {
+				'currentTab': 'recipe-pro-tab-ingredient',
 				'title' : 'my cool recipe'
 			},
 			urlRoot : ajaxurl + '?action=recipepro_recipe&postid='
@@ -66,7 +69,7 @@
 			events: {
 				"click .recipe-pro-tab-button": "tabClick",
 				"click #add-ingredient" : "addIngredient",
-				"change input" : "blur"
+				"keypress input" : "blur"
 			},
 			initialize: function(){
 				_.bindAll(this, "render");
@@ -74,13 +77,14 @@
 			},
 			render: function() {
 				var jsonable = this.model.toJSON();
-				jsonable['doc'] = JSON.stringify(jsonable);
+				jsonable['doc'] = JSON.stringify(_.omit(jsonable, this.model.blacklist));
 				this.$el.html(this.template(jsonable));
 				return this;
 			},
 			tabClick: function (e) {
 				var toggleTo = $(e.currentTarget).parent().attr('for');
-				$('#' + toggleTo).show().siblings('.recipe-pro-tab').hide();
+				this.model.set({'currentTab': toggleTo});
+				//$('#' + toggleTo).show().siblings('.recipe-pro-tab').hide();
 			},
 			blur : function() {
 				var input = this.$('input').val();
@@ -88,6 +92,7 @@
 				if ( input !== this.model.get( name ) ) {
 					this.model.set(name, input);
 				}
+				return true;
 			},
 			addIngredient: function() {
 				this.model.get('ingredients').add(new Ingredient({id: generateUUID()}));
