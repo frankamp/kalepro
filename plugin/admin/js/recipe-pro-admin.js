@@ -21,7 +21,8 @@
 			defaults : {
 				quantity: 0,
 				unit: 'cup',
-				name : 'carrot'
+				name : 'carrot',
+				description: ''
 			}
 		});
 		var Ingredients = Backbone.Collection.extend({
@@ -57,14 +58,28 @@
 			model: {
 				ingredients: Ingredients
 			},
-			defaults : {
+			defaults: {
 				'currentTab': 'recipe-pro-tab-ingredient',
 				'title' : 'my cool recipe'
 			},
-			urlRoot : ajaxurl + '?action=recipepro_recipe&postid='
+			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
+			ingestIngredients: function(ingredientDocument) {
+				var target = this.get('ingredients');
+				var extracted = $(ingredientDocument).children('p').each(function(){
+					target.add(new Ingredient({id: generateUUID(), description: $(this).text()}));
+				});
+				this.bump();
+				console.log("done");
+			},
+			bump: function() {
+				this.set({'update': generateUUID()});
+			}
 		});
 		var recipe = new Recipe({id: container.attr('data-post')});
 		recipe.fetch();
+		window.RecipePro = {
+			currentRecipe: recipe
+		};
 		var RecipeView = Backbone.View.extend({
 			events: {
 				"click .recipe-pro-tab-button": "tabClick",
@@ -96,7 +111,7 @@
 			},
 			addIngredient: function() {
 				this.model.get('ingredients').add(new Ingredient({id: generateUUID()}));
-				this.model.set({'update': generateUUID()});
+				this.model.bump();
 			},
 			template: _.template( $('#recipe-pro-recipe-template').html() )
 		});
@@ -106,3 +121,4 @@
 		});
 	});
 })( jQuery );
+//# sourceURL=recipe-pro-admin.js

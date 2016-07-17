@@ -224,7 +224,42 @@ class Recipe_Pro_Admin {
 //		$post_id = $post->ID;
 //		$hits = get_post_meta( $post_id, 'hits2', true );
 //		echo 'hits while hits are ' . $hits;
+		//bold,italic,strikethrough,separator,bullist,numlist,separator,blockquote,separator,justifyleft,justifycenter,justifyright,separator,link,unlink,separator,undo,redo,separator
+		
+		$settings = array(
+			'textarea_name' => 'excerpt',
+			'quicktags'     => false,
+			'tinymce'       => array(
+				// 'selector' => '#recipe-pro-editor',
+				// 'inline' => true,
+				'plugins' => 'paste',
+				'external_plugins' => "{'recipeproingredient': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-ingredient/plugin.min.js'}",
+				'toolbar' => false,
+				'toolbar1' => '',
+				'statusbar' => false,
+				'theme_advanced_buttons1' => '',
+				'theme_advanced_buttons2' => '',
+				'force_p_newlines' => true,
+				'paste_remove_styles' => true,
+				'paste_remove_spans' => true,
+				'paste_strip_class_attributes' => 'none',
+				'paste_as_text' => true,
+				'paste_preprocess' =>  "function(plugin, args) {
+					console.log('before its: ' + args.content);
+					var tag = 'p';
+				    args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
+				    args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
+				    args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
+				    console.log(args.content);
+				}",
+				"content_style" => "p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; }"
+				//,'protect' => "[/<div class='helper'>.*?<\/div>/g]"
+			),
+			'media_buttons' => false,
+			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
+		);
 		?>
+		<?= wp_editor( "", "recipe-pro-editor", $settings  ) ?>
 		<script type="text/template" id="recipe-pro-recipe-template">
 			<ul id="recipe-pro-tabs">
 				<li class="<%= currentTab == 'recipe-pro-tab-ingredient' ? 'active' : '' %>"><label for="recipe-pro-tab-ingredient"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('ingredients') ?></button></label></li>
