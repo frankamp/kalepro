@@ -252,14 +252,29 @@ class Recipe_Pro_Admin {
 				    args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
 				    console.log(args.content);
 				}",
-				"content_style" => "p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; }"
+				"content_style" => "body#tinymce p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; margin-bottom: 5px; }"
 				//,'protect' => "[/<div class='helper'>.*?<\/div>/g]"
 			),
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
 		);
 		?>
-		<?= wp_editor( "", "recipe-pro-editor", $settings  ) ?>
+		<!--
+		aggregateRating
+			ratingValue span
+			ratingCount span
+		name
+		image -> eg: <img itemprop="image" src="http://cdn3.minimalistbaker.com/wp-content/uploads/2016/07/Go-to-Smoothie-Bowl-SQUARE.jpg" width="205">
+		prepTime -> <time itemprop="prepTime" datetime="PT5M">
+		totalTime -> <time itemprop="totalTime" datetime="PT5M">
+		description
+		author
+		recipeCategory span "recipe type" aka breakfast
+		recipeCuisine span aka Thai food
+		recipeYield
+		ingredients (many)
+		recipeInstructions (many)
+ 		-->
 		<script type="text/template" id="recipe-pro-recipe-template">
 			<ul id="recipe-pro-tabs">
 				<li class="<%= currentTab == 'recipe-pro-tab-ingredient' ? 'active' : '' %>"><label for="recipe-pro-tab-ingredient"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('ingredients') ?></button></label></li>
@@ -267,6 +282,7 @@ class Recipe_Pro_Admin {
 			</ul>
 			<div id="recipe-pro-content">
 				<div id="recipe-pro-tab-ingredient" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-ingredient' ? 'block' : 'none' %>;">
+					<?= wp_editor( "", "recipe-pro-editor", $settings  ) ?>
 					<p><input name="title" type="text" value="<%= _.escape(title) %>" /></p>
 					<span><?= $this->get_label('ingredients') ?></span>
 					<ul>
@@ -277,11 +293,18 @@ class Recipe_Pro_Admin {
 							<input name="name" type="text" value="<%= _.escape(ing.name) %>" />
 						</li>
 						<% }); %>
-						<button type="button" id="add-ingredient">Add Ingredient</button>
 					</ul>
 				</div>
 				<div id="recipe-pro-tab-nutrition" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-nutrition' ? 'block' : 'none' %>;">
-					matrix
+					<span><?= $this->get_label('serving_size') ?></span> <input name="servingSize" type="text" value="<%= _.escape(servingSize) %>" />
+					<span><?= $this->get_label('calories') ?></span> <input name="calories" type="text" value="<%= _.escape(calories) %>" />
+					<span><?= $this->get_label('total_fat') ?></span> <input name="fatContent" type="text" value="<%= _.escape(fatContent) %>" />
+					<span><?= $this->get_label('saturated_fat') ?></span> <input name="saturatedFatContent" type="text" value="<%= _.escape(saturatedFatContent) %>" />
+					<span><?= $this->get_label('carbohydrates') ?></span> <input name="carbohydrateContent" type="text" value="<%= _.escape(carbohydrateContent) %>" />
+					<span><?= $this->get_label('sugars') ?></span> <input name="sugarContent" type="text" value="<%= _.escape(sugarContent) %>" />
+					<span><?= $this->get_label('sodium') ?></span> <input name="sodiumContent" type="text" value="<%= _.escape(sodiumContent) %>" />
+					<span><?= $this->get_label('fiber') ?></span> <input name="fiberContent" type="text" value="<%= _.escape(fiberContent) %>" />
+					<span><?= $this->get_label('protein') ?></span> <input name="proteinContent" type="text" value="<%= _.escape(proteinContent) %>" />
 				</div>
 			</div>
 			<input type="hidden" name="doc" value="<%= _.escape(doc) %>" />

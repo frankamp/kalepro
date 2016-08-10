@@ -68,7 +68,6 @@
 				var extracted = $(ingredientDocument).children('p').each(function(){
 					target.add(new Ingredient({id: generateUUID(), description: $(this).text()}));
 				});
-				this.bump();
 				console.log("done");
 			},
 			bump: function() {
@@ -83,7 +82,6 @@
 		var RecipeView = Backbone.View.extend({
 			events: {
 				"click .recipe-pro-tab-button": "tabClick",
-				"click #add-ingredient" : "addIngredient",
 				"keypress input" : "blur"
 			},
 			initialize: function(){
@@ -98,7 +96,13 @@
 			},
 			tabClick: function (e) {
 				var toggleTo = $(e.currentTarget).parent().attr('for');
+				if (this.model.get('currentTab') == 'recipe-pro-tab-ingredient') {
+					tinyMCE.EditorManager.remove('#recipe-pro-editor');
+				}
 				this.model.set({'currentTab': toggleTo});
+				if (toggleTo == 'recipe-pro-tab-ingredient') {
+					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor']);
+				}
 				//$('#' + toggleTo).show().siblings('.recipe-pro-tab').hide();
 			},
 			blur : function() {
@@ -108,10 +112,6 @@
 					this.model.set(name, input);
 				}
 				return true;
-			},
-			addIngredient: function() {
-				this.model.get('ingredients').add(new Ingredient({id: generateUUID()}));
-				this.model.bump();
 			},
 			template: _.template( $('#recipe-pro-recipe-template').html() )
 		});
