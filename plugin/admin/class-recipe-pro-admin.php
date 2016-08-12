@@ -296,15 +296,20 @@ class Recipe_Pro_Admin {
 					</ul>
 				</div>
 				<div id="recipe-pro-tab-nutrition" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-nutrition' ? 'block' : 'none' %>;">
-					<span><?= $this->get_label('serving_size') ?></span> <input name="servingSize" type="text" value="<%= _.escape(servingSize) %>" />
-					<span><?= $this->get_label('calories') ?></span> <input name="calories" type="text" value="<%= _.escape(calories) %>" />
-					<span><?= $this->get_label('total_fat') ?></span> <input name="fatContent" type="text" value="<%= _.escape(fatContent) %>" />
-					<span><?= $this->get_label('saturated_fat') ?></span> <input name="saturatedFatContent" type="text" value="<%= _.escape(saturatedFatContent) %>" />
-					<span><?= $this->get_label('carbohydrates') ?></span> <input name="carbohydrateContent" type="text" value="<%= _.escape(carbohydrateContent) %>" />
-					<span><?= $this->get_label('sugars') ?></span> <input name="sugarContent" type="text" value="<%= _.escape(sugarContent) %>" />
-					<span><?= $this->get_label('sodium') ?></span> <input name="sodiumContent" type="text" value="<%= _.escape(sodiumContent) %>" />
-					<span><?= $this->get_label('fiber') ?></span> <input name="fiberContent" type="text" value="<%= _.escape(fiberContent) %>" />
-					<span><?= $this->get_label('protein') ?></span> <input name="proteinContent" type="text" value="<%= _.escape(proteinContent) %>" />
+					<div class="left">
+						<p><label for="recipepro_servingSize"><?= $this->get_label('serving_size') ?></label> <input id="recipepro_servingSize" name="servingSize" type="text" value="<%= _.escape(servingSize) %>" /></p>
+						<p><label for="recipepro_calories"><?= $this->get_label('calories') ?></label> <input id="recipepro_calories" name="calories" type="text" value="<%= _.escape(calories) %>" /></p>
+						<p><label for="recipepro_fatContent"><?= $this->get_label('total_fat') ?></label> <input id="recipepro_fatContent" name="fatContent" type="text" value="<%= _.escape(fatContent) %>" /></p>
+						<p><label for="recipepro_saturatedFatContent"><?= $this->get_label('saturated_fat') ?></label> <input id="recipepro_saturatedFatContent" name="saturatedFatContent" type="text" value="<%= _.escape(saturatedFatContent) %>" /></p>
+						<p><label for="recipepro_carbohydrateContent"><?= $this->get_label('carbohydrates') ?></label> <input id="recipepro_carbohydrateContent" name="carbohydrateContent" type="text" value="<%= _.escape(carbohydrateContent) %>" /></p>
+					</div>
+					<div class="right">
+						<p><label for="recipepro_sugarContent"><?= $this->get_label('sugars') ?></label> <input id="recipepro_sugarContent" name="sugarContent" type="text" value="<%= _.escape(sugarContent) %>" /></p>
+						<p><label for="recipepro_sodiumContent"><?= $this->get_label('sodium') ?></label> <input id="recipepro_sodiumContent" name="sodiumContent" type="text" value="<%= _.escape(sodiumContent) %>" /></p>
+						<p><label for="recipepro_fiberContent"><?= $this->get_label('fiber') ?></label> <input id="recipepro_fiberContent" name="fiberContent" type="text" value="<%= _.escape(fiberContent) %>" /></p>
+						<p><label for="recipepro_proteinContent"><?= $this->get_label('protein') ?></label> <input id="recipepro_proteinContent" name="proteinContent" type="text" value="<%= _.escape(proteinContent) %>" /></p>
+					</div>
+					<div class="clear"/>
 				</div>
 			</div>
 			<input type="hidden" name="doc" value="<%= _.escape(doc) %>" />
