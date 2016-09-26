@@ -29,4 +29,4 @@ env:
 before_script:
   - bash plugin/bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
-script: phpunit plugin/phpunit.xml.dist
+script: phpunit -c plugin/phpunit.xml.dist
