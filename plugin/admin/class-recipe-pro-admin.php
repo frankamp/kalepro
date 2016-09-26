@@ -60,6 +60,8 @@ class Recipe_Pro_Admin {
 	private function get_labels() {
 		if (!$this->_labels) {
 			$this->_labels = array(
+				'overview' => __('Overview', 'recipe-pro'),
+				'title' => __('Title', 'recipe-pro'),
 				'ingredients' => __('Ingredients', 'recipe-pro'),
 				'instructions' => __('Instructions', 'recipe-pro'),
 				'notes' => __('Notes', 'recipe-pro'),
@@ -226,7 +228,7 @@ class Recipe_Pro_Admin {
 //		echo 'hits while hits are ' . $hits;
 		//bold,italic,strikethrough,separator,bullist,numlist,separator,blockquote,separator,justifyleft,justifycenter,justifyright,separator,link,unlink,separator,undo,redo,separator
 		
-		$settings = array(
+		$ingredient_settings = array(
 			'textarea_name' => 'excerpt',
 			'quicktags'     => false,
 			'tinymce'       => array(
@@ -258,6 +260,39 @@ class Recipe_Pro_Admin {
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
 		);
+
+		$instruction_settings = array(
+			'textarea_name' => 'excerpt',
+			'quicktags'     => false,
+			'tinymce'       => array(
+				// 'selector' => '#recipe-pro-editor',
+				// 'inline' => true,
+				'plugins' => 'paste',
+				'toolbar' => false,
+				'toolbar1' => '',
+				'statusbar' => false,
+				'theme_advanced_buttons1' => '',
+				'theme_advanced_buttons2' => '',
+				'force_p_newlines' => true,
+				'paste_remove_styles' => true,
+				'paste_remove_spans' => true,
+				'paste_strip_class_attributes' => 'none',
+				'paste_as_text' => true,
+				'paste_preprocess' =>  "function(plugin, args) {
+					console.log('before its: ' + args.content);
+					var tag = 'p';
+				    args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
+				    args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
+				    args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
+				    console.log(args.content);
+				}"
+				//,
+				//"content_style" => "body#tinymce p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; margin-bottom: 5px; }"
+				//,'protect' => "[/<div class='helper'>.*?<\/div>/g]"
+			),
+			'media_buttons' => false,
+			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
+		);
 		?>
 		<!--
 		aggregateRating
@@ -277,15 +312,21 @@ class Recipe_Pro_Admin {
  		-->
 		<script type="text/template" id="recipe-pro-recipe-template">
 			<ul id="recipe-pro-tabs">
+				<li class="<%= currentTab == 'recipe-pro-tab-overview' ? 'active' : '' %>"><label for="recipe-pro-tab-overview"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('overview') ?></button></label></li>
 				<li class="<%= currentTab == 'recipe-pro-tab-ingredient' ? 'active' : '' %>"><label for="recipe-pro-tab-ingredient"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('ingredients') ?></button></label></li>
 				<li class="<%= currentTab == 'recipe-pro-tab-nutrition' ? 'active' : '' %>"><label for="recipe-pro-tab-nutrition"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('nutrition_information') ?></button></label></li>
+				<li class="<%= currentTab == 'recipe-pro-tab-instruction' ? 'active' : '' %>"><label for="recipe-pro-tab-instruction"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('instructions') ?></button></label></li>
 			</ul>
 			<div id="recipe-pro-content">
+				<div id="recipe-pro-tab-overview" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-overview' ? 'block' : 'none' %>;">
+					<p><label for="recipepro_title"><?= $this->get_label('title') ?></label> <input id="recipepro_title" name="title" type="text" value="<%= _.escape(title) %>" /></p>
+					<p><label for="recipepro_author"><?= $this->get_label('author') ?></label> <input id="recipepro_author" name="author" type="text" value="<%= _.escape(author) %>" /></p>
+					<p><label for="recipepro_type"><?= $this->get_label('recipe_type') ?></label> <input id="recipepro_type" name="type" type="text" value="<%= _.escape(type) %>" />  </p>
+					<p><label for="recipepro_cuisine"><?= $this->get_label('cuisine') ?></label><input id="recipepro_cuisine" name="cuisine" type="text" value="<%= _.escape(cuisine) %>" /></p>
+				</div>
 				<div id="recipe-pro-tab-ingredient" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-ingredient' ? 'block' : 'none' %>;">
-					<?= wp_editor( "", "recipe-pro-editor", $settings  ) ?>
-					<p><input name="title" type="text" value="<%= _.escape(title) %>" /></p>
-					<span><?= $this->get_label('ingredients') ?></span>
-					<ul>
+					<?= wp_editor( "", "recipe-pro-editor-ingredient", $ingredient_settings  ) ?>
+					<!-- <ul>
 						<% _.each(ingredients, function(ing){ %>
 						<li>
 							<input name="quantity" type="text" value="<%= _.escape(ing.quantity) %>" />
@@ -293,7 +334,7 @@ class Recipe_Pro_Admin {
 							<input name="name" type="text" value="<%= _.escape(ing.name) %>" />
 						</li>
 						<% }); %>
-					</ul>
+					</ul> -->
 				</div>
 				<div id="recipe-pro-tab-nutrition" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-nutrition' ? 'block' : 'none' %>;">
 					<div class="left">
@@ -311,6 +352,9 @@ class Recipe_Pro_Admin {
 					</div>
 					<div class="clear"/>
 				</div>
+				<div id="recipe-pro-tab-instruction" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-instruction' ? 'block' : 'none' %>;">
+					<?= wp_editor( "", "recipe-pro-editor-instruction", $instruction_settings  ) ?>
+				</div>
 			</div>
 			<input type="hidden" name="doc" value="<%= _.escape(doc) %>" />
 		</script>
@@ -321,19 +365,21 @@ class Recipe_Pro_Admin {
 	public function save_meta_box ( $post_id, $post ) {
 		// todo: sanitize and validate the input
 		// todo: nonce
-
-
-		$success = update_post_meta( (int) $post_id, (string) 'recipepro_recipe', $_POST['doc']);
-		error_log( "save meta called" );
-//		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
-//		error_log( "hits are " . $hits . " but type is " . gettype($hits));
-//		$hits += 1;
-//		error_log( "hits are " . $hits . " after incrementing type is " . gettype($hits));
-//		$success = update_post_meta( (int) $post_id, (string) 'hits2', (string) $hits );
-		if ($success) {
-			error_log( "you are successful" );
+		if (isset($_POST['doc'])) {
+			$success = update_post_meta( (int) $post_id, (string) 'recipepro_recipe', $_POST['doc']);
+			error_log( "save meta called" );
+	//		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
+	//		error_log( "hits are " . $hits . " but type is " . gettype($hits));
+	//		$hits += 1;
+	//		error_log( "hits are " . $hits . " after incrementing type is " . gettype($hits));
+	//		$success = update_post_meta( (int) $post_id, (string) 'hits2', (string) $hits );
+			if ($success) {
+				error_log( "you are successful" );
+			} else {
+				error_log( "you not successful" );
+			}
 		} else {
-			error_log( "you not successful" );
+			error_log( "save_meta_box called with no doc" );
 		}
 //		error_log( "some success metrics for your update are: " . strval($success) . "type is " . gettype($success));
 //		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );

@@ -59,7 +59,7 @@
 				ingredients: Ingredients
 			},
 			defaults: {
-				'currentTab': 'recipe-pro-tab-ingredient',
+				'currentTab': 'recipe-pro-tab-overview',
 				'title' : 'my cool recipe'
 			},
 			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
@@ -82,7 +82,7 @@
 		var RecipeView = Backbone.View.extend({
 			events: {
 				"click .recipe-pro-tab-button": "tabClick",
-				"keypress input" : "blur"
+				"change input" : "change"
 			},
 			initialize: function(){
 				_.bindAll(this, "render");
@@ -97,17 +97,24 @@
 			tabClick: function (e) {
 				var toggleTo = $(e.currentTarget).parent().attr('for');
 				if (this.model.get('currentTab') == 'recipe-pro-tab-ingredient') {
-					tinyMCE.EditorManager.remove('#recipe-pro-editor');
+					tinyMCE.EditorManager.remove('#recipe-pro-editor-ingredient');
+				}
+				if (this.model.get('currentTab') == 'recipe-pro-tab-instruction') {
+					tinyMCE.EditorManager.remove('#recipe-pro-editor-instruction');
 				}
 				this.model.set({'currentTab': toggleTo});
 				if (toggleTo == 'recipe-pro-tab-ingredient') {
-					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor']);
+					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient']);
+				}
+				if (toggleTo == 'recipe-pro-tab-instruction') {
+					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-instruction']);
 				}
 				//$('#' + toggleTo).show().siblings('.recipe-pro-tab').hide();
 			},
-			blur : function() {
-				var input = this.$('input').val();
-				var name = this.$('input').attr('name');
+			change : function(e) {
+				var element = $(e.currentTarget);
+				var input = element.val();
+				var name = element.attr('name');
 				if ( input !== this.model.get( name ) ) {
 					this.model.set(name, input);
 				}

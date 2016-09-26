@@ -20,7 +20,11 @@ class Recipe_Pro_Recipe implements JsonSerializable {
             $this->inflate($a[0]);
         }
         $this->title = "";
+        $this->author = "";
+        $this->type = "";
+        $this->cuisine = "";
         $this->ingredients = array();
+        $this->instructions = array();
         $this->servingSize = "";
         $this->calories = "";
         $this->fatContent = "";
@@ -45,6 +49,11 @@ class Recipe_Pro_Recipe implements JsonSerializable {
                 $ingredient['html']
             ));
         }
+        foreach ($jsonObj['instructions'] as $instruction) {
+            array_push($this->instructions, new Recipe_Pro_Instruction(
+                $instruction['html']
+            ));
+        }
     }
 
     /**
@@ -53,6 +62,15 @@ class Recipe_Pro_Recipe implements JsonSerializable {
     public function jsonSerialize()
     {
         return $this;
+    }
+}
+
+
+class Recipe_Pro_Instruction {
+    public $html;
+
+    public function __construct($html) {
+        $this->html = $html;
     }
 }
 
