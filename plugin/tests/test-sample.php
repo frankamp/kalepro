@@ -21,9 +21,9 @@ class SampleTest extends WP_UnitTestCase {
 		$this->assertEquals( "Overview", $options['recipepro_text_label_overview'] );
 	}
 
-	function test_sample_string() {	 
-	 	$post = $this->factory->post->create_and_get();
-	 	$this->assertEquals( 'Post title 18', $post->post_title );
+	function test_post_create() {	 
+	 	$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
+	 	$this->assertEquals( 'My Title BLERRRRG', $post->post_title );
 	}
 }
 
