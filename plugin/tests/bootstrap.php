@@ -12,7 +12,8 @@ if ( ! $_tests_dir ) {
 
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
-
+// require_once( dirname( dirname( __FILE__ ) ) . 'wp-admin/includes/plugin.php' )
+// activate_plugin( dirname( dirname( __FILE__ ) ) . '/recipe-pro.php' );
 /**
  * Manually load the plugin being tested.
  */

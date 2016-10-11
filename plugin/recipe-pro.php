@@ -35,6 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * This action is documented in includes/class-recipe-pro-activator.php
  */
 function activate_recipe_pro() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-option-defaults.php';
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro-activator.php';
 	Recipe_Pro_Activator::activate();
 }
@@ -67,9 +68,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro.php';
  * @since    1.0.0
  */
 function run_recipe_pro() {
-
 	$plugin = new Recipe_Pro();
 	$plugin->run();
-
 }
 run_recipe_pro();

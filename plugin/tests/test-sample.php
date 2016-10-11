@@ -13,16 +13,17 @@ class SampleTest extends WP_UnitTestCase {
 	/**
 	 * A single example test.
 	 */
-	function test_sample() {
-		// Replace this with some actual testing code.
-		$this->assertTrue( true );
+	function test_activation_sets_label_options() {
+		$options = get_option( 'recipepro_settings', false );
+		$this->assertEquals( false, $options );
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_settings', false );
+		$this->assertEquals( "Overview", $options['recipepro_text_label_overview'] );
 	}
 
-	function test_sample_string() {
-	 
-		$string = 'Unit tests are sweet';
-	 
-		$this->assertEquals( 'Unit tests are sweet', $string );
+	function test_sample_string() {	 
+	 	$post = $this->factory->post->create_and_get();
+	 	$this->assertEquals( 'Post title 18', $post->post_title );
 	}
 }
 
