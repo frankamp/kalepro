@@ -33,6 +33,14 @@ class BasicPluginTests extends WP_UnitTestCase {
 		$this->assertEquals( "Overizzle", $options['recipepro_text_label_overview'] );
 	}
 
+	// /**
+	//  * @expectedException PHPUnit_Framework_Error
+	//  */
+	// function test_fail_activate() {
+	// fake a lower version?
+	// 	activate_recipe_pro();
+	// }
+
 	function test_post_create() {	 
 	 	$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
 	 	$this->assertEquals( 'My Title BLERRRRG', $post->post_title );
