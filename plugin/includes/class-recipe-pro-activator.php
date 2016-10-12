@@ -31,6 +31,10 @@ class Recipe_Pro_Activator {
      * @since    1.0.0
      */
     public static function activate() {
+        if (!function_exists('version_compare') || !version_compare(PHP_VERSION, '5.6.0', '>=')) {
+            deactivate_plugins(dirname( dirname( __FILE__ ) ) . '/recipe-pro.php');
+            die("You must have PHP version 5.6 or higher to use this plugin.");
+        }
         $options = get_option( 'recipepro_settings', array() );
         foreach ( Recipe_Pro_Option_Defaults::get_labels() as $key => $value ) {
             $options['recipepro_text_label_' . $key] = $value;

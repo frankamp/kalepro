@@ -8,7 +8,7 @@
 /**
  * Sample test case.
  */
-class SampleTest extends WP_UnitTestCase {
+class BasicPluginTests extends WP_UnitTestCase {
 
 	/**
 	 * A single example test.
@@ -19,6 +19,18 @@ class SampleTest extends WP_UnitTestCase {
 		activate_recipe_pro();
 		$options = get_option( 'recipepro_settings', false );
 		$this->assertEquals( "Overview", $options['recipepro_text_label_overview'] );
+	}
+
+	function test_activation_doesnt_override_on_reactivate() {
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_settings', false );
+		$this->assertEquals( "Overview", $options['recipepro_text_label_overview'] );
+		$options['recipepro_text_label_overview'] = "Overizzle";
+		update_option( 'recipepro_settings', $options);
+		deactivate_recipe_pro();
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_settings', false );
+		$this->assertEquals( "Overizzle", $options['recipepro_text_label_overview'] );
 	}
 
 	function test_post_create() {	 
