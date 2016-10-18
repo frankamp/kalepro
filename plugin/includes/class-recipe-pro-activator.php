@@ -20,9 +20,11 @@
  * @subpackage Recipe_Pro/includes
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
+require_once __DIR__.'/class-option-defaults.php';
+
 
 class Recipe_Pro_Activator {
-
+    
     /**
      * Short Description. (use period)
      *

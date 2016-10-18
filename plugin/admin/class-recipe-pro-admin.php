@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__."/../includes/class-option-defaults.php";
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -21,6 +21,7 @@
  * @author     Josh Frankamp <frankamp@gmail.com>
  */
 class Recipe_Pro_Admin {
+
 
 	/**
 	 * The ID of this plugin.
@@ -51,49 +52,9 @@ class Recipe_Pro_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->get_labels();
 
 	}
 
-	private $_labels;
-
-	private function get_labels() {
-		if (!$this->_labels) {
-			$this->_labels = array(
-				'overview' => __('Overview', 'recipe-pro'),
-				'title' => __('Title', 'recipe-pro'),
-				'ingredients' => __('Ingredients', 'recipe-pro'),
-				'instructions' => __('Instructions', 'recipe-pro'),
-				'notes' => __('Notes', 'recipe-pro'),
-				'nutrition_information' => __('Nutrition Information', 'recipe-pro'),
-				'prep_time' => __('Prep time', 'recipe-pro'),
-				'cook_time' => __('Cook time', 'recipe-pro'),
-				'total_time' => __('Total time', 'recipe-pro'),
-				'serving_size' => __('Serving size', 'recipe-pro'),
-				'hour' => __('Hour', 'recipe-pro'),
-				'hours' => __('Hours', 'recipe-pro'),
-				'minute' => __('Minute', 'recipe-pro'),
-				'minutes' => __('Minutes', 'recipe-pro'),
-				'author' => __('Author', 'recipe-pro'),
-				'recipe_type' => __('Recipe Type', 'recipe-pro'),
-				'cuisine' => __('Cuisine', 'recipe-pro'),
-				'yield' => __('Yield', 'recipe-pro'),
-				'calories' => __('Calories', 'recipe-pro'),
-				'total_fat' => __('Total Fat', 'recipe-pro'),
-				'saturated_fat' => __('Saturated fat', 'recipe-pro'),
-				'unsaturated_fat' => __('Unsaturated fat', 'recipe-pro'),
-				'trans_fat' => __('Trans fat', 'recipe-pro'),
-				'cholesterol' => __('Cholesterol', 'recipe-pro'),
-				'sodium' => __('Sodium', 'recipe-pro'),
-				'carbohydrates' => __('Carbohydrates', 'recipe-pro'),
-				'fiber' => __('Fiber', 'recipe-pro'),
-				'sugars' => __('Sugars', 'recipe-pro'),
-				'protein' => __('Protein', 'recipe-pro'),
-				'rate_this_recipe' => __('Rate this recipe', 'recipe-pro')
-			);
-		}
-		return $this->_labels;
-	}
 
 	/**
 	 * Gets a label value. This will be i18n default, or if the user
@@ -106,7 +67,7 @@ class Recipe_Pro_Admin {
 		if ( isset($options) && array_key_exists('recipepro_text_label_' . $key, $options) ) {
 			return $options['recipepro_text_label_' . $key];
 		}
-		$options = $this->get_labels();
+		$options = Recipe_Pro_Option_Defaults::get_labels();
 		if ( array_key_exists($key, $options) ) {
 			return $options[$key];
 		};
@@ -155,22 +116,22 @@ class Recipe_Pro_Admin {
 
 	public function settings_init(  ) { 
 
-		register_setting( 'pluginPage', 'recipepro_settings' );
+		register_setting( 'recipepro_settings_group', 'recipepro_settings' ); // could santize option values on save via callback here
 
 		add_settings_section(
-			'recipepro_pluginPage_section', 
+			'recipepro_settings_section_labels', 
 			__( 'Labels', 'recipe-pro' ),
-			array(&$this, 'recipepro_settings_section_callback'), 
-			'pluginPage'
+			array(&$this, 'recipepro_settings_section_callback_labels'), 
+			'recipepro_settings_group'
 		);
 
-		foreach ( $this->get_labels() as $key => $value ) {
+		foreach ( Recipe_Pro_Option_Defaults::get_labels() as $key => $value ) {
 			add_settings_field(
 				'recipepro_text_label_' . $key,
 				$value,
 				array(&$this, 'recipepro_text_label_render'),
-				'pluginPage',
-				'recipepro_pluginPage_section',
+				'recipepro_settings_group',
+				'recipepro_settings_section_labels',
 				array('label' => $key)
 			);
 		}
@@ -179,13 +140,12 @@ class Recipe_Pro_Admin {
 	public function recipepro_text_label_render( $args ) {
 		$options = get_option( 'recipepro_settings' );
 		?>
-		<input type='text' name='recipepro_settings[recipepro_text_label_<?php echo $args['label'] ?>]' value='<?php echo $options['recipepro_text_label_' . $args['label']]; ?>'>
+		<input type='text' name='recipepro_settings[recipepro_text_label_<?= $args['label'] ?>]' value='<?= $options['recipepro_text_label_' . $args['label']]; ?>'>
 		<?php
 
 	}
 
-
-	public function recipepro_settings_section_callback(  ) { 
+	public function recipepro_settings_section_callback_labels(  ) { 
 		echo __( 'Label overrides', 'recipe-pro' );
 	}
 
@@ -194,10 +154,10 @@ class Recipe_Pro_Admin {
 		?>
 		<div class="wrap">
 			<form action='options.php' method='post'>
-				<h2>Recipe Pro</h2>
+				<h2><?= __( 'Recipe', 'recipe-pro' ) ?></h2>
 				<?php
-				settings_fields( 'pluginPage' );
-				do_settings_sections( 'pluginPage' );
+				settings_fields( 'recipepro_settings_group' );
+				do_settings_sections( 'recipepro_settings_group' );
 				submit_button();
 				?>
 			</form>
