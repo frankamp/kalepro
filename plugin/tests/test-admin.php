@@ -60,12 +60,10 @@ class AdminTest extends WP_UnitTestCase {
 		$this->assertEquals( $_POST['doc'], $meta );
 	}
 
-
-		// $this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );
-		// $this->loader->add_action( 'save_post', $plugin_admin,  'save_meta_box', 10, 2);
-		// $this->loader->add_action( 'wp_ajax_recipepro_recipe', $plugin_admin,  'ajax_get_recipe' );
-		// $this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_button' );
-		// $this->loader->add_filter( 'mce_buttons', $plugin_admin, 'register_button' );
+	// $this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );
+	// $this->loader->add_action( 'wp_ajax_recipepro_recipe', $plugin_admin,  'ajax_get_recipe' );
+	// $this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_button' );
+	// $this->loader->add_filter( 'mce_buttons', $plugin_admin, 'register_button' );
 
 	// /**
 	//  * @expectedException PHPUnit_Framework_Error
@@ -82,9 +80,5 @@ class AdminTest extends WP_UnitTestCase {
 		// $wp_rewrite->set_permalink_structure('/archives/%post_id%');
 		// presumably here something that relied on rewrites having a permalink structure is run
 
-	// function test_post_create() {	 
-	//  	$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
-	//  	$this->assertEquals( 'My Title BLERRRRG', $post->post_title );
-	// }
 }
 

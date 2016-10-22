@@ -79,6 +79,8 @@ class Recipe_Pro_Admin {
 	}
 
 	public function render_recipe( $atts ) {
+		// IT IS MY RESPONSIBILITY TO SECURE THE OUTPUT
+		// https://developer.wordpress.org/plugins/security/securing-output/
 		$html = '<h3>oh look its a recipe</h3>';
 		return $html;
 	}
