@@ -78,6 +78,11 @@ class Recipe_Pro_Admin {
 		add_shortcode( 'recipepro', array( $this, 'render_recipe' ) );
 	}
 
+	public function render_recipe( $atts ) {
+		$html = '<h3>oh look its a recipe</h3>';
+		return $html;
+	}
+
 	public function create_menu() {
 		add_menu_page(
 			'Recipe Pro',          // The title to be displayed on the corresponding page for this menu
@@ -344,11 +349,6 @@ class Recipe_Pro_Admin {
 //		error_log( "some success metrics for your update are: " . strval($success) . "type is " . gettype($success));
 //		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
 //		error_log( "after update hits are " . $hits . " but type is " . gettype($hits));
-	}
-
-	public function render_recipe( $atts ) {
-		$html = '<h3>oh look its a recipe</h3>';
-		return $html;
 	}
 
 	public function add_button( $plugin_array ) {
