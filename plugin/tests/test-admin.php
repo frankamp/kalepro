@@ -27,6 +27,7 @@ class AdminTest extends WP_UnitTestCase {
 			 //     string(10) "someoption"
 			 //   }
 			 // }
+		global $new_whitelist_options;
 		$this->assertEquals(false, array_key_exists('recipepro_settings_group', $new_whitelist_options));
 		do_action( 'admin_init' );
 		$this->	assertEquals(true, array_key_exists('recipepro_settings_group', $new_whitelist_options));
