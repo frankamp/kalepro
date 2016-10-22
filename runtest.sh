@@ -1,0 +1,1 @@
+docker-compose run --rm wordpress bash -c 'while true; do phpunit -c /var/www/html/wp-content/plugins/recipe-pro/phpunit.xml.dist; read key; if [ "$key" ]; then break; fi; done'
