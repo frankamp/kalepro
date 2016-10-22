@@ -28,9 +28,21 @@ class AdminTest extends WP_UnitTestCase {
 			 //   }
 			 // }
 		global $new_whitelist_options;
-		$this->assertEquals(false, array_key_exists('recipepro_settings_group', $new_whitelist_options));
+		$this->assertEquals( false, array_key_exists( 'recipepro_settings_group', $new_whitelist_options ));
 		do_action( 'admin_init' );
-		$this->	assertEquals(true, array_key_exists('recipepro_settings_group', $new_whitelist_options));
+		$this->	assertEquals( true, array_key_exists( 'recipepro_settings_group', $new_whitelist_options ));
+	}
+
+	function test_create_menu() {
+		global $admin_page_hooks;
+		do_action( 'admin_menu' );
+		$this->	assertEquals( true, array_key_exists( 'recipepro', $admin_page_hooks ));
+	}
+
+	function test_create_shortcode() {
+		global $shortcode_tags;
+		do_action( 'init' );
+		$this->	assertEquals( true, array_key_exists( 'recipepro', $shortcode_tags ));
 	}
 
 	// /**

@@ -64,18 +64,18 @@ class Recipe_Pro_Admin {
 	 */
 	public function get_label( $key ) {
 		$options = get_option( 'recipepro_settings', null );
-		if ( isset($options) && array_key_exists('recipepro_text_label_' . $key, $options) ) {
+		if ( isset( $options ) && array_key_exists( 'recipepro_text_label_' . $key, $options )) {
 			return $options['recipepro_text_label_' . $key];
 		}
 		$options = Recipe_Pro_Option_Defaults::get_labels();
-		if ( array_key_exists($key, $options) ) {
+		if ( array_key_exists( $key, $options )) {
 			return $options[$key];
 		};
 		return "";
 	}
 
 	public function register_shortcodes() {
-		add_shortcode('recipepro', array($this, 'render_recipe'));
+		add_shortcode( 'recipepro', array( $this, 'render_recipe' ) );
 	}
 
 	public function create_menu() {
@@ -87,6 +87,22 @@ class Recipe_Pro_Admin {
 			array(&$this, 'menu_page_display'),// The name of the function to call when rendering the menu for this page
 			'dashicons-carrot'
 		);
+	}
+
+	public function menu_page_display () {
+		$html = '';
+		?>
+		<div class="wrap">
+			<form action='options.php' method='post'>
+				<h2><?= __( 'Recipe', 'recipe-pro' ) ?></h2>
+				<?php
+				settings_fields( 'recipepro_settings_group' );
+				do_settings_sections( 'recipepro_settings_group' );
+				submit_button();
+				?>
+			</form>
+		</div>
+		<?php
 	}
 
 	public function GUIDv4 ()
@@ -147,22 +163,6 @@ class Recipe_Pro_Admin {
 
 	public function recipepro_settings_section_callback_labels(  ) { 
 		echo __( 'Label overrides', 'recipe-pro' );
-	}
-
-	public function menu_page_display () {
-		$html = '';
-		?>
-		<div class="wrap">
-			<form action='options.php' method='post'>
-				<h2><?= __( 'Recipe', 'recipe-pro' ) ?></h2>
-				<?php
-				settings_fields( 'recipepro_settings_group' );
-				do_settings_sections( 'recipepro_settings_group' );
-				submit_button();
-				?>
-			</form>
-		</div>
-		<?php
 	}
 	
 	public function add_meta_box ( ) {
