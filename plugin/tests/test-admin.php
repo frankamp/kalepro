@@ -5,11 +5,18 @@
  * @package 
  */
 
+class Simple_Render_Admin extends Recipe_Pro_Admin {
+	public function render_recipe( $recipe ) {
+		return "rendered " . $recipe->title;
+	}
+}
+
 function var_log() {
     ob_start();
     call_user_func_array( 'var_dump', func_get_args() );
     error_log( ob_get_clean() );
 }
+
 //var_log(get_bloginfo('version'));
 
 /**
@@ -45,11 +52,21 @@ class AdminTest extends WP_UnitTestCase {
 		$this->assertEquals( true, array_key_exists( 'recipepro', $shortcode_tags ));
 	}
 
-	function test_shortcode() {
-		$plugin_admin = new Recipe_Pro_Admin( "", "" );
-		$content = $plugin_admin->render_recipe(array());
+	function test_shortcode_dispatch() {
+		$plugin_admin = new Simple_Render_Admin( "", "" );
+		$plugin_admin->register_shortcodes();
+		$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
+		$content = $plugin_admin->render_recipe($post); // dummy implementation
+		$GLOBALS['post'] = $post;
 		$filtered = do_shortcode( "my [recipepro] is");
 		$this->assertEquals( "my " . $content . " is", $filtered );
+	}
+
+	function test_render_recipe() {
+		$plugin_admin = new Recipe_Pro_Admin("", "");
+		$recipe = new Recipe_Pro_Recipe(json_decode('{"title":"bannana bread","ingredients":[],"author":"","type":"","cuisine":"","instructions":[],"servingSize":"","calories":"","fatContent":"","saturatedFatContent":"","carbohydrateContent":"","sugarContent":"","sodiumContent":"","fiberContent":"","proteinContent":""}', true));
+		$recipe_result = $plugin_admin->render_recipe($recipe);
+		$this->assertEquals("<div><p>bannana bread</p></div>", $recipe_result);
 	}
 
 	function test_save_post() {
@@ -58,6 +75,12 @@ class AdminTest extends WP_UnitTestCase {
 		$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
 		$meta = get_post_meta( $post->ID, 'recipepro_recipe', true);
 		$this->assertEquals( $_POST['doc'], $meta );
+	}
+
+	function test_post_factory_current_post() {
+		$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
+		$GLOBALS['post'] = $post; // this is required to get the current post set
+		$this->assertEquals( $post, get_post());
 	}
 
 	// $this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );

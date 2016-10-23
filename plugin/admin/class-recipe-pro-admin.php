@@ -75,14 +75,26 @@ class Recipe_Pro_Admin {
 	}
 
 	public function register_shortcodes() {
-		add_shortcode( 'recipepro', array( $this, 'render_recipe' ) );
+		add_shortcode( 'recipepro', array( $this, 'render_recipe_shortcode' ) );
 	}
 
-	public function render_recipe( $atts ) {
+	public function render_recipe_shortcode( $atts ) {
 		// IT IS MY RESPONSIBILITY TO SECURE THE OUTPUT
 		// https://developer.wordpress.org/plugins/security/securing-output/
-		$html = '<h3>oh look its a recipe</h3>';
-		return $html;
+		$post = get_post();
+		$meta_result = get_post_meta( (int) $post->ID, (string) 'recipepro_recipe', true );
+		if( ! $meta_result ) {
+			error_log( "There is no meta result so rendering empty recipe" );
+			$recipe = new Recipe_Pro_Recipe();
+		} else {
+			error_log( "There is a meta result so rendering recipe" . $meta_result );
+			$recipe = new Recipe_Pro_Recipe(json_decode($meta_result));
+		}
+		return $this->render_recipe($recipe);
+	}
+
+	public function render_recipe( $recipe ) {
+		return $recipe->render();
 	}
 
 	public function create_menu() {

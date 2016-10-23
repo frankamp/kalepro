@@ -8,17 +8,12 @@
  * @package    recipe-pro
  * @subpackage recipe-pro/includes
  */
-
+    
 class Recipe_Pro_Recipe implements JsonSerializable {
     public $title;
     public $ingredients;
 
     public function __construct() {
-        $a = func_get_args();
-        $i = func_num_args();
-        if ( $i == 1 && $i && isset($a[0]) && is_array($a[0])) {
-            $this->inflate($a[0]);
-        }
         $this->title = "";
         $this->author = "";
         $this->type = "";
@@ -35,10 +30,16 @@ class Recipe_Pro_Recipe implements JsonSerializable {
         $this->fiberContent = "";
         $this->proteinContent = "";
         $this->saturatedFatContent = "";
+        $a = func_get_args();
+        $i = func_num_args();
+        if ( $i == 1 && $i && isset($a[0]) && is_array($a[0])) {
+            $this->inflate($a[0]);
+        }
 
     }
 
     private function inflate( $jsonObj ) {
+        error_log("Inflating");
         $this->title = $jsonObj['title'];
         $this->ingredients = array();
         foreach ($jsonObj['ingredients'] as $ingredient) {
@@ -54,6 +55,12 @@ class Recipe_Pro_Recipe implements JsonSerializable {
                 $instruction['html']
             ));
         }
+    }
+
+    public function render() {
+        ob_start();
+        ?><div><p><?= $this->title ?></p></div><?php
+        return ob_get_clean();
     }
 
     /**
