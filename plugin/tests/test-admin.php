@@ -17,6 +17,12 @@ function var_log() {
     error_log( ob_get_clean() );
 }
 
+function test_content( $name ) {
+	ob_start();
+	include( $name . ".html" );
+	return ob_get_clean();
+}
+
 //var_log(get_bloginfo('version'));
 
 /**
@@ -64,9 +70,9 @@ class AdminTest extends WP_UnitTestCase {
 
 	function test_render_recipe() {
 		$plugin_admin = new Recipe_Pro_Admin("", "");
-		$recipe = new Recipe_Pro_Recipe(json_decode('{"title":"bannana bread","ingredients":[],"author":"","type":"","cuisine":"","instructions":[],"servingSize":"","calories":"","fatContent":"","saturatedFatContent":"","carbohydrateContent":"","sugarContent":"","sodiumContent":"","fiberContent":"","proteinContent":""}', true));
+		$recipe = new Recipe_Pro_Recipe(json_decode('{"title":"Coconut Curry Ramen","ingredients":[],"author":"","type":"","cuisine":"","instructions":[],"servingSize":"","calories":"","fatContent":"","saturatedFatContent":"","carbohydrateContent":"","sugarContent":"","sodiumContent":"","fiberContent":"","proteinContent":""}', true));
 		$recipe_result = $plugin_admin->render_recipe($recipe);
-		$this->assertEquals("<div><p>bannana bread</p></div>", $recipe_result);
+		$this->assertEquals(test_content( 'recipe' ), $recipe_result);
 	}
 
 	function test_save_post() {

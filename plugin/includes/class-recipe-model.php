@@ -59,7 +59,8 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 
     public function render() {
         ob_start();
-        ?><div><p><?= $this->title ?></p></div><?php
+        $recipe = $this;
+        include('recipe-template.php');
         return ob_get_clean();
     }
 
