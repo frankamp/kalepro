@@ -10,14 +10,14 @@
  */
     
 class Recipe_Pro_Recipe implements JsonSerializable {
-    public $title;
-    public $ingredients;
 
     public function __construct() {
         $this->title = "";
+        $this->description = "";
         $this->author = "";
         $this->type = "";
         $this->cuisine = "";
+        $this->yield = "";
         $this->ingredients = array();
         $this->instructions = array();
         $this->servingSize = "";
@@ -29,29 +29,35 @@ class Recipe_Pro_Recipe implements JsonSerializable {
         $this->sodiumContent = "";
         $this->fiberContent = "";
         $this->proteinContent = "";
-        $this->saturatedFatContent = "";
         $a = func_get_args();
         $i = func_num_args();
-        if ( $i == 1 && $i && isset($a[0]) && is_array($a[0])) {
+        if ( $i == 1 && $i && isset( $a[0] ) && is_array( $a[0]) ) {
             $this->inflate($a[0]);
         }
 
     }
 
     private function inflate( $jsonObj ) {
-        error_log("Inflating");
-        $this->title = $jsonObj['title'];
+        foreach ( array( "title", "description", "author", "type",
+                         "cuisine", "yield", "servingSize", "servingSize",
+                         "calories", "fatContent", "saturatedFatContent",
+                         "carbohydrateContent", "sugarContent", "sodiumContent",
+                         "fiberContent", "proteinContent" ) as $prop ) {
+            if ( array_key_exists( $prop, $jsonObj ) ) {
+                $this->{$prop} = $jsonObj[$prop];
+            }
+        }
         $this->ingredients = array();
-        foreach ($jsonObj['ingredients'] as $ingredient) {
-            array_push($this->ingredients, new Recipe_Pro_Ingredient(
+        foreach ( $jsonObj['ingredients'] as $ingredient ) {
+            array_push( $this->ingredients, new Recipe_Pro_Ingredient(
                 $ingredient['quantity'],
                 $ingredient['unit'],
                 $ingredient['name'],
                 $ingredient['html']
             ));
         }
-        foreach ($jsonObj['instructions'] as $instruction) {
-            array_push($this->instructions, new Recipe_Pro_Instruction(
+        foreach ( $jsonObj['instructions'] as $instruction ) {
+            array_push( $this->instructions, new Recipe_Pro_Instruction(
                 $instruction['html']
             ));
         }

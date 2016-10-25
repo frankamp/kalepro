@@ -9,7 +9,7 @@
 	<div itemprop="name"><?= $recipe->title ?></div> 
 	<div>&nbsp;</div> 
 	<div> 
-		<img itemprop="image" src="http://cdn3.minimalistbaker.com/wp-content/uploads/2016/09/Curry-Ramen-SQUARE.jpg" width="205" data-jpibfi-ignore="1"> 
+		<img itemprop="image" src="http://cdn3.minimalistbaker.com/wp-content/uploads/2016/09/Curry-Ramen-SQUARE.jpg" width="205"> 
 		<div> <span ><a href="http://minimalistbaker.com/easyrecipe-print/21524-0/" rel="nofollow" target="_blank" role="button"><span ></span><span >Print Friendly Version</span></a></span> 
 		</div> 
 	</div> 
@@ -28,20 +28,32 @@
 		</div> 
 		<div>&nbsp;</div> 
 	</div> 
-	<div itemprop="description" >Savory vegan ramen infused with curry and coconut milk. Serve with sautéed portobello mushrooms and gluten free noodles for the ultimate plant-based meal.</div> 
-	<div> <div>Author: <span itemprop="author">Minimalist Baker</span></div> 
-	<div>Recipe type: <span itemprop="recipeCategory">Entrée, Soup</span></div> 
-	<div>Cuisine: <span itemprop="recipeCuisine">Vegan, Gluten Free</span></div> 
-	<div>Serves: <span itemprop="recipeYield">2-3</span></div> </div> 
+	<div itemprop="description"><?= $recipe->description ?></div> 
+	<div> <div>Author: <span itemprop="author"><?= $recipe->author ?></span></div> 
+	<div>Recipe type: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div> 
+	<div>Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div> 
+	<div>Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div> </div> 
 	<div> 
 		<div>Ingredients</div> 
 		<div>BROTH</div> 
 		<ul> 
-			<li itemprop="ingredients">1 Tbsp (15 ml) toasted or untoasted sesame oil*</li> <li itemprop="ingredients">1 small knob ginger, sliced lengthwise (into long strips)</li> <li itemprop="ingredients">5 cloves garlic, chopped</li> <li itemprop="ingredients">1 large onion, chopped lengthwise</li> <li itemprop="ingredients">2 1/2 Tbsp (40 g) yellow or green curry paste</li> <li itemprop="ingredients">4 cups (960 ml) vegetable broth</li> <li itemprop="ingredients">2 cups (480 ml) light coconut milk</li> <li itemprop="ingredients"><em>optional: </em>1-2 Tbsp coconut sugar (more to taste)</li> <li itemprop="ingredients"><em>optional:</em> 1/2 tsp ground turmeric (for color and more curry flavor)</li> <li itemprop="ingredients">1 Tbsp (15 g) white or yellow miso paste</li> 
+			<li itemprop="ingredients">1 Tbsp (15 ml) toasted or untoasted sesame oil*</li>
+			<li itemprop="ingredients">1 small knob ginger, sliced lengthwise (into long strips)</li>
+			<li itemprop="ingredients">5 cloves garlic, chopped</li>
+			<li itemprop="ingredients">1 large onion, chopped lengthwise</li>
+			<li itemprop="ingredients">2 1/2 Tbsp (40 g) yellow or green curry paste</li>
+			<li itemprop="ingredients">4 cups (960 ml) vegetable broth</li>
+			<li itemprop="ingredients">2 cups (480 ml) light coconut milk</li>
+			<li itemprop="ingredients"><em>optional: </em>1-2 Tbsp coconut sugar (more to taste)</li>
+			<li itemprop="ingredients"><em>optional:</em> 1/2 tsp ground turmeric (for color and more curry flavor)</li>
+			<li itemprop="ingredients">1 Tbsp (15 g) white or yellow miso paste</li>
 		</ul> 
 		<div>FOR SERVING</div> 
 		<ul> 
-			<li itemprop="ingredients">2-3 cups noodles of choice (i.e. <a href="http://minimalistbaker.com/zucchini-pasta-with-lentil-bolognese/" target="_blank">spiralized zucchini squash</a>, cooked <a href="http://minimalistbaker.com/easy-vegan-ramen/" target="_blank">ramen noodles</a>*, or cooked <a href="http://www.amazon.com/dp/B0048IAIOS/?tag=minimalistbaker-20" target="_blank" rel="nofollow">brown rice noodles</a>)</li> <li itemprop="ingredients"><em>optional:</em> 2 portobello mushrooms, stems removed, sliced into 1/2-inch pieces (+ sautéed in 1 Tbsp sesame oil + 1 Tbsp tamari + 1 tsp maple syrup)</li> <li itemprop="ingredients"><em>optional:</em> Fresh green onion, chopped</li> <li itemprop="ingredients"><em>optional:</em> Sriracha or <a href="http://www.amazon.com/dp/B000LO25RG/?tag=minimalistbaker-20" target="_blank" rel="nofollow">chili garlic sauce</a></li> 
+			<li itemprop="ingredients">2-3 cups noodles of choice (i.e. <a href="http://minimalistbaker.com/zucchini-pasta-with-lentil-bolognese/" target="_blank">spiralized zucchini squash</a>, cooked <a href="http://minimalistbaker.com/easy-vegan-ramen/" target="_blank">ramen noodles</a>*, or cooked <a href="http://www.amazon.com/dp/B0048IAIOS/?tag=minimalistbaker-20" target="_blank" rel="nofollow">brown rice noodles</a>)</li>
+			<li itemprop="ingredients"><em>optional:</em> 2 portobello mushrooms, stems removed, sliced into 1/2-inch pieces (+ sautéed in 1 Tbsp sesame oil + 1 Tbsp tamari + 1 tsp maple syrup)</li>
+			<li itemprop="ingredients"><em>optional:</em> Fresh green onion, chopped</li>
+			<li itemprop="ingredients"><em>optional:</em> Sriracha or <a href="http://www.amazon.com/dp/B000LO25RG/?tag=minimalistbaker-20" target="_blank" rel="nofollow">chili garlic sauce</a></li>
 		</ul> 
 		<div></div> 
 	</div> 
@@ -60,7 +72,15 @@
 	<div itemprop="nutrition" itemscope="" itemtype="http://schema.org/NutritionInformation"> 
 		<div>Nutrition Information</div> 
 		<div> 
-			Serving size:&nbsp;<span itemprop="servingSize">1/3 of recipe*</span> Calories:&nbsp;<span itemprop="calories">310</span> Fat:&nbsp;<span itemprop="fatContent">19.6 g</span> Saturated fat:&nbsp;<span itemprop="saturatedFatContent">8.8 g</span> Carbohydrates:&nbsp;<span itemprop="carbohydrateContent">26 g</span> Sugar:&nbsp;<span itemprop="sugarContent">5.3 g</span> Sodium:&nbsp;<span itemprop="sodiumContent">1253 mg</span> Fiber:&nbsp;<span itemprop="fiberContent">0.8 g</span> Protein:&nbsp;<span itemprop="proteinContent">10.1 g</span> 
+			Serving size:&nbsp;<span itemprop="servingSize"><?= $recipe->servingSize ?></span> 
+			Calories:&nbsp;<span itemprop="calories"><?= $recipe->calories ?></span> 
+			Fat:&nbsp;<span itemprop="fatContent"><?= $recipe->fatContent ?></span> 
+			Saturated fat:&nbsp;<span itemprop="saturatedFatContent"><?= $recipe->saturatedFatContent ?></span> 
+			Carbohydrates:&nbsp;<span itemprop="carbohydrateContent"><?= $recipe->carbohydrateContent ?></span> 
+			Sugar:&nbsp;<span itemprop="sugarContent"><?= $recipe->sugarContent ?></span> 
+			Sodium:&nbsp;<span itemprop="sodiumContent"><?= $recipe->sodiumContent ?></span> 
+			Fiber:&nbsp;<span itemprop="fiberContent"><?= $recipe->fiberContent ?></span> 
+			Protein:&nbsp;<span itemprop="proteinContent"><?= $recipe->proteinContent ?></span> 
 		</div> 
 		<div></div> 
 	</div>

@@ -70,7 +70,26 @@ class AdminTest extends WP_UnitTestCase {
 
 	function test_render_recipe() {
 		$plugin_admin = new Recipe_Pro_Admin("", "");
-		$recipe = new Recipe_Pro_Recipe(json_decode('{"title":"Coconut Curry Ramen","ingredients":[],"author":"","type":"","cuisine":"","instructions":[],"servingSize":"","calories":"","fatContent":"","saturatedFatContent":"","carbohydrateContent":"","sugarContent":"","sodiumContent":"","fiberContent":"","proteinContent":""}', true));
+		$recipe = new Recipe_Pro_Recipe(json_decode('
+			{
+				"title":"Coconut Curry Ramen",
+				"description":"Savory vegan ramen infused with curry and coconut milk. Serve with sautéed portobello mushrooms and gluten free noodles for the ultimate plant-based meal.",
+				"ingredients":[],
+				"author":"Minimalist Baker",
+				"type":"Entrée, Soup",
+				"cuisine":"Vegan, Gluten Free",
+				"yield":"2-3",
+				"instructions":[],
+				"servingSize":"1/3 of recipe*",
+				"calories":"310",
+				"fatContent":"19.6 g",
+				"saturatedFatContent":"8.8 g",
+				"carbohydrateContent":"26 g",
+				"sugarContent":"5.3 g",
+				"sodiumContent":"1253 mg",
+				"fiberContent":"0.8 g",
+				"proteinContent":"10.1 g"
+			}', true));
 		$recipe_result = $plugin_admin->render_recipe($recipe);
 		$this->assertEquals(test_content( 'recipe' ), $recipe_result);
 	}
