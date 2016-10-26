@@ -74,6 +74,7 @@ class Recipe_Pro {
 
 		$this->load_dependencies();
 		$this->set_locale();
+		// if else for whether I'm in admin?
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
