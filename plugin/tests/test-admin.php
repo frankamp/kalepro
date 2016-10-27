@@ -126,7 +126,9 @@ class AdminTest extends WP_UnitTestCase {
 				"sugarContent":"5.3 g",
 				"sodiumContent":"1253 mg",
 				"fiberContent":"0.8 g",
-				"proteinContent":"10.1 g"
+				"proteinContent":"10.1 g",
+				"prepTime": "PT15M",
+				"cookTime": "PT1H15M"
 			}', true);
 		if ( json_last_error() != JSON_ERROR_NONE ) {
 			$this->assertEquals("bad json", "is bad because " . json_last_error_msg());

@@ -16,17 +16,16 @@
 	<div> 
 		<div> 
 			<div>Prep time</div> 
-			<div> <time itemprop="prepTime" datetime="PT15M">15 mins</time> </div> 
+			<div> <time itemprop="prepTime" datetime="<?= $viewhelper->interval( $recipe->prepTime ) ?>"><?= $viewhelper->prettyInterval( $recipe->prepTime ) ?></time> </div> 
 		</div> 
 		<div> 
 			<div>Cook time</div> 
-			<div> <time itemprop="cookTime" datetime="PT1H15M">1 hour 15 mins</time> </div> 
+			<div> <time itemprop="cookTime" datetime="<?=  $viewhelper->interval( $recipe->cookTime ) ?>"><?= $viewhelper->prettyInterval( $recipe->cookTime ) ?></time> </div> 
 		</div> 
 		<div>
 			<div>Total time</div> 
-			<div> <time itemprop="totalTime" datetime="PT1H30M">1 hour 30 mins</time> </div> 
+			<div> <time itemprop="totalTime" datetime="<?= $viewhelper->interval( $recipe->totalTime() ) ?>"><?= $viewhelper->prettyInterval( $recipe->totalTime() ) ?></time> </div> 
 		</div> 
-		<div>&nbsp;</div> 
 	</div> 
 	<div itemprop="description"><?= $recipe->description ?></div> 
 	<div> <div>Author: <span itemprop="author"><?= $recipe->author ?></span></div> 

@@ -8,7 +8,81 @@
  * @package    recipe-pro
  * @subpackage recipe-pro/includes
  */
-	
+
+class Recipe_Pro_Recipe_View_Helper {
+	public function prettyInterval(\DateInterval $interval) {
+		$doPlural = function($nb,$str){return $nb>1?$str.'s':$str;}; // adds plurals
+
+		$format = array();
+		if($interval->y !== 0) {
+			$format[] = "%y ".$doPlural($interval->y, "year");
+		}
+		if($interval->m !== 0) {
+			$format[] = "%m ".$doPlural($interval->m, "month");
+		}
+		if($interval->d !== 0) {
+			$format[] = "%d ".$doPlural($interval->d, "day");
+		}
+		if($interval->h !== 0) {
+			$format[] = "%h ".$doPlural($interval->h, "hour");
+		}
+		if($interval->i !== 0) {
+			$format[] = "%i ".$doPlural($interval->i, "min");
+		}
+		if($interval->s !== 0) {
+			if(!count($format)) {
+				return "";
+			} else {
+				$format[] = "%s ".$doPlural($interval->s, "second");
+			}
+		}
+
+		// We use the two biggest parts
+		if(count($format) > 1) {
+			$format = array_shift($format)." ".array_shift($format);
+		} else {
+			$format = array_pop($format);
+		}
+
+		// Prepend 'since ' or whatever you like
+		return $interval->format($format);
+	}
+
+	/**
+	 * @param \DateInterval $interval
+	 *
+	 * @return string
+	 */
+	public function interval(\DateInterval $interval) {
+		// Reading all non-zero date parts.
+		$date = array_filter(array(
+			'Y' => $interval->y,
+			'M' => $interval->m,
+			'D' => $interval->d
+		));
+		// Reading all non-zero time parts.
+		$time = array_filter(array(
+			'H' => $interval->h,
+			'M' => $interval->i,
+			'S' => $interval->s
+		));
+		$specString = 'P';
+		// Adding each part to the spec-string.
+		foreach ($date as $key => $value) {
+			$specString .= $value . $key;
+		}
+		if (count($time) > 0) {
+			$specString .= 'T';
+			foreach ($time as $key => $value) {
+				$specString .= $value . $key;
+			}
+		}
+		return $specString;
+	}
+
+}
+
+
 class Recipe_Pro_Recipe implements JsonSerializable {
 
 	public function __construct() {
@@ -30,12 +104,21 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		$this->sodiumContent = "";
 		$this->fiberContent = "";
 		$this->proteinContent = "";
+		$this->prepTime = new DateInterval("PT0M");
+		$this->cookTime = new DateInterval("PT0M");
 		$a = func_get_args();
 		$i = func_num_args();
 		if ( $i == 1 && $i && isset( $a[0] ) && is_array( $a[0]) ) {
 			$this->inflate($a[0]);
 		}
+	}
 
+	public function totalTime() {
+		$reference = new DateTime();
+		$endTime = clone $reference;
+		$endTime->add($this->prepTime);
+		$endTime->add($this->cookTime);
+		return $reference->diff($endTime);
 	}
 
 	private function inflate( $jsonObj ) {
@@ -46,6 +129,11 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 						 "fiberContent", "proteinContent" ) as $prop ) {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
 				$this->{$prop} = $jsonObj[$prop];
+			}
+		}
+		foreach ( array( "prepTime", "cookTime" ) as $prop ) {
+			if ( array_key_exists( $prop, $jsonObj ) ) {
+				$this->{$prop} = new DateInterval($jsonObj[$prop]);
 			}
 		}
 		$this->ingredientSections = array();
@@ -72,6 +160,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	public function render() {
 		ob_start();
 		$recipe = $this;
+		$viewhelper = new Recipe_Pro_Recipe_View_Helper();
 		include('recipe-template.php');
 		return ob_get_clean();
 	}
