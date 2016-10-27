@@ -88,6 +88,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	public function __construct() {
 		$this->title = "";
 		$this->description = "";
+		$this->imageUrl = "";
 		$this->author = "";
 		$this->type = "";
 		$this->cuisine = "";
@@ -106,6 +107,8 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		$this->proteinContent = "";
 		$this->prepTime = new DateInterval("PT0M");
 		$this->cookTime = new DateInterval("PT0M");
+		$this->ratingValue = 0.0;
+		$this->ratingCount = 0;
 		$a = func_get_args();
 		$i = func_num_args();
 		if ( $i == 1 && $i && isset( $a[0] ) && is_array( $a[0]) ) {
@@ -122,11 +125,11 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	}
 
 	private function inflate( $jsonObj ) {
-		foreach ( array( "title", "description", "author", "type",
+		foreach ( array( "title", "description", "imageUrl", "author", "type",
 						 "cuisine", "yield", "servingSize", "servingSize",
 						 "calories", "fatContent", "saturatedFatContent",
 						 "carbohydrateContent", "sugarContent", "sodiumContent",
-						 "fiberContent", "proteinContent" ) as $prop ) {
+						 "fiberContent", "proteinContent", "ratingCount", "ratingValue" ) as $prop ) {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
 				$this->{$prop} = $jsonObj[$prop];
 			}

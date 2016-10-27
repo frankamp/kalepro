@@ -74,6 +74,7 @@ class AdminTest extends WP_UnitTestCase {
 			{
 				"title":"Coconut Curry Ramen",
 				"description":"Savory vegan ramen infused with curry and coconut milk. Serve with sautéed portobello mushrooms and gluten free noodles for the ultimate plant-based meal.",
+				"imageUrl":"http://cdn3.minimalistbaker.com/wp-content/uploads/2016/09/Curry-Ramen-SQUARE.jpg",
 				"author":"Minimalist Baker",
 				"type":"Entrée, Soup",
 				"cuisine":"Vegan, Gluten Free",
@@ -128,7 +129,9 @@ class AdminTest extends WP_UnitTestCase {
 				"fiberContent":"0.8 g",
 				"proteinContent":"10.1 g",
 				"prepTime": "PT15M",
-				"cookTime": "PT1H15M"
+				"cookTime": "PT1H15M",
+				"ratingValue": 5.0,
+				"ratingCount": 5
 			}', true);
 		if ( json_last_error() != JSON_ERROR_NONE ) {
 			$this->assertEquals("bad json", "is bad because " . json_last_error_msg());

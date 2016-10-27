@@ -2,16 +2,14 @@
 	<div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
 		<div> 
 			<div style="width: 100%"></div> 
-			<div><span ><span itemprop="ratingValue">5.0</span> from <span itemprop="ratingCount">5</span> reviews</span>
+			<div><span ><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</span>
 			</div> 
 		</div> 
 	</div> 
 	<div itemprop="name"><?= $recipe->title ?></div> 
 	<div>&nbsp;</div> 
 	<div> 
-		<img itemprop="image" src="http://cdn3.minimalistbaker.com/wp-content/uploads/2016/09/Curry-Ramen-SQUARE.jpg" width="205"> 
-		<div> <span ><a href="http://minimalistbaker.com/easyrecipe-print/21524-0/" rel="nofollow" target="_blank" role="button"><span ></span><span >Print Friendly Version</span></a></span> 
-		</div> 
+		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
 	<div> 
 		<div> 
