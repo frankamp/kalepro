@@ -40,7 +40,11 @@ class BasicPluginTests extends WP_UnitTestCase {
 	// 	activate_recipe_pro();
 	// }
 
-
+	function test_translate_() {
+		require_once dirname( dirname( __FILE__ ) ) . '/includes/class-recipe-model.php';
+		$this->assertEquals("PT0M", Recipe_Pro_Recipe_View_Helper::interval(new DateInterval("PT0M")));
+		
+	}
     // public function test_help_dispatch_for_options_page() {
     //     //set up the variables
     //     $contextual_help = '';

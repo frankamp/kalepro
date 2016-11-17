@@ -8,7 +8,7 @@ wordpress:
     - ./plugin/:/var/www/html/wp-content/plugins/recipe-pro/
   environment:
     WORDPRESS_DEBUG: 'true'
-  command: phpunit -c /var/www/html/wp-content/plugins/recipe-pro/phpunit.xml.dist    
+#  command: phpunit -c /var/www/html/wp-content/plugins/recipe-pro/phpunit.xml.dist    
 db:
   image: mariadb
   environment:

@@ -84,11 +84,9 @@ class Recipe_Pro_Admin {
 		$post = get_post();
 		$meta_result = get_post_meta( (int) $post->ID, (string) 'recipepro_recipe', true );
 		if( ! $meta_result ) {
-			error_log( "There is no meta result so rendering empty recipe" );
 			$recipe = new Recipe_Pro_Recipe();
 		} else {
-			error_log( "There is a meta result so rendering recipe" . $meta_result );
-			$recipe = new Recipe_Pro_Recipe(json_decode($meta_result));
+			$recipe = new Recipe_Pro_Recipe(json_decode($meta_result, true));
 		}
 		return $this->render_recipe($recipe);
 	}
@@ -345,15 +343,23 @@ class Recipe_Pro_Admin {
 		// todo: sanitize and validate the input
 		// todo: nonce
 		if (isset($_POST['doc'])) {
-			$success = update_post_meta( (int) $post_id, (string) 'recipepro_recipe', $_POST['doc']);
-			error_log( "save meta called" );
+			// deserialize/serialize to prove we can prior to saving it to the database
+			//error_log( "save meta called with: " . $_POST['doc'] ); //stripslashes( )
+			$json = json_decode( stripslashes( $_POST['doc'] ), true );
+			//error_log("Attempt decode json error: " . json_last_error() );
+			$recipe = new Recipe_Pro_Recipe( $json );
+			//error_log( "inflated");
+			//error_log( "recipe back to json " . json_encode($recipe) );
+			//error_log( "Preparing to save");
+			$success = update_post_meta( (int) $post_id, (string) 'recipepro_recipe', wp_slash( json_encode( $recipe ) ) );
+			
 	//		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
 	//		error_log( "hits are " . $hits . " but type is " . gettype($hits));
 	//		$hits += 1;
 	//		error_log( "hits are " . $hits . " after incrementing type is " . gettype($hits));
 	//		$success = update_post_meta( (int) $post_id, (string) 'hits2', (string) $hits );
 			if ($success) {
-				error_log( "you are successful" );
+				//error_log( "you are successful" );
 			} else {
 				error_log( "you not successful" );
 			}

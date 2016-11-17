@@ -10,7 +10,7 @@
  */
 
 class Recipe_Pro_Recipe_View_Helper {
-	public function prettyInterval(\DateInterval $interval) {
+	public static function prettyInterval(\DateInterval $interval) {
 		$doPlural = function($nb,$str){return $nb>1?$str.'s':$str;}; // adds plurals
 
 		$format = array();
@@ -53,7 +53,7 @@ class Recipe_Pro_Recipe_View_Helper {
 	 *
 	 * @return string
 	 */
-	public function interval(\DateInterval $interval) {
+	public static function interval(\DateInterval $interval) {
 		// Reading all non-zero date parts.
 		$date = array_filter(array(
 			'Y' => $interval->y,
@@ -70,6 +70,9 @@ class Recipe_Pro_Recipe_View_Helper {
 		// Adding each part to the spec-string.
 		foreach ($date as $key => $value) {
 			$specString .= $value . $key;
+		}
+		if (count($time) == 0) {
+			$time = array('M' => '0');
 		}
 		if (count($time) > 0) {
 			$specString .= 'T';
@@ -136,11 +139,12 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		}
 		foreach ( array( "prepTime", "cookTime" ) as $prop ) {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
+				error_log("inflating prop: " . $prop);
 				$this->{$prop} = new DateInterval($jsonObj[$prop]);
 			}
 		}
 		$this->ingredientSections = array();
-		foreach ( $jsonObj['ingredients'] as $section ) {
+		foreach ( $jsonObj['ingredientSections'] as $section ) {
 			array_push( $this->ingredientSections, new Recipe_Pro_Ingredient_Section(
 				$section['name'],
 				$section['items']
@@ -161,9 +165,9 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	}
 
 	public function render() {
-		ob_start();
 		$recipe = $this;
 		$viewhelper = new Recipe_Pro_Recipe_View_Helper();
+		ob_start();
 		include('recipe-template.php');
 		return ob_get_clean();
 	}
@@ -173,7 +177,14 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	 */
 	public function jsonSerialize()
 	{
-		return $this;
+		$copy = array();
+		foreach( $this as $key => $val ) { 
+			$copy[$key] = $val;
+		}
+		foreach ( array( "prepTime", "cookTime" ) as $prop ) {
+			$copy[$prop] = Recipe_Pro_Recipe_View_Helper::interval( $copy[$prop] );
+		}
+		return $copy;
 	}
 }
 

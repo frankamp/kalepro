@@ -68,9 +68,8 @@ class AdminTest extends WP_UnitTestCase {
 		$this->assertEquals( "my " . $content . " is", $filtered );
 	}
 
-	function test_render_recipe() {
-		$plugin_admin = new Recipe_Pro_Admin("", "");
-		$test_data = json_decode('
+	function get_test_recipe_json() {
+		return '
 			{
 				"title":"Coconut Curry Ramen",
 				"description":"Savory vegan ramen infused with curry and coconut milk. Serve with sautéed portobello mushrooms and gluten free noodles for the ultimate plant-based meal.",
@@ -79,7 +78,7 @@ class AdminTest extends WP_UnitTestCase {
 				"type":"Entrée, Soup",
 				"cuisine":"Vegan, Gluten Free",
 				"yield":"2-3",
-				"ingredients": [
+				"ingredientSections": [
 					{
 						"name": "BROTH",
 						"items": [
@@ -132,21 +131,32 @@ class AdminTest extends WP_UnitTestCase {
 				"cookTime": "PT1H15M",
 				"ratingValue": 5.0,
 				"ratingCount": 5
-			}', true);
+			}';
+	}
+
+	function test_render_recipe() {
+		$plugin_admin = new Recipe_Pro_Admin("", "");
+		$test_data = json_decode( $this->get_test_recipe_json(), true);
 		if ( json_last_error() != JSON_ERROR_NONE ) {
-			$this->assertEquals("bad json", "is bad because " . json_last_error_msg());
+			$this->assertEquals( "bad json", "is bad because " . json_last_error_msg());
 		}
-		$recipe = new Recipe_Pro_Recipe($test_data);
-		$recipe_result = $plugin_admin->render_recipe($recipe);
-		$this->assertEquals(test_content( 'recipe' ), $recipe_result);
+		$recipe = new Recipe_Pro_Recipe( $test_data );
+		$recipe_result = $plugin_admin->render_recipe( $recipe );
+		$this->assertEquals( test_content( 'recipe' ), $recipe_result );
 	}
 
 	function test_save_post() {
 		global $_POST;
-		$_POST['doc'] = "hello!";
-		$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
-		$meta = get_post_meta( $post->ID, 'recipepro_recipe', true);
-		$this->assertEquals( $_POST['doc'], $meta );
+		$_POST['doc'] = wp_slash($this->get_test_recipe_json());
+		$post = $this->factory->post->create_and_get( array( "post_title" => "My Title BLERRRRG" ) );
+		$meta = get_post_meta( $post->ID, 'recipepro_recipe', true );
+		// error_log( "We got back some meta during test_save_post and it is " . $meta );
+		// error_log( "lets decode it!" );
+		// var_log( json_decode( $meta, true ) );
+		// error_log( "but was there an errror? " . json_last_error() );
+		// error_log( "for kicks here is the decoded test json" );
+		// var_log( json_decode( $this->get_test_recipe_json(), true) ); 
+		$this->assertEquals( json_decode( $this->get_test_recipe_json(), true), json_decode( $meta, true) );
 	}
 
 	function test_post_factory_current_post() {

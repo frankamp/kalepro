@@ -14,15 +14,15 @@
 	<div> 
 		<div> 
 			<div>Prep time</div> 
-			<div> <time itemprop="prepTime" datetime="<?= $viewhelper->interval( $recipe->prepTime ) ?>"><?= $viewhelper->prettyInterval( $recipe->prepTime ) ?></time> </div> 
+			<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div> 
 		</div> 
 		<div> 
 			<div>Cook time</div> 
-			<div> <time itemprop="cookTime" datetime="<?=  $viewhelper->interval( $recipe->cookTime ) ?>"><?= $viewhelper->prettyInterval( $recipe->cookTime ) ?></time> </div> 
+			<div> <time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div> 
 		</div> 
 		<div>
 			<div>Total time</div> 
-			<div> <time itemprop="totalTime" datetime="<?= $viewhelper->interval( $recipe->totalTime() ) ?>"><?= $viewhelper->prettyInterval( $recipe->totalTime() ) ?></time> </div> 
+			<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div> 
 		</div> 
 	</div> 
 	<div itemprop="description"><?= $recipe->description ?></div> 
