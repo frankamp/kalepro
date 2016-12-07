@@ -79,7 +79,7 @@ class Recipe_Pro_Admin {
 	}
 
 	public function render_recipe_shortcode( $atts ) {
-		// IT IS MY RESPONSIBILITY TO SECURE THE OUTPUT
+		// TODO: IT IS MY RESPONSIBILITY TO SECURE THE OUTPUT
 		// https://developer.wordpress.org/plugins/security/securing-output/
 		$post = get_post();
 		$meta_result = get_post_meta( (int) $post->ID, (string) 'recipepro_recipe', true );
@@ -104,10 +104,21 @@ class Recipe_Pro_Admin {
 			array(&$this, 'menu_page_display'),// The name of the function to call when rendering the menu for this page
 			'dashicons-carrot'
 		);
+		add_submenu_page( 
+			'recipepro',
+			'Import Recipes From Other Plugins',
+			'Import Recipes',
+			'manage_options',
+			'import-recipes-menu',
+			array(&$this, 'menu_import_page_display')
+		);
 	}
 
 	public function menu_page_display () {
 		$html = '';
+		if ( !current_user_can( 'manage_options' ) )  {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
 		?>
 		<div class="wrap">
 			<form action='options.php' method='post'>
@@ -117,6 +128,21 @@ class Recipe_Pro_Admin {
 				do_settings_sections( 'recipepro_settings_group' );
 				submit_button();
 				?>
+			</form>
+		</div>
+		<?php
+	}
+
+	public function menu_import_page_display () {
+		$html = '';
+		if ( !current_user_can( 'manage_options' ) )  {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+		?>
+		<div class="wrap">
+			<form action='options.php' method='post'>
+				<h2><?= __( 'Things!', 'recipe-pro' ) ?></h2>
+				MAKE IMPORT GO!
 			</form>
 		</div>
 		<?php
