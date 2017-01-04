@@ -62,7 +62,10 @@
 			Serving size:&nbsp;<span itemprop="servingSize"><?= $recipe->servingSize ?></span> 
 			Calories:&nbsp;<span itemprop="calories"><?= $recipe->calories ?></span> 
 			Fat:&nbsp;<span itemprop="fatContent"><?= $recipe->fatContent ?></span> 
+			Trans fat:&nbsp;<span itemprop="transFatContent"><?= $recipe->transFatContent ?></span> 
+			Cholesterol:&nbsp;<span itemprop="cholesterolContent"><?= $recipe->cholesterolContent ?></span> 
 			Saturated fat:&nbsp;<span itemprop="saturatedFatContent"><?= $recipe->saturatedFatContent ?></span> 
+			Unsaturated fat:&nbsp;<span itemprop="unsaturatedFatContent"><?= $recipe->unsaturatedFatContent ?></span> 
 			Carbohydrates:&nbsp;<span itemprop="carbohydrateContent"><?= $recipe->carbohydrateContent ?></span> 
 			Sugar:&nbsp;<span itemprop="sugarContent"><?= $recipe->sugarContent ?></span> 
 			Sodium:&nbsp;<span itemprop="sodiumContent"><?= $recipe->sodiumContent ?></span> 

@@ -101,8 +101,11 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		$this->notes = array();
 		$this->servingSize = "";
 		$this->calories = "";
+		$this->cholesterolContent = "";
 		$this->fatContent = "";
+		$this->transFatContent = "";
 		$this->saturatedFatContent = "";
+		$this->unsaturatedFatContent = "";
 		$this->carbohydrateContent = "";
 		$this->sugarContent = "";
 		$this->sodiumContent = "";
@@ -130,7 +133,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	private function inflate( $jsonObj ) {
 		foreach ( array( "title", "description", "imageUrl", "author", "type",
 						 "cuisine", "yield", "servingSize", "servingSize",
-						 "calories", "fatContent", "saturatedFatContent",
+						 "calories", "cholesterolContent", "fatContent", "transFatContent", "saturatedFatContent", "unsaturatedFatContent",
 						 "carbohydrateContent", "sugarContent", "sodiumContent",
 						 "fiberContent", "proteinContent", "ratingCount", "ratingValue" ) as $prop ) {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
@@ -139,8 +142,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		}
 		foreach ( array( "prepTime", "cookTime" ) as $prop ) {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
-				error_log("inflating prop: " . $prop);
-				$this->{$prop} = new DateInterval($jsonObj[$prop]);
+				$this->{$prop} = new DateInterval( $jsonObj[$prop] );
 			}
 		}
 		$this->ingredientSections = array();
@@ -164,6 +166,14 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		}
 	}
 
+	public function setPrepTimeByValue( $timeString ) {
+		$this->prepTime = new DateInterval( $timeString );
+	}
+
+	public function setCookTimeByValue( $timeString ) {
+		$this->cookTime = new DateInterval( $timeString );
+	}
+
 	public function render() {
 		$recipe = $this;
 		$viewhelper = new Recipe_Pro_Recipe_View_Helper();
@@ -175,8 +185,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	/**
 	 * This class implements JsonSerializable as the deflation side of the serialization
 	 */
-	public function jsonSerialize()
-	{
+	public function jsonSerialize() {
 		$copy = array();
 		foreach( $this as $key => $val ) { 
 			$copy[$key] = $val;
@@ -189,19 +198,27 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 }
 
 
-class Recipe_Pro_Instruction {
+class Recipe_Pro_Instruction implements JsonSerializable {
 	public function __construct($description) {
 		$this->description = $description;
 	}
-}
 
-class Recipe_Pro_Note {
-	public function __construct($description) {
-		$this->description = $description;
+	public function jsonSerialize() {
+		return $this;
 	}
 }
 
-class Recipe_Pro_Ingredient_Section {
+class Recipe_Pro_Note implements JsonSerializable {
+	public function __construct($description) {
+		$this->description = $description;
+	}
+
+	public function jsonSerialize() {
+		return $this;
+	}
+}
+
+class Recipe_Pro_Ingredient_Section implements JsonSerializable {
 	public function __construct($name, $items) {
 		$this->name = $name;
 		$this->items = array();
@@ -214,9 +231,13 @@ class Recipe_Pro_Ingredient_Section {
 			));
 		}
 	}
+
+	public function jsonSerialize() {
+		return $this;
+	}
 }
 
-class Recipe_Pro_Ingredient {
+class Recipe_Pro_Ingredient implements JsonSerializable {
 	public function __construct($quantity, $unit, $name, $description) {
 		$this->quantity = $quantity;
 		$this->unit =  $unit;
@@ -231,6 +252,10 @@ class Recipe_Pro_Ingredient {
 		return array(
 			'teaspoon' => new Recipe_Pro_Volume_Unit('teaspoon', '')
 		);
+	}
+
+	public function jsonSerialize() {
+		return $this;
 	}
 }
 

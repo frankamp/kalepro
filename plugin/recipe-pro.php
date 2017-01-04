@@ -30,6 +30,28 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+function setup_constants() {
+	// Plugin version.
+	if ( ! defined( 'RECIPE_PRO_VERSION' ) ) {
+		define( 'RECIPE_PRO_VERSION', '1.0.0' );
+	}
+
+	// Plugin Folder Path.
+	if ( ! defined( 'RECIPE_PRO_PLUGIN_DIR' ) ) {
+		define( 'RECIPE_PRO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+	}
+
+	// Plugin Folder URL.
+	if ( ! defined( 'RECIPE_PRO_PLUGIN_URL' ) ) {
+		define( 'RECIPE_PRO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+	}
+
+	// Plugin Root File.
+	if ( ! defined( 'RECIPE_PRO_PLUGIN_FILE' ) ) {
+		define( 'RECIPE_PRO_PLUGIN_FILE', __FILE__ );
+	}
+}
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-recipe-pro-activator.php
@@ -67,6 +89,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro.php';
  * @since    1.0.0
  */
 function run_recipe_pro() {
+	setup_constants();
 	$plugin = new Recipe_Pro();
 	$plugin->run();
 }

@@ -11,12 +11,6 @@ class Simple_Render_Admin extends Recipe_Pro_Admin {
 	}
 }
 
-function var_log() {
-    ob_start();
-    call_user_func_array( 'var_dump', func_get_args() );
-    error_log( ob_get_clean() );
-}
-
 function test_content( $name ) {
 	ob_start();
 	include( $name . ".html" );
@@ -120,8 +114,11 @@ class AdminTest extends WP_UnitTestCase {
 				],
 				"servingSize":"1/3 of recipe*",
 				"calories":"310",
+				"cholesterolContent":"",
 				"fatContent":"19.6 g",
+				"transFatContent":"",
 				"saturatedFatContent":"8.8 g",
+				"unsaturatedFatContent":"",
 				"carbohydrateContent":"26 g",
 				"sugarContent":"5.3 g",
 				"sodiumContent":"1253 mg",

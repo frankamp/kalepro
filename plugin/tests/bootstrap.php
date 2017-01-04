@@ -10,6 +10,12 @@ if ( ! $_tests_dir ) {
 	$_tests_dir = '/tmp/wordpress-tests-lib';
 }
 
+function var_log() {
+    ob_start();
+    call_user_func_array( 'var_dump', func_get_args() );
+    error_log( ob_get_clean() );
+}
+
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 // require_once( dirname( dirname( __FILE__ ) ) . 'wp-admin/includes/plugin.php' )
