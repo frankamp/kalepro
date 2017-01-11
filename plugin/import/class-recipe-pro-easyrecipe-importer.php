@@ -1,16 +1,44 @@
 <?php
 
+require_once __DIR__."/../includes/class-recipe-pro-service.php";
 
 class Recipe_Pro_EasyRecipe_Importer {
+	
+	/**
+	* I return a boolean: whether or not the wppost is an instance of the foreign recipe type
+	* e.g. an ER recipe. Semantically this should return true before a convert() for a 
+	* potential future Recipe Pro recipe, and false after because the recipe has been converted.
+	**/
+	static public function is_instance($wppost) {
+		$erdoc = new EasyRecipeDocument( $wppost->post_content );
+		return $erdoc->isEasyRecipe;
+	}
+
 	/**
 	* I take a wordpress post and transform the content from the source to the target
 	* It should not be assumed that the object can be used after this function is called
-	* but rather re-retrieved from wordpress api.
+	* but rather re-retrieved from wordpress api. Destructive.
 	**/
-	public function import($wppost) {}
+	static public function convert($wppost) {
+		// run extract on the post
+		$extracted = self::extract( $wppost );
+		// take the model and write it to the post's metadata
+		Recipe_Pro_Service::saveRecipe( $wppost->post_id, $extracted );
 
-
-
+		$erdoc = new EasyRecipeDocument( $wppost->post_content );
+		// remove the ERP bits from the post + add the shortcode that renders the other bits
+		$replacement = $erdoc->createTextNode( "[recipepro]" );
+		$erdoc->getRecipe()->parentNode->replaceChild( $replacement, $erdoc->getRecipe() );
+		$post_changes = array(
+		      'ID'           => $wppost->ID,
+		      'post_content' => $erdoc->getHTML( true ),
+		);
+		$updated = wp_update_post( $post_changes );
+		if ( $updated == 0 ) {
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	* I convert ER ingredient array to RP ingredient array
@@ -30,11 +58,11 @@ class Recipe_Pro_EasyRecipe_Importer {
 	*	           bool(false)
 	*	         }
 	**/
-	private function convertIngredients($erdoc, $ingredients) {
+	static private function convertIngredients($ingredients) {
 		$collection = array();
 		foreach ( $ingredients as $ingredient ) {
 			array_push($collection, array(
-				"description" => $erdoc->convertShortcodes($ingredient->ingredient),
+				"description" => EasyRecipeDocument::convertShortcodes( $ingredient->ingredient ),
 				"quantity" => "",
 				"unit" => "",
 				"name" => ""
@@ -45,9 +73,11 @@ class Recipe_Pro_EasyRecipe_Importer {
 
 	/**
 	* I take a wordpress post and transform its first recipe into a Recipe Pro Recipe and return it 
+	* non destructively.
 	**/
-	public function extract($wppost) {
-		$erdoc = new EasyRecipeDocument($wppost->post_content);
+	static public function extract($wppost) {
+		// var_log( $wppost->post_content );
+		$erdoc = new EasyRecipeDocument( $wppost->post_content );
 		$settings = new stdClass();
 		$settings->lblHour = "hour";
 		$settings->lblHours = "hours";
@@ -86,7 +116,7 @@ class Recipe_Pro_EasyRecipe_Importer {
 				foreach ( $section as $name => $ingredients ) {
 					array_push( $recipe->ingredientSections, new Recipe_Pro_Ingredient_Section(
 						$name,
-						$this->convertIngredients( $erdoc, $ingredients )
+						self::convertIngredients( $ingredients )
 					));
 				}
 			}
@@ -109,7 +139,7 @@ class Recipe_Pro_EasyRecipe_Importer {
 				foreach ( $step as $name => $instructions ) {
 					foreach ( $instructions as $instruction) {
 						array_push( $recipe->instructions, new Recipe_Pro_Instruction(
-							$erdoc->convertShortcodes( $instruction->instruction )
+							EasyRecipeDocument::convertShortcodes(  $instruction->instruction )
 						));	
 					}
 				}
@@ -117,7 +147,7 @@ class Recipe_Pro_EasyRecipe_Importer {
 		}
 		
 		array_push( $recipe->notes, new Recipe_Pro_Note(
-			$erdoc->convertShortcodes( $data->notes )
+			EasyRecipeDocument::convertShortcodes( $data->notes )
 		));
 
 		
@@ -469,7 +499,7 @@ class EasyRecipeDocument extends EasyRecipeDOMDocument {
     }
 
 
-    public function convertShortcodes($html) {
+    static public function convertShortcodes($html) {
 		/**
          * Handle our own shortcodes because Wordpress's braindead implementation doesn't handle consecutive shortcodes properly
          */
@@ -483,17 +513,17 @@ class EasyRecipeDocument extends EasyRecipeDOMDocument {
          */
         if (strpos($html, "[") !== false) {
             if (preg_match(self::regexShortCodes, $html)) {
-                $html = preg_replace_callback('%\[(i|b|u)\](.*?)\[/\1\]%si', array($this, "shortCodes"), $html);
-                $html = preg_replace_callback('%\[(img)(?:&nbsp; *| +|\p{Zs}+)(.*?) */?\]%iu', array($this, "shortCodes"), $html);
-                $html = preg_replace_callback('%\[(url|a)(?:&nbsp; *| +|\p{Zs}+)([^\]]+?)\](.*?)\[/url\]%iu', array($this, "shortCodes"), $html);
-                $html = preg_replace_callback('%\[(cap)(?:&nbsp; *| +|\p{Zs}+)([^\]]+?)\](.*?)\[/cap\]%iu', array($this, "shortCodes"), $html);
+                $html = preg_replace_callback('%\[(i|b|u)\](.*?)\[/\1\]%si', array('EasyRecipeDocument', 'shortCodes'), $html);
+                $html = preg_replace_callback('%\[(img)(?:&nbsp; *| +|\p{Zs}+)(.*?) */?\]%iu', array('EasyRecipeDocument', "shortCodes"), $html);
+                $html = preg_replace_callback('%\[(url|a)(?:&nbsp; *| +|\p{Zs}+)([^\]]+?)\](.*?)\[/url\]%iu', array('EasyRecipeDocument', "shortCodes"), $html);
+                $html = preg_replace_callback('%\[(cap)(?:&nbsp; *| +|\p{Zs}+)([^\]]+?)\](.*?)\[/cap\]%iu', array('EasyRecipeDocument', "shortCodes"), $html);
             }
         }
         return $html;
 	}
 
     /**
-     * Process the shotcodes.
+     * Process the shortcodes.
      * Called as the preg_replace callback
      * TODO - this is a pretty naive implementation. It doesn't handle markdown embedded in markdown very well
      * e.g. [b]bold[b]another bold[/b][/b] won't work
@@ -503,7 +533,7 @@ class EasyRecipeDocument extends EasyRecipeDOMDocument {
      *
      * @return string The replacement code, or the original complete match if we don't recognise the shortcode
      */
-    private function shortCodes($match) {
+    static public function shortCodes($match) {
         switch ($match[1]) {
             case "i" :
                 $replacement = "<em>{$match[2]}</em>";

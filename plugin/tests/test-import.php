@@ -13,9 +13,9 @@ require_once RECIPE_PRO_PLUGIN_DIR . '/import/class-recipe-pro-easyrecipe-import
 class ImportTest extends WP_UnitTestCase {
 
 	function get_er_post() {
-		$post = new stdClass();		
-		$post->post_title = "My Title BLERRRRG";
-		$post->post_content = "<div class=\"item ERName\"><img class=\"alignnone size-large wp-image-10886\" src=\"http://test1.recipeproplugin.com/wp-content/uploads/2016/09/AMAZING-1-Bowl-Banana-Bread-Cinnamon-Rolls-9-ingredients-fast-and-entirely-vegan-683x1024.jpg\" alt=\"amazing-1-bowl-banana-bread-cinnamon-rolls-9-ingredients-fast-and-entirely-vegan\" width=\"683\" height=\"1024\" /></div>
+		$post = $this->factory->post->create_and_get(array(
+			"post_title" => "My Title BLERRRRG",
+			"post_content" => "<div class=\"item ERName\"><img class=\"alignnone size-large wp-image-10886\" src=\"http://test1.recipeproplugin.com/wp-content/uploads/2016/09/AMAZING-1-Bowl-Banana-Bread-Cinnamon-Rolls-9-ingredients-fast-and-entirely-vegan-683x1024.jpg\" alt=\"amazing-1-bowl-banana-bread-cinnamon-rolls-9-ingredients-fast-and-entirely-vegan\" width=\"683\" height=\"1024\" /></div>
 				<div class=\"item ERName\"></div>
 				<div class=\"item ERName\"></div>
 				<div></div>
@@ -63,7 +63,8 @@ class ImportTest extends WP_UnitTestCase {
 				<div class=\"ERNotes\">*For soaking cashews in boiling water, simply place raw cashews in a dish or jar, bring a large pot of water to a boil, then pour over and soak at least 1 hour, no longer than 2. Drain as usual.[br]*Prep time does not include soaking cashews or freezing.[br]*Nutrition information is a rough estimate for 1 of 7 1/2-cup servings without toppings or pecans.[br]*Adapted from [url href=\"http://www.theppk.com/2013/10/pumpkin-pie-ice-cream-video/\" target=\"_blank\"]Post Punk Kitchen[/url].</div>
 				</div>
 				<div class=\"endeasyrecipe\" style=\"display: none;\">3.5.3208</div>
-				</div>";
+				</div>"
+		));
 		return $post;
 	}
 
@@ -122,16 +123,38 @@ class ImportTest extends WP_UnitTestCase {
 		}';
 	}
 
+	function test_unfiltered_capability() {
+		$this->assertEquals( false, current_user_can('unfiltered_html') );
+		wp_set_current_user( null, 'admin' );
+		$this->assertEquals( true, current_user_can('unfiltered_html') );
+	}
+
 	function test_parse_easyrecipe() {
+		wp_set_current_user( null, 'admin' );
 		$erdoc = new EasyRecipeDocument( $this->get_er_post()->post_content );
 		$this->assertEquals( true, $erdoc->isEasyRecipe );
 	}
 
-	function test_extract_easyrecipe() {
-		$importer = new Recipe_Pro_EasyRecipe_Importer();
-		$recipe = $importer->extract( $this->get_er_post() );
+	function test_is_instance() {
+		wp_set_current_user( null, 'admin' );
+		$this->assertEquals( true, Recipe_Pro_EasyRecipe_Importer::is_instance( $this->get_er_post() ) );
+	}
 
+	function test_extract_easyrecipe() {
+		wp_set_current_user( null, 'admin' );
+		$recipe = Recipe_Pro_EasyRecipe_Importer::extract( $this->get_er_post() );
 		$this->assertEquals( json_decode( $this->get_test_recipe_json(), true ), json_decode(json_encode( $recipe ), true) );
+	}
+
+	function test_convert_easyrecipe() {
+		wp_set_current_user( null, 'admin' );
+		$post = $this->get_er_post();
+		$this->assertEquals( true, Recipe_Pro_EasyRecipe_Importer::is_instance( $post ) );
+		$result = Recipe_Pro_EasyRecipe_Importer::convert( $post );
+		$this->assertEquals( true, $result );
+		$post = get_post($post->ID);
+		$this->assertEquals( false, Recipe_Pro_EasyRecipe_Importer::is_instance( $post ) );
+		$this->assertContains( "[recipepro]", $post->post_content );
 	}
 
 }

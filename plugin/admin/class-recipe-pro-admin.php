@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__."/../includes/class-option-defaults.php";
+require_once __DIR__."/../includes/class-recipe-pro-service.php";
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -139,10 +140,17 @@ class Recipe_Pro_Admin {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		?>
+
 		<div class="wrap">
 			<form action='options.php' method='post'>
 				<h2><?= __( 'Things!', 'recipe-pro' ) ?></h2>
-				MAKE IMPORT GO!
+				<div id="importer">
+					<li v-for="item in importers">
+						{{ item.name }}
+						<button v-on:click="beginImport" v-bind:name="item.name">{{ item.name }}</button>
+					</li>
+
+				</div>
 			</form>
 		</div>
 		<?php
@@ -167,10 +175,10 @@ class Recipe_Pro_Admin {
 		mt_srand((double)microtime() * 10000);
 		$charid = strtolower(md5(uniqid(rand(), true)));
 		return substr($charid,  0,  8).chr(45).
-		          substr($charid,  8,  4).chr(45).
-		          substr($charid, 12,  4).chr(45).
-		          substr($charid, 16,  4).chr(45).
-		          substr($charid, 20, 12);
+				  substr($charid,  8,  4).chr(45).
+				  substr($charid, 12,  4).chr(45).
+				  substr($charid, 16,  4).chr(45).
+				  substr($charid, 20, 12);
 	}
 
 	public function settings_init(  ) { 
@@ -252,10 +260,10 @@ class Recipe_Pro_Admin {
 				'paste_preprocess' =>  "function(plugin, args) {
 					console.log('before its: ' + args.content);
 					var tag = 'p';
-				    args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
-				    args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
-				    args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
-				    console.log(args.content);
+					args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
+					args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
+					args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
+					console.log(args.content);
 				}",
 				"content_style" => "body#tinymce p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; margin-bottom: 5px; }"
 				//,'protect' => "[/<div class='helper'>.*?<\/div>/g]"
@@ -284,10 +292,10 @@ class Recipe_Pro_Admin {
 				'paste_preprocess' =>  "function(plugin, args) {
 					console.log('before its: ' + args.content);
 					var tag = 'p';
-				    args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
-				    args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
-				    args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
-				    console.log(args.content);
+					args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
+					args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
+					args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
+					console.log(args.content);
 				}"
 				//,
 				//"content_style" => "body#tinymce p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; margin-bottom: 5px; }"
@@ -312,7 +320,7 @@ class Recipe_Pro_Admin {
 		recipeYield
 		ingredients (many)
 		recipeInstructions (many)
- 		-->
+		-->
 		<script type="text/template" id="recipe-pro-recipe-template">
 			<ul id="recipe-pro-tabs">
 				<li class="<%= currentTab == 'recipe-pro-tab-overview' ? 'active' : '' %>"><label for="recipe-pro-tab-overview"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('overview') ?></button></label></li>
@@ -377,8 +385,7 @@ class Recipe_Pro_Admin {
 			//error_log( "inflated");
 			//error_log( "recipe back to json " . json_encode($recipe) );
 			//error_log( "Preparing to save");
-			$success = update_post_meta( (int) $post_id, (string) 'recipepro_recipe', wp_slash( json_encode( $recipe ) ) );
-			
+			$success = Recipe_Pro_Service::saveRecipe( $post_id, $recipe );
 	//		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
 	//		error_log( "hits are " . $hits . " but type is " . gettype($hits));
 	//		$hits += 1;
@@ -425,6 +432,8 @@ class Recipe_Pro_Admin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-admin.js', array( 'jquery', 'backbone', 'underscore' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . "vue", plugin_dir_url( __FILE__ ) . 'js/vue.js', array(), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . "importer", plugin_dir_url( __FILE__ ) . 'js/recipe-pro-importer.js', array( 'jquery' ), $this->version, false );
 	}
 
 }
