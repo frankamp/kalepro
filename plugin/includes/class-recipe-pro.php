@@ -166,6 +166,9 @@ class Recipe_Pro {
 		$this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin,  'save_meta_box', 10, 2);
 		$this->loader->add_action( 'wp_ajax_recipepro_recipe', $plugin_admin,  'ajax_get_recipe' );
+		$this->loader->add_action( 'wp_ajax_recipepro_cancel_import', $plugin_admin,  'ajax_cancel_import' );
+		$this->loader->add_action( 'wp_ajax_recipepro_begin_import', $plugin_admin,  'ajax_begin_import' );
+		$this->loader->add_action( 'wp_ajax_recipepro_do_import_work', $plugin_admin,  'ajax_do_import_work' );
 		$this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_button' );
 		$this->loader->add_filter( 'mce_buttons', $plugin_admin, 'register_button' );
 	}
