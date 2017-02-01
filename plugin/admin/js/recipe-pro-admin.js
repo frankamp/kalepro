@@ -65,6 +65,7 @@
 			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
 			ingestIngredients: function(ingredientDocument) {
 				var target = this.get('ingredients');
+				target.reset();
 				var extracted = $(ingredientDocument).children('p').each(function(){
 					target.add(new Ingredient({id: generateUUID(), description: $(this).text()}));
 				});
@@ -128,4 +129,3 @@
 		});
 	});
 })( jQuery );
-//# sourceURL=recipe-pro-admin.js

@@ -2,3 +2,160 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ /* Recipe Pro Basic Structure
+--------------------------------------------- */
+
+.rp {
+	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-size: 14px;
+	line-height: 125%;
+	color: #000;
+	border: 0; /*included in case an outline would be helpful*/
+	margin: 20px 0;
+	padding: 0;
+	clear: both;
+	position: relative;
+	padding: 10px;
+}
+
+/*I think we can make this obsolete, but didn't want to skip it if it'd be helpful. */
+#container {
+	position: relative;
+	display: none;
+	padding: 5px;
+}
+
+div.rp {
+	position: relative;
+	clear: both;
+	font-family: font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-size: 14px;
+	line-height: 125%;
+	color: #000;	
+}
+
+.rp div,
+.rp li,
+.rp ol,
+.rp p,
+.rp span,
+.rp ul {
+    padding: 0;
+    margin: 0;
+    line-height: inherit
+}
+
+.rp .name {
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+
+.rp .subheading
+.rp .ingredientstitle,
+.rp .instructionstitle,
+.rp .nutritiontitle,
+.rp .notestitle {
+	text-transform: uppercase;
+	font-size: 18px ;
+}
+
+/* Arugably, I could make special classes for each header. I decided to delete this thinking we coudl use the h1 tags if necessary. It's a  */
+
+
+.rp .ingredients,
+.rp .instructions,
+.rp .nutrition,
+.rp .notes {
+	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-weight: 400;
+	margin-bottom: 10px;
+}
+
+.rp .ingredients {
+	list-style: disc inside;
+	margin-left: 10px;
+}
+
+.rp .ratings {
+    float: right;
+    width: 95px
+}
+
+.ratinggray {
+    background: url(images/greystar15.png) repeat-x;
+    width: 95px;
+    height: 15px;
+    font: 10px "Trebuchet MS", Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px
+}
+
+.ratingyellow {
+    background: url(images/yellowstar15.png) repeat-x;
+    width: 50%;
+    height: 15px
+}
+
+.rpcomment {
+    margin-bottom: 10px!important;
+    margin-top: 10px
+}
+
+.rpcomment .rpratebackground {
+    width: 95px;
+    height: 15px;
+    cursor: pointer;
+    float: left;
+    background: url(images/greystar15.png) repeat-x
+}
+
+.rpcomment .rpratehighlight {
+    width: 95px;
+    height: 15px;
+    cursor: pointer;
+    background: url(images/yellowstar15.png) repeat-x
+}
+
+span.rpcomment,
+span.rpcomment span {
+    display: block
+}
+
+.commentrating {
+    background: url(images/greystar15.png) repeat-x;
+    width: 95px;
+    height: 15px;
+    margin-right: 20px
+}
+
+.commentratingyellow {
+    background: url(images/yellowstar15.png) repeat-x;
+    width: 50%;
+    height: 15px
+}
+
+div.rp .rpprint {
+    border: none;
+    color: #fff;
+    background: #666;
+    font-size: 11px
+}
+
+.rp .previewimage img {
+	width: 200px;
+	height: auto;
+	margin: 5px;
+}
+
+/* I'll probably need to do some more work, but aim to have an image on the right and orgainze the time and description similarly. */
+
+/* list type? I feel like the default is usually pretty good. But something to check. Current it's list-style: decimal;. If anything, we'd add this or a size change/*
+
+/* figuring out the image will take some adjusting, but not much work once I can see one in action */
+
+/* Save Button? I don't think we have any plan to implement this, but we can match print button CSS if this is something we want to implement*/
+
+/* I'll add mobile styles once we've finalized the desktop version. However, I think I can write most of them to be flexible enough for any type of site. */

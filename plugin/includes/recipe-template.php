@@ -1,4 +1,4 @@
-<div itemscope="" itemtype="http://schema.org/Recipe"> 
+<div class="rp" itemscope="" itemtype="http://schema.org/Recipe"> 
 	<div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
 		<div> 
 			<div style="width: 100%"></div> 
@@ -6,7 +6,7 @@
 			</div> 
 		</div> 
 	</div> 
-	<div itemprop="name"><?= $recipe->title ?></div> 
+	<div class="name" itemprop="name"><?= $recipe->title ?></div> 
 	<div>&nbsp;</div> 
 	<div> 
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
@@ -33,11 +33,11 @@
 	<div> 
 		<div>Ingredients</div> 
 <?php foreach( $recipe->ingredientSections as $section ): ?>
-		<?php if ( $section->name ): ?><div><?= $section->name ?></div> 
+		<?php if ( $section->name ): ?><div class="ingredientstitle"><?= $section->name ?></div> 
 <?php endif; ?>
 		<ul> 
 <?php foreach($section->items as $ingredient): ?>
-			<li itemprop="ingredients"><?= $ingredient->description ?></li>
+			<li class="ingredients" itemprop="ingredients"><?= $ingredient->description ?></li>
 <?php endforeach; ?>
 		</ul> 
 <?php endforeach; ?>
