@@ -8,3 +8,5 @@ Recipe Pro is automatically tested against
 
 PHP 5.6, 7, and hhvm
 with Wordpress 4.4, 4.5, and 4.6
+
+I changed it!
