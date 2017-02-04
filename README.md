@@ -4,7 +4,7 @@
 
 A healthy alternative
 
-Recipe Pro is automatically tested against
+Recipe Pro is automatically tested aginst
 
 PHP 5.6, 7, and hhvm
 with Wordpress 4.4, 4.5, and 4.6
