@@ -33,7 +33,7 @@ before_script:
 script: phpunit -c plugin/phpunit.xml.dist
 
 deploy:
-- echo $push > /tmp/deploy_rsa
+- echo $push
 - chmod 600 /tmp/deploy_rsa
 - rsync -r --delete-after -e "ssh -p$pushport -i /tmp/deploy_rsa -o 'StrictHostKeyChecking no'" $TRAVIS_BUILD_DIR/plugin/ $pushuser@$puship:$pushpath
 - rm -rf /tmp/deploy_rsa
