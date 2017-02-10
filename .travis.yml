@@ -34,7 +34,7 @@ script:
   - phpunit -c plugin/phpunit.xml.dist
 after_success:
   - |
-      if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]] then
+      if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then
         echo "I am number 1. ME!"
         echo $pushkey | tr _ '\n' > /tmp/deploy_rsa # prepped with | tr "\n" "_" | sed 's/ /\\ /g'
         chmod 600 /tmp/deploy_rsa
