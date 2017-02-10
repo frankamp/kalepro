@@ -32,34 +32,17 @@ before_script:
 
 script: 
   - phpunit -c plugin/phpunit.xml.dist
-  - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
 after_success:
-  - python travis_after_all.py https://api.travis-ci.org
-  - export $(cat .to_export_back)
   - |
-      if [ "$BUILD_LEADER" = "YES" ]; then
-        if [ "$BUILD_AGGREGATE_STATUS" = "others_succeeded" ]; then
-          echo "All jobs succeeded! PUBLISHING..."
-          echo $push | tr _ '\n' > /tmp/deploy_rsa
-          chmod 600 /tmp/deploy_rsa
-          rsync -r --delete-after -e "ssh -p$pushport -i /tmp/deploy_rsa -o LogLevel=quiet -o StrictHostKeyChecking=no" $TRAVIS_BUILD_DIR/plugin/ $pushuser@$puship:$pushpath
-          rm -rf /tmp/deploy_rsa
-        else
-          echo "Some jobs failed"
-        fi
+      if [[ "$TRAVIS_JOB_NUMBER" == *.1 ]] then;
+        echo "I am number 1. ME!"
+        echo $pushkey | tr _ '\n' > /tmp/deploy_rsa # prepped with | tr "\n" "_" | sed 's/ /\\ /g'
+        chmod 600 /tmp/deploy_rsa
+        rsync -r --delete-after -e "ssh -p$pushport -i /tmp/deploy_rsa -o LogLevel=quiet -o StrictHostKeyChecking=no" $TRAVIS_BUILD_DIR/plugin/ $pushuser@$puship:$pushpath
+        rm -rf /tmp/deploy_rsa
+      else
+        echo "Not number 1"
       fi
-after_failure:
-  - python travis_after_all.py https://api.travis-ci.org
-  - export $(cat .to_export_back)
-  - |
-      if [ "$BUILD_LEADER" = "YES" ]; then
-        if [ "$BUILD_AGGREGATE_STATUS" = "others_failed" ]; then
-          echo "All jobs failed"
-        else
-          echo "Some jobs failed"
-        fi
-      fi
-after_script:
-  - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
+
 
 
