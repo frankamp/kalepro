@@ -103,8 +103,16 @@ class Recipe_Pro_Admin {
 			'Recipe Pro',                  // The text to be displayed for this actual menu item
 			'manage_options',            // Which type of users can see this menu
 			'recipepro',                  // The unique ID - that is, the slug - for this menu item
-			array(&$this, 'menu_page_display'),// The name of the function to call when rendering the menu for this page
+			array(&$this, 'label_page_display'),// The name of the function to call when rendering the menu for this page
 			'dashicons-carrot'
+		);
+		add_submenu_page( 
+			'recipepro',
+			'License',
+			'License',
+			'manage_options',
+			RECIPE_PRO_LICENSE_PAGE,
+			array(&$this, 'license_page_display')
 		);
 		add_submenu_page( 
 			'recipepro',
@@ -112,11 +120,47 @@ class Recipe_Pro_Admin {
 			'Import Recipes',
 			'manage_options',
 			'import-recipes-menu',
-			array(&$this, 'menu_import_page_display')
+			array(&$this, 'import_page_display')
 		);
 	}
 
-	public function menu_page_display () {
+	public function on_admin_init(  ) { 
+		$this->recipepro_register_option();
+		$this->recipepro_activate_license();
+		$this->recipepro_deactivate_license();
+		register_setting( 'recipepro_settings_group', 'recipepro_settings' ); // could santize option values on save via callback here
+		add_settings_section(
+			'recipepro_settings_section_labels', 
+			__( 'Labels', 'recipe-pro' ),
+			array(&$this, 'recipepro_settings_section_callback_labels'), 
+			'recipepro_settings_group'
+		);
+
+		foreach ( Recipe_Pro_Option_Defaults::get_labels() as $key => $value ) {
+			add_settings_field(
+				'recipepro_text_label_' . $key,
+				$value,
+				array(&$this, 'recipepro_text_label_render'),
+				'recipepro_settings_group',
+				'recipepro_settings_section_labels',
+				array('label' => $key)
+			);
+		}
+	}
+
+	public function recipepro_text_label_render( $args ) {
+		$options = get_option( 'recipepro_settings' );
+		?>
+		<input type='text' name='recipepro_settings[recipepro_text_label_<?= $args['label'] ?>]' value='<?= $options['recipepro_text_label_' . $args['label']]; ?>'>
+		<?php
+
+	}
+
+	public function recipepro_settings_section_callback_labels(  ) { 
+		echo __( 'Label overrides', 'recipe-pro' );
+	}
+
+	public function label_page_display () {
 		$html = '';
 		if ( !current_user_can( 'manage_options' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
@@ -135,7 +179,267 @@ class Recipe_Pro_Admin {
 		<?php
 	}
 
-	public function menu_import_page_display () {
+	public function license_page_display () {
+		$license = get_option( RECIPE_PRO_LICENSE_OPTION );
+		$status  = get_option( RECIPE_PRO_LICENSE_OPTION . '_status' );
+		?>
+		<div class="wrap">
+			<h2><?php _e('License Key and Activation'); ?></h2>
+			<form method="post" action="options.php">
+
+				<?php settings_fields('recipepro_license'); ?>
+
+				<table class="form-table">
+					<tbody>
+						<tr valign="top">
+							<th scope="row" valign="top">
+								<?php _e('License Key'); ?>
+							</th>
+							<td>
+								<input id="<?=RECIPE_PRO_LICENSE_OPTION?>" name="<?=RECIPE_PRO_LICENSE_OPTION?>" type="text" class="regular-text" value="<?php esc_attr_e( $license ); ?>" />
+								<label class="description" for="<?=RECIPE_PRO_LICENSE_OPTION?>"><?php _e('Enter your license key'); ?></label>
+								<?php submit_button(); ?>
+							</td>
+						</tr>
+						<tr valign="top">
+								<th scope="row" valign="top">
+									<?php _e('License status'); ?>
+								</th>
+								<td><?php if( $status !== false && $status == 'valid' ) { ?>
+									<span style="color:green;"><?php _e('The license is active. '); ?></span>
+									<?php } else { ?>
+									<span style="color:orange;"><?php _e('Please activate a license to receive support and upgrades. '); ?></span>
+									<?php } ?>
+								</td>
+						</tr>
+						<?php if( false !== $license ) { ?>
+							<tr valign="top">
+								<th scope="row" valign="top">
+									<?php _e('Activation'); ?>
+								</th>
+								<td>
+									<?php wp_nonce_field( 'recipepro_nonce', 'recipepro_nonce' ); ?>
+									<?php if( $status !== false && $status == 'valid' ) { ?>
+										<input type="submit" disabled="disabled" class="button-secondary" name="recipepro_license_activate" value="<?php _e('Activate License'); ?>"/>
+										<input type="submit" class="button-secondary" name="recipepro_license_deactivate" value="<?php _e('Deactivate License'); ?>"/>
+									<?php } else { ?>
+										<input type="submit" class="button-secondary" name="recipepro_license_activate" value="<?php _e('Activate License'); ?>"/>
+										<input type="submit" disabled="disabled" class="button-secondary" name="recipepro_license_deactivate" value="<?php _e('Deactivate License'); ?>"/>
+									<?php } ?>
+									<div style="margin-top: 20px;"><?php _e('If you have changed it, you must save the license key before activating or deactivating.'); ?></div>
+								</td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+				
+			</form>
+		<?php
+	}
+
+	private function recipepro_register_option() {
+		// creates our settings in the options table
+		register_setting('recipepro_license', RECIPE_PRO_LICENSE_OPTION, array(&$this, 'recipepro_sanitize_license') );
+	}
+	
+
+	public function recipepro_sanitize_license( $new ) {
+		$old = get_option( RECIPE_PRO_LICENSE_OPTION );
+		if( $old && $old != $new ) {
+			delete_option( RECIPE_PRO_LICENSE_OPTION . '_status' ); // new license has been entered, so must reactivate
+		}
+		return $new;
+	}
+
+	/************************************
+	* this illustrates how to activate
+	* a license key
+	*************************************/
+
+	private function recipepro_activate_license() {
+
+		// listen for our activate button to be clicked
+		if( isset( $_POST['recipepro_license_activate'] ) ) {
+
+			// run a quick security check
+		 	if( ! check_admin_referer( 'recipepro_nonce', 'recipepro_nonce' ) )
+				return; // get out if we didn't click the Activate button
+
+			// retrieve the license from the database
+			$license = trim( get_option( RECIPE_PRO_LICENSE_OPTION ) );
+
+
+			// data to send in our API request
+			$api_params = array(
+				'edd_action' => 'activate_license',
+				'license'    => $license,
+				'item_name'  => urlencode( RECIPE_PRO_EDD_SL_ITEM_NAME ), // the name of our product in EDD
+				'url'        => home_url()
+			);
+
+			// Call the custom API.
+			$response = wp_remote_post( RECIPE_PRO_EDD_SL_STORE_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
+
+			// make sure the response came back okay
+			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+
+				if ( is_wp_error( $response ) ) {
+					$message = $response->get_error_message();
+				} else {
+					$message = __( 'An error occurred, please try again.' );
+				}
+
+			} else {
+
+				$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+				if ( false === $license_data->success ) {
+
+					switch( $license_data->error ) {
+
+						case 'expired' :
+
+							$message = sprintf(
+								__( 'Your license key expired on %s.' ),
+								date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
+							);
+							break;
+
+						case 'revoked' :
+
+							$message = __( 'Your license key has been disabled.' );
+							break;
+
+						case 'missing' :
+
+							$message = __( 'Invalid license.' );
+							break;
+
+						case 'invalid' :
+						case 'site_inactive' :
+
+							$message = __( 'Your license is not active for this URL.' );
+							break;
+
+						case 'item_name_mismatch' :
+
+							$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), RECIPE_PRO_EDD_SL_ITEM_NAME );
+							break;
+
+						case 'no_activations_left':
+
+							$message = __( 'Your license key has reached its activation limit.' );
+							break;
+
+						default :
+
+							$message = __( 'An error occurred, please try again.' );
+							break;
+					}
+
+				}
+
+			}
+
+			$base_url = admin_url( 'admin.php?page=' . RECIPE_PRO_LICENSE_PAGE );
+			// Check if anything passed on a message constituting a failure
+			if ( ! empty( $message ) ) {
+				$redirect = add_query_arg( array( 'recipepro_sl_activation' => 'false', 'message' => urlencode( $message ) ), $base_url );
+				wp_redirect( $redirect );
+				exit();
+			}
+
+			// $license_data->license will be either "valid" or "invalid"
+			update_option( RECIPE_PRO_LICENSE_OPTION . '_status', $license_data->license );
+			$message = __( "Thanks for activating! Time to get cooking!" );
+			$redirect = add_query_arg( array( 'recipepro_sl_activation' => 'true', 'message' => urlencode( $message ) ), $base_url );
+			wp_redirect( $redirect );
+			exit();
+		}
+	}
+
+	private function recipepro_deactivate_license() {
+
+		// listen for our activate button to be clicked
+		if( isset( $_POST['recipepro_license_deactivate'] ) ) {
+
+			// run a quick security check
+		 	if( ! check_admin_referer( 'recipepro_nonce', 'recipepro_nonce' ) )
+				return; // get out if we didn't click the Activate button
+
+			// retrieve the license from the database
+			$license = trim( get_option( RECIPE_PRO_LICENSE_OPTION ) );
+
+
+			// data to send in our API request
+			$api_params = array(
+				'edd_action' => 'deactivate_license',
+				'license'    => $license,
+				'item_name'  => urlencode( RECIPE_PRO_EDD_SL_ITEM_NAME ), // the name of our product in EDD
+				'url'        => home_url()
+			);
+
+			// Call the custom API.
+			$response = wp_remote_post( RECIPE_PRO_EDD_SL_STORE_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
+
+			$base_url = admin_url( 'admin.php?page=' . RECIPE_PRO_LICENSE_PAGE );
+			// make sure the response came back okay
+			if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+
+				if ( is_wp_error( $response ) ) {
+					$message = $response->get_error_message();
+				} else {
+					$message = __( 'An error occurred, please try again.' );
+				}
+
+				$redirect = add_query_arg( array( 'recipepro_sl_activation' => 'false', 'message' => urlencode( $message ) ), $base_url );
+
+				wp_redirect( $redirect );
+				exit();
+			}
+
+			// decode the license data
+			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+			// $license_data->license will be either "deactivated" or "failed"
+			if( $license_data->license == 'deactivated' ) {
+				delete_option( RECIPE_PRO_LICENSE_OPTION . '_status' );
+			}
+			$message = __( 'License deactivated.' );
+			$redirect = add_query_arg( array( 'recipepro_sl_activation' => 'false', 'message' => urlencode( $message ) ), $base_url );
+			wp_redirect( $redirect );
+			exit();
+		}
+	}
+	
+	
+	public function display_admin_notices() {
+		if ( isset( $_GET['recipepro_sl_activation'] ) && ! empty( $_GET['message'] ) ) {
+			$message = $_GET['message']; //urldecode()
+			switch( $_GET['recipepro_sl_activation'] ) {
+				case 'false':
+					?>
+					<div class="notice notice-error is-dismissible">
+						<p><?php echo $message; ?></p>
+					</div>
+					<?php
+					break;
+
+				case 'true':
+				default:
+					?>
+					<div class="notice notice-success is-dismissible">
+						<p><?php echo $message; ?></p>
+					</div>
+					<?php
+					break;
+			}
+		}
+	}
+
+
+
+	public function import_page_display () {
 		$html = '';
 		if ( !current_user_can( 'manage_options' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
@@ -183,70 +487,35 @@ class Recipe_Pro_Admin {
 		<?php
 	}
 
-	public function GUIDv4 ()
-	{
-		// Windows
-		if (function_exists('com_create_guid') === true) {
-			return trim(com_create_guid(), '{}');
-		}
 
-		// OSX/Linux
-		if (function_exists('openssl_random_pseudo_bytes') === true) {
-			$data = openssl_random_pseudo_bytes(16);
-			$data[6] = chr(ord($data[6]) & 0x0f | 0x40);    // set version to 0100
-			$data[8] = chr(ord($data[8]) & 0x3f | 0x80);    // set bits 6-7 to 10
-			return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-		}
+	// public function GUIDv4 ()
+	// {
+	// 	// Windows
+	// 	if (function_exists('com_create_guid') === true) {
+	// 		return trim(com_create_guid(), '{}');
+	// 	}
 
-		// Fallback (PHP 4.2+)
-		mt_srand((double)microtime() * 10000);
-		$charid = strtolower(md5(uniqid(rand(), true)));
-		return substr($charid,  0,  8).chr(45).
-				  substr($charid,  8,  4).chr(45).
-				  substr($charid, 12,  4).chr(45).
-				  substr($charid, 16,  4).chr(45).
-				  substr($charid, 20, 12);
-	}
+	// 	// OSX/Linux
+	// 	if (function_exists('openssl_random_pseudo_bytes') === true) {
+	// 		$data = openssl_random_pseudo_bytes(16);
+	// 		$data[6] = chr(ord($data[6]) & 0x0f | 0x40);    // set version to 0100
+	// 		$data[8] = chr(ord($data[8]) & 0x3f | 0x80);    // set bits 6-7 to 10
+	// 		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+	// 	}
 
-	public function settings_init(  ) { 
-
-		register_setting( 'recipepro_settings_group', 'recipepro_settings' ); // could santize option values on save via callback here
-
-		add_settings_section(
-			'recipepro_settings_section_labels', 
-			__( 'Labels', 'recipe-pro' ),
-			array(&$this, 'recipepro_settings_section_callback_labels'), 
-			'recipepro_settings_group'
-		);
-
-		foreach ( Recipe_Pro_Option_Defaults::get_labels() as $key => $value ) {
-			add_settings_field(
-				'recipepro_text_label_' . $key,
-				$value,
-				array(&$this, 'recipepro_text_label_render'),
-				'recipepro_settings_group',
-				'recipepro_settings_section_labels',
-				array('label' => $key)
-			);
-		}
-	}
-
-	public function recipepro_text_label_render( $args ) {
-		$options = get_option( 'recipepro_settings' );
-		?>
-		<input type='text' name='recipepro_settings[recipepro_text_label_<?= $args['label'] ?>]' value='<?= $options['recipepro_text_label_' . $args['label']]; ?>'>
-		<?php
-
-	}
-
-	public function recipepro_settings_section_callback_labels(  ) { 
-		echo __( 'Label overrides', 'recipe-pro' );
-	}
+	// 	// Fallback (PHP 4.2+)
+	// 	mt_srand((double)microtime() * 10000);
+	// 	$charid = strtolower(md5(uniqid(rand(), true)));
+	// 	return substr($charid,  0,  8).chr(45).
+	// 			  substr($charid,  8,  4).chr(45).
+	// 			  substr($charid, 12,  4).chr(45).
+	// 			  substr($charid, 16,  4).chr(45).
+	// 			  substr($charid, 20, 12);
+	// }
 	
 	public function add_meta_box ( ) {
 		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
 	}
-
 
 	public function ajax_cancel_import ( ) {
 		$importer_status = $this->importer->cancel();
@@ -273,10 +542,8 @@ class Recipe_Pro_Admin {
 	public function ajax_get_recipe ( ) {
 		header ( "Content-Type: application/json" );
 		$postid = str_replace('/', '', $_GET['postid']);
-		error_log( "getting recipe for " . $postid  );
 		$payload = get_post_meta( (int) $postid, (string) 'recipepro_recipe', true );
 		if( ! $payload ) {
-			error_log("defaulting, no payload");
 			$payload = json_encode( new Recipe_Pro_Recipe() );
 		}
 		echo $payload;
@@ -444,7 +711,7 @@ class Recipe_Pro_Admin {
 			if ($success) {
 				//error_log( "you are successful" );
 			} else {
-				error_log( "you not successful" );
+				//error_log( "you not successful" );
 			}
 		} else {
 			error_log( "save_meta_box called with no doc" );

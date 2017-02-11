@@ -50,6 +50,13 @@ function setup_constants() {
 	if ( ! defined( 'RECIPE_PRO_PLUGIN_FILE' ) ) {
 		define( 'RECIPE_PRO_PLUGIN_FILE', __FILE__ );
 	}
+
+	define( 'RECIPE_PRO_EDD_SL_STORE_URL', 'https://recipeproplugin.com' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
+	// the name of your product. This is the title of your product in EDD and should match the download title in EDD exactly
+	define( 'RECIPE_PRO_EDD_SL_ITEM_NAME', 'Recipe Pro' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
+	// the name of the settings page for the license input to be displayed
+	define( 'RECIPE_PRO_LICENSE_PAGE', 'recipe-pro-license' );
+	define( 'RECIPE_PRO_LICENSE_OPTION', 'recipe-pro-license-key' );
 }
 
 /**
@@ -73,11 +80,26 @@ function deactivate_recipe_pro() {
 register_activation_hook( __FILE__, 'activate_recipe_pro' );
 register_deactivation_hook( __FILE__, 'deactivate_recipe_pro' );
 
+
+function licensing() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-updater.php';
+	$license_key = trim( get_option( RECIPE_PRO_LICENSE_OPTION ) ); 
+	$edd_updater = new EDD_SL_Plugin_Updater( RECIPE_PRO_EDD_SL_STORE_URL, __FILE__, array(
+		'version' 	=> RECIPE_PRO_VERSION,
+		'license' 	=> $license_key,
+		'item_name' => RECIPE_PRO_EDD_SL_ITEM_NAME,
+		'author' 	=> 'Josh Frankamp',
+		'url'       => home_url(),
+	    'beta'      => false
+	) );
+}
+
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro.php';
+
 
 /**
  * Begins execution of the plugin.
@@ -90,6 +112,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-recipe-pro.php';
  */
 function run_recipe_pro() {
 	setup_constants();
+	add_action( 'admin_init', 'licensing', 0 ); // TODO: Move to other action registration area
 	$plugin = new Recipe_Pro();
 	$plugin->run();
 }
