@@ -208,7 +208,7 @@ class Recipe_Pro_Admin {
 								<td><?php if( $status !== false && $status == 'valid' ) { ?>
 									<span style="color:green;"><?php _e('The license is active. '); ?></span>
 									<?php } else { ?>
-									<span style="color:orange;"><?php _e('Please activate a license to receive support and upgrades. '); ?></span>
+									<span style="color:orange;"><?php _e('Please activate a license to receive support and upgrades.'); ?></span>
 									<?php } ?>
 								</td>
 						</tr>
