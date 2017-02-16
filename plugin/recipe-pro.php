@@ -14,11 +14,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       RecipePro
- * Plugin URI:        recipepro.com
+ * Plugin URI:        recipeproplugin.com
  * Description:       The best recipe plugin for Wordpress.
  * Version:           1.0.0
  * Author:            Josh Frankamp
- * Author URI:        http://www.joshuafrankamp.com
+ * Author URI:        https://recipeproplugin.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       recipe-pro
