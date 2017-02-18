@@ -23,7 +23,7 @@ class Recipe_Pro_EasyRecipe_Importer {
 		// run extract on the post
 		$extracted = self::extract( $wppost );
 		// take the model and write it to the post's metadata
-		Recipe_Pro_Service::saveRecipe( $wppost->post_id, $extracted );
+		Recipe_Pro_Service::saveRecipe( $wppost->ID, $extracted );
 
 		$erdoc = new EasyRecipeDocument( $wppost->post_content );
 		// remove the ERP bits from the post + add the shortcode that renders the other bits
