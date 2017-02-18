@@ -1,5 +1,4 @@
 (function($) {
-	console.log("getting tinymce loaded up");
 	tinymce.create('tinymce.plugins.recipepro', {
 		/**
 		 * Initializes the plugin, this will be executed after the plugin has been created.
@@ -10,29 +9,14 @@
 		 * @param {string} url Absolute URL to where the plugin is located.
 		 */
 		init : function(ed, url) {
-			console.log("initializing RecipePro at " + url)
 			ed.addButton('addeditrecipe', {
 				title : 'Add Recipe',
 				cmd : 'addeditrecipe',
 				icon: 'recipe_pro_carrot'
 			});
 			ed.addCommand('addeditrecipe', function() {
-				console.log("attempting to modal");
-				$('#recipeproeditor').modal();
-				$('#recipeproeditor').attr("tabindex",-1).focus();
-				// var number = prompt("How many posts you want to show ? ");
-				// var shortcode;
-				// if (number !== null) {
-				//     number = parseInt(number);
-				//     if (number > 0 && number <= 20) {
-				//         shortcode = '[recipepro number="' + number + '"/]';
-				//         ed.execCommand('mceInsertContent', 0, shortcode);
-				//     }
-				//     else {
-				//         alert("The number value is invalid. It should be from 0 to 20.");
-				//     }
-				// }
-				console.log("attempted to modal");
+				shortcode = '[recipepro]';
+				ed.execCommand('mceInsertContent', 0, shortcode);
 			});
 		},
  

@@ -795,16 +795,15 @@ class Recipe_Pro_Admin {
 //		error_log( "after update hits are " . $hits . " but type is " . gettype($hits));
 	}
 
-	public function add_button( $plugin_array ) {
-		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-button.js', array( 'jquery' ), $this->version, false );
-
-		$plugin_array['recipe-pro'] = plugin_dir_url( __FILE__ ) . 'js/recipe-pro-button.js';
-		return $plugin_array;
-	}
-
-	public function register_button( $buttons ) {
+	public function register_mce_carrot_button( $buttons ) {
 		array_push( $buttons, 'addeditrecipe' ); // dropcap', 'recentposts
 		return $buttons;
+	}
+
+	public function add_mce_carrot_button_action( $plugin_array ) {
+		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-button.js', array( 'jquery' ), $this->version, false );
+		$plugin_array['recipe-pro'] = plugin_dir_url( __FILE__ ) . 'js/recipe-pro-button.js';
+		return $plugin_array;
 	}
 
 	/**
