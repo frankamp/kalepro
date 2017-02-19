@@ -9,15 +9,21 @@
 		 * @param {string} url Absolute URL to where the plugin is located.
 		 */
 		init : function(ed, url) {
-			ed.addButton('addeditrecipe', {
+			ed.addButton('recipepro_addeditrecipe', {
 				title : 'Add Recipe',
-				cmd : 'addeditrecipe',
+				cmd : 'recipepro_addeditrecipe',
 				icon: 'recipe_pro_carrot'
 			});
-			ed.addCommand('addeditrecipe', function() {
+			ed.addCommand('recipepro_addeditrecipe', function() {
 				shortcode = '[recipepro]';
 				ed.execCommand('mceInsertContent', 0, shortcode);
 			});
+			// ed.addButton( 'recipepro_media', {
+			// 	tooltip: 'Add photo',
+			// 	onclick: function() {
+			// 		ed.execCommand( 'WP_Medialib' );
+			// 	}
+			// });
 		},
  
 		/**

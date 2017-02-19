@@ -105,9 +105,15 @@
 				}
 				this.model.set({'currentTab': toggleTo});
 				if (toggleTo == 'recipe-pro-tab-ingredient') {
+					tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient'].init_instance_callback = function(inst) {
+						inst.setContent('<p>' + this.model.get('ingredientSections')[0].items[0].description + '</p>');
+					}.bind(this);
 					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient']);
 				}
 				if (toggleTo == 'recipe-pro-tab-instruction') {
+					tinyMCEPreInit.mceInit['recipe-pro-editor-instruction'].init_instance_callback = function(inst) {
+						inst.setContent('<p>' + this.model.get('instructions')[0].description + '</p>');
+					}.bind(this);
 					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-instruction']);
 				}
 				//$('#' + toggleTo).show().siblings('.recipe-pro-tab').hide();
