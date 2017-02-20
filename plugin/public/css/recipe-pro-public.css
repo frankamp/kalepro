@@ -7,9 +7,9 @@
 --------------------------------------------- */
 
 .rp {
-	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 14px;
-	line-height: 125%;
+	line-height: 1.4;
 	color: #000;
 	border: 0; /*included in case an outline would be helpful*/
 	margin: 20px 0;
@@ -29,7 +29,7 @@
 div.rp {
 	position: relative;
 	clear: both;
-	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 14px;
 	line-height: 125%;
 	color: #000;	
@@ -43,32 +43,36 @@ div.rp {
 .rp ul {
     padding: 0;
     margin: 0;
-    line-height: inherit
+    line-height: inherit;
 }
 
 .rp .name {
-	font-size: 16px;
+	font-size: 22px;
 	text-transform: uppercase;
+    font-weight: 700;
 }
 
 
-.rp .subheading
+
 .rp .ingredientstitle,
 .rp .instructionstitle,
 .rp .nutritiontitle,
 .rp .notestitle {
 	text-transform: uppercase;
-	font-size: 18px ;
+	font-size: 18px;
+    font-weight: 700;
 }
 
-/* Arugably, I could make special classes for each header. I decided to delete this thinking we coudl use the h1 tags if necessary. It's a  */
-
+.rp .subheading {
+    text-transform: uppercase;
+    font-size: 14px;
+}
 
 .rp .ingredients,
 .rp .instructions,
 .rp .nutrition,
 .rp .notes {
-	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
 	font-weight: 400;
 	margin-bottom: 10px;
 }
@@ -83,20 +87,31 @@ div.rp {
     width: 95px
 }
 
-.ratinggray {
-    background: url(images/greystar15.png) repeat-x;
-    width: 95px;
-    height: 15px;
-    font: 10px "Trebuchet MS", Arial, Helvetica, sans-serif;
-    text-align: center;
-    margin-right: 5px;
-    margin-left: 5px
+.rp .star-rating .star-full:before {
+    content: "\f155";
 }
 
-.ratingyellow {
-    background: url(images/yellowstar15.png) repeat-x;
-    width: 50%;
-    height: 15px
+.rp .star-rating .star-half:before {
+    content: "\f459";
+}
+
+.rp .star-rating .star-empty:before {
+    content: "\f154";
+}
+
+.rp .star-rating .star {
+    color: #0074A2;
+    display: inline-block;
+    font-family: dashicons;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    height: 20px;
+    line-height: 1;
+    text-align: center;
+    text-decoration: inherit;
+    vertical-align: top;
+    width: 20px;
 }
 
 .rpcomment {
@@ -104,37 +119,9 @@ div.rp {
     margin-top: 10px
 }
 
-.rpcomment .rpratebackground {
-    width: 95px;
-    height: 15px;
-    cursor: pointer;
-    float: left;
-    background: url(images/greystar15.png) repeat-x
-}
-
-.rpcomment .rpratehighlight {
-    width: 95px;
-    height: 15px;
-    cursor: pointer;
-    background: url(images/yellowstar15.png) repeat-x
-}
-
 span.rpcomment,
 span.rpcomment span {
     display: block
-}
-
-.commentrating {
-    background: url(images/greystar15.png) repeat-x;
-    width: 95px;
-    height: 15px;
-    margin-right: 20px
-}
-
-.commentratingyellow {
-    background: url(images/yellowstar15.png) repeat-x;
-    width: 50%;
-    height: 15px
 }
 
 div.rp .rpprint {
@@ -149,13 +136,3 @@ div.rp .rpprint {
 	height: auto;
 	margin: 5px;
 }
-
-/* I'll probably need to do some more work, but aim to have an image on the right and orgainze the time and description similarly. */
-
-/* list type? I feel like the default is usually pretty good. But something to check. Current it's list-style: decimal;. If anything, we'd add this or a size change/*
-
-/* figuring out the image will take some adjusting, but not much work once I can see one in action */
-
-/* Save Button? I don't think we have any plan to implement this, but we can match print button CSS if this is something we want to implement*/
-
-/* I'll add mobile styles once we've finalized the desktop version. However, I think I can write most of them to be flexible enough for any type of site. */

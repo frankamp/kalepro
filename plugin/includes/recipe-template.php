@@ -31,9 +31,9 @@
 	<div>Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div> 
 	<div>Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div> </div> 
 	<div> 
-		<div>Ingredients</div> 
+		<div class="ingredientstitle">Ingredients</div> 
 <?php foreach( $recipe->ingredientSections as $section ): ?>
-		<?php if ( $section->name ): ?><div class="ingredientstitle"><?= $section->name ?></div> 
+		<?php if ( $section->name ): ?><div class="subheading"><?= $section->name ?></div> 
 <?php endif; ?>
 		<ul> 
 <?php foreach($section->items as $ingredient): ?>
