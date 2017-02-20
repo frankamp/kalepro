@@ -105,14 +105,25 @@
 				}
 				this.model.set({'currentTab': toggleTo});
 				if (toggleTo == 'recipe-pro-tab-ingredient') {
-					tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient'].init_instance_callback = function(inst) {
-						inst.setContent('<p>' + this.model.get('ingredientSections')[0].items[0].description + '</p>');
+					tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient'].init_instance_callback = function(editor) {
+						var content = "";
+						this.model.get('ingredientSections').forEach(function(section) {
+							content += '<h4>' + section.name + '</h4>';
+							section.items.forEach(function(item){
+								content += '<p>' + item.description + '</p>';
+							});
+						});
+						editor.setContent(content);
 					}.bind(this);
 					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient']);
 				}
 				if (toggleTo == 'recipe-pro-tab-instruction') {
-					tinyMCEPreInit.mceInit['recipe-pro-editor-instruction'].init_instance_callback = function(inst) {
-						inst.setContent('<p>' + this.model.get('instructions')[0].description + '</p>');
+					tinyMCEPreInit.mceInit['recipe-pro-editor-instruction'].init_instance_callback = function(editor) {
+						var content = "";
+						this.model.get('instructions').forEach(function(inst) {
+							content += '<p>' + inst.description + '</p>';
+						});
+						editor.setContent(content);
 					}.bind(this);
 					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-instruction']);
 				}
