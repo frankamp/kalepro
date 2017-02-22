@@ -63,3 +63,7 @@ msgstr ""
 #: ../admin/class-recipe-pro-admin.php:165
 msgid "Recipe"
 msgstr ""
+
+#: ../admin/class-recipe-pro-admin.php:103
+msgid "Upload image"
+msgstr ""

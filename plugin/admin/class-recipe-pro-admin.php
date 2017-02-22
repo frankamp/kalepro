@@ -184,7 +184,7 @@ class Recipe_Pro_Admin {
 		$status  = get_option( RECIPE_PRO_LICENSE_OPTION . '_status' );
 		?>
 		<div class="wrap">
-			<h2><?php _e('License Key and Activation'); ?></h2>
+			<h2><?php __('License Key and Activation', 'recipepro'); ?></h2>
 			<form method="post" action="options.php">
 
 				<?php settings_fields('recipepro_license'); ?>
@@ -621,6 +621,7 @@ class Recipe_Pro_Admin {
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
 		);
+		wp_enqueue_media();
 		?>
 		<!--
 		aggregateRating
@@ -647,10 +648,22 @@ class Recipe_Pro_Admin {
 			</ul>
 			<div id="recipe-pro-content">
 				<div id="recipe-pro-tab-overview" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-overview' ? 'block' : 'none' %>;">
-					<p><label for="recipepro_title"><?= $this->get_label('title') ?></label> <input id="recipepro_title" name="title" type="text" value="<%= _.escape(title) %>" /></p>
-					<p><label for="recipepro_author"><?= $this->get_label('author') ?></label> <input id="recipepro_author" name="author" type="text" value="<%= _.escape(author) %>" /></p>
-					<p><label for="recipepro_type"><?= $this->get_label('recipe_type') ?></label> <input id="recipepro_type" name="type" type="text" value="<%= _.escape(type) %>" />  </p>
-					<p><label for="recipepro_cuisine"><?= $this->get_label('cuisine') ?></label><input id="recipepro_cuisine" name="cuisine" type="text" value="<%= _.escape(cuisine) %>" /></p>
+					<div class="left">
+						<p><label for="recipepro_title"><?= $this->get_label('title') ?></label> <input id="recipepro_title" name="title" type="text" value="<%= _.escape(title) %>" /></p>
+						<p><label for="recipepro_author"><?= $this->get_label('author') ?></label> <input id="recipepro_author" name="author" type="text" value="<%= _.escape(author) %>" /></p>
+						<p><label for="recipepro_type"><?= $this->get_label('recipe_type') ?></label> <input id="recipepro_type" name="type" type="text" value="<%= _.escape(type) %>" />  </p>
+						<p><label for="recipepro_cuisine"><?= $this->get_label('cuisine') ?></label><input id="recipepro_cuisine" name="cuisine" type="text" value="<%= _.escape(cuisine) %>" /></p>
+					</div>
+					<div class="right">
+						<p>
+						<div class='image-preview-wrapper'>
+							<img id='image-preview' src='<%= _.escape(imageUrl) %>' width='100' height='100' style='max-height: 100px; width: 100px;'>
+						</div>
+						<input id="upload_image_button" type="button" class="button" value="<?php _e( 'Select Recipe Image', 'recipe-pro' ); ?>" />
+						<input type='hidden' name='recipepro_imageurl' id='imageUrl' value='<%= _.escape(imageUrl) %>' />
+						</p>
+					</div>
+					<div class="clear"/>
 				</div>
 				<div id="recipe-pro-tab-ingredient" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-ingredient' ? 'block' : 'none' %>;">
 					<?= wp_editor( "", "recipe-pro-editor-ingredient", $ingredient_settings  ) ?>
