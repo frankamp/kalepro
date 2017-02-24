@@ -6,6 +6,10 @@
 		if (!container.length) {
 			return;
 		}
+		var outputContainer = $('#recipe-pro-admin-container-output');
+		if (!container.length) {
+			return;
+		}
 		var generateUUID = function (){
 			var d = new Date().getTime();
 			if(window.performance && typeof window.performance.now === "function"){
@@ -70,9 +74,6 @@
 					target.add(new Ingredient({id: generateUUID(), description: $(this).text()}));
 				});
 				console.log("done");
-			},
-			bump: function() {
-				this.set({'update': generateUUID()});
 			}
 		});
 		var recipe = new Recipe({id: container.attr('data-post')});
@@ -80,6 +81,19 @@
 		window.RecipePro = {
 			currentRecipe: recipe
 		};
+		var RecipeViewModelEmitter = Backbone.View.extend({
+			initialize: function(){
+				_.bindAll(this, "render");
+				this.model.bind('change', this.render);
+			},
+			render: function() {
+				var jsonable = this.model.toJSON();
+				jsonable['doc'] = JSON.stringify(_.omit(jsonable, this.model.blacklist));
+				this.$el.html(this.template(jsonable));
+				return this;
+			},
+			template: _.template( $('#recipe-pro-recipe-output-template').html() )
+		});
 		var RecipeView = Backbone.View.extend({
 			events: {
 				"click .recipe-pro-tab-button": "tabClick",
@@ -87,7 +101,9 @@
 			},
 			initialize: function(){
 				_.bindAll(this, "render");
-				this.model.bind('change', this.render);
+				//this.model.bind('sync', this.render);
+				//this.render();
+				this.listenToOnce(this.model, 'change', this.render);
 			},
 			setupImage: function(jQuery) {
 				// Uploading files
@@ -137,7 +153,6 @@
 			},
 			render: function() {
 				var jsonable = this.model.toJSON();
-				jsonable['doc'] = JSON.stringify(_.omit(jsonable, this.model.blacklist));
 				this.$el.html(this.template(jsonable));
 				this.setupImage($);
 				return this;
@@ -151,6 +166,7 @@
 					tinyMCE.EditorManager.remove('#recipe-pro-editor-instruction');
 				}
 				this.model.set({'currentTab': toggleTo});
+				this.render();
 				if (toggleTo == 'recipe-pro-tab-ingredient') {
 					tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient'].init_instance_callback = function(editor) {
 						var content = "";
@@ -174,6 +190,7 @@
 					}.bind(this);
 					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-instruction']);
 				}
+
 				//$('#' + toggleTo).show().siblings('.recipe-pro-tab').hide();
 			},
 			change : function(e) {
@@ -190,6 +207,10 @@
 		new RecipeView({
 			model: recipe,
 			el: container
+		});
+		new RecipeViewModelEmitter({
+			model: recipe,
+			el: outputContainer
 		});
 	});
 })( jQuery );

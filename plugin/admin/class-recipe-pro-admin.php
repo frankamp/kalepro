@@ -642,10 +642,18 @@ class Recipe_Pro_Admin {
 		-->
 		<script type="text/template" id="recipe-pro-recipe-template">
 			<ul id="recipe-pro-tabs">
-				<li class="<%= currentTab == 'recipe-pro-tab-overview' ? 'active' : '' %>"><label for="recipe-pro-tab-overview"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('overview') ?></button></label></li>
-				<li class="<%= currentTab == 'recipe-pro-tab-ingredient' ? 'active' : '' %>"><label for="recipe-pro-tab-ingredient"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('ingredients') ?></button></label></li>
-				<li class="<%= currentTab == 'recipe-pro-tab-nutrition' ? 'active' : '' %>"><label for="recipe-pro-tab-nutrition"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('nutrition_information') ?></button></label></li>
-				<li class="<%= currentTab == 'recipe-pro-tab-instruction' ? 'active' : '' %>"><label for="recipe-pro-tab-instruction"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('instructions') ?></button></label></li>
+				<li class="<%= currentTab == 'recipe-pro-tab-overview' ? 'active' : '' %>">
+					<label for="recipe-pro-tab-overview"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('overview') ?></button></label>
+				</li>
+				<li class="<%= currentTab == 'recipe-pro-tab-ingredient' ? 'active' : '' %>">
+					<label for="recipe-pro-tab-ingredient"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('ingredients') ?></button></label>
+				</li>
+				<li class="<%= currentTab == 'recipe-pro-tab-nutrition' ? 'active' : '' %>">
+					<label for="recipe-pro-tab-nutrition"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('nutrition_information') ?></button></label>
+				</li>
+				<li class="<%= currentTab == 'recipe-pro-tab-instruction' ? 'active' : '' %>">
+					<label for="recipe-pro-tab-instruction"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('instructions') ?></button></label>
+				</li>
 			</ul>
 			<div id="recipe-pro-content">
 				<div id="recipe-pro-tab-overview" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-overview' ? 'block' : 'none' %>;">
@@ -698,9 +706,12 @@ class Recipe_Pro_Admin {
 					<?= wp_editor( "", "recipe-pro-editor-instruction", $instruction_settings  ) ?>
 				</div>
 			</div>
-			<input type="hidden" name="doc" value="<%= _.escape(doc) %>" />
 		</script>
 		<div id="recipe-pro-admin-container" data-post="<?= $post->ID ?>"></div>
+		<script type="text/template" id="recipe-pro-recipe-output-template">
+			<input type="hidden" name="doc" value="<%= _.escape(doc) %>" />
+		</script>
+		<div id="recipe-pro-admin-container-output"></div>
 		<?php
 	}
 
