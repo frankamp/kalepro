@@ -136,3 +136,25 @@ div.rp .rpprint {
 	height: auto;
 	margin: 5px;
 }
+
+@media print {
+	body { background:white; color:black; margin:0; }
+	#masthead { display: none; }
+	/*#content { display: none; }*/
+	#comments { display: none; }
+	#sidebar { display: none; }
+	#footer { display: none; }
+	#commentform { display:none }
+	.tmeals { display: none;}
+	.entry-footer { display: none;}
+	#colophon { display:none }
+	/*div.rp { 
+    position: fixed;
+    top: -20px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: #ffffff;
+	}*/
+}
