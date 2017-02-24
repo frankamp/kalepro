@@ -251,11 +251,6 @@ class Recipe_Pro_Admin {
 		return $new;
 	}
 
-	/************************************
-	* this illustrates how to activate
-	* a license key
-	*************************************/
-
 	private function recipepro_activate_license() {
 
 		// listen for our activate button to be clicked
@@ -513,8 +508,14 @@ class Recipe_Pro_Admin {
 	// 			  substr($charid, 20, 12);
 	// }
 	
+	/**
+	 * Adds a meta box for the current screen (by omitting the screen arg)
+	 * The screen types are chosen by hooking the screen types directly in the main plugin
+	 *
+	 * @since    1.0.0
+	 */
 	public function add_meta_box ( ) {
-		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
+		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), null, 'normal', 'high' );
 	}
 
 	public function ajax_cancel_import ( ) {
