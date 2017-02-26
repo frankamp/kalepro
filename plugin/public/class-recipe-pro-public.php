@@ -96,7 +96,8 @@ class Recipe_Pro_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . "main", plugin_dir_url( __FILE__ ) . 'js/recipe-pro-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . "print", plugin_dir_url( __FILE__ ) . 'js/printThis.js', array( 'jquery' ), $this->version, false );
 
 	}
 

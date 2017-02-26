@@ -1,4 +1,4 @@
-<div class="rp" itemscope="" itemtype="http://schema.org/Recipe"> 
+<div id="recipe-pro-recipe" class="rp" itemscope="" itemtype="http://schema.org/Recipe"> 
 	<div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
 		<div> 
 			<div style="width: 100%"></div> 
@@ -7,7 +7,7 @@
 		</div> 
 	</div> 
 	<div class="name" itemprop="name"><?= $recipe->title ?></div> 
-	<div>&nbsp;</div> 
+	<div>&nbsp;<button id="recipe-pro-print">Print</button></div> 
 	<div> 
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
