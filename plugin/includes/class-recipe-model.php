@@ -83,6 +83,87 @@ class Recipe_Pro_Recipe_View_Helper {
 		return $specString;
 	}
 
+	public static function ldjson($recipe) {
+		$json_object = array();
+		$json_object['@context'] = "http://schema.org/";
+		$json_object['@type'] = "Recipe";
+		$json_object['name'] = $recipe->title;
+		$json_object['author'] = array();
+		$json_object['author']['@type'] = "Person";
+		$json_object['author']['name'] = "$recipe->author";
+		$json_object['datePublished'] = get_the_date('Y-m-d');
+		$json_object['image'] = $recipe->imageUrl;
+		$json_object['description'] = $recipe->description;
+		$json_object['prepTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->prepTime );
+		$json_object['cookTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->cookTime );
+		$json_object['totalTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->cookTime );
+		$json_object['aggregateRating'] = array();
+		$json_object['aggregateRating']['@type'] = 'AggregateRating';
+		$json_object['aggregateRating']['ratingValue'] = $recipe->ratingValue;
+		$json_object['aggregateRating']['ratingCount'] = $recipe->ratingCount;
+		$json_object['recipeCategory'] = $recipe->type;
+		$json_object['recipeCuisine'] = $recipe->cuisine;
+		$json_object['recipeYield'] = $recipe->yield;
+		$json_object['recipeIngredient'] = array();
+		foreach ( $recipe->ingredientSections as $section ) {
+			if ( $section->name ) {
+				$json_object['recipeIngredient'][] = $section->name;
+	 		}
+		 	foreach ( $section->items as $ingredient) {
+				$json_object['recipeIngredient'][] = $ingredient->description;
+		 	}
+		}
+		$json_object['recipeInstructions'] = array();
+		foreach( $recipe->instructions as $instruction ) {
+			$json_object['recipeInstructions'][] = $instruction->description;
+		}
+		$json_object['nutrition'] = array();
+		$json_object['nutrition']['@type'] = 'NutritionInformation';
+		$json_object['nutrition']['servingSize'] = $recipe->servingSize;
+		$json_object['nutrition']['calories'] = $recipe->calories;
+		$json_object['nutrition']['fatContent'] = $recipe->fatContent;
+		$json_object['nutrition']['transFatContent'] = $recipe->transFatContent;
+		$json_object['nutrition']['cholesterolContent'] = $recipe->cholesterolContent;
+		$json_object['nutrition']['saturatedFatContent'] = $recipe->saturatedFatContent;
+		$json_object['nutrition']['unsaturatedFatContent'] = $recipe->unsaturatedFatContent;
+		$json_object['nutrition']['carbohydrateContent'] = $recipe->carbohydrateContent;
+		$json_object['nutrition']['sugarContent'] = $recipe->sugarContent;
+		$json_object['nutrition']['sodiumContent'] = $recipe->sodiumContent;
+		$json_object['nutrition']['fiberContent'] = $recipe->fiberContent;
+		$json_object['nutrition']['proteinContent'] = $recipe->proteinContent;
+		return json_encode( $json_object );
+	}
+// 	"recipeIngredient": [
+// 		"ICE CREAM",
+// 		"1.5 cups raw cashews (soaked for 4-6 hours, or in boiling hot water for 1-2 hours*)",
+// 		"1 cup dairy-free milk (such as unsweetened almond (light coconut or rice))",
+// 		"3  Tbsp olive oil",
+// 		"3\/4 cup pumpkin puree",
+// 		"1\/4 cup maple syrup (sub agave or honey if not vegan)",
+// 		"1\/4 cup + 2 Tbsp brown sugar",
+// 		"1.5 tsp pure vanilla extract",
+// 		"1\/4 tsp sea salt",
+// 		"1 1\/2 tsp pumpkin pie spice",
+// 		"3\/4 tsp ground cinnamon",
+// 		"ROASTED PECANS (optional)",
+// 		"1\/2 cup raw pecan halves",
+// 		"1  Tbsp vegan butter (such as Earth Balance | or sub olive or grape seed oil)",
+// 		"1  Tbsp brown sugar",
+// 		"pinch each sea salt (cinnamon and cayenne pepper)"
+// 	],
+// 	"recipeInstructions": [
+// 		"Set your churning bowl in the freezer the night before to chill. Soak your cashews the night before as well, or for at least 4-6 hour before blending. Alternatively soak in boiling water for 1-2 hours (see notes).",
+// 		"Once soaked, add well-drained cashews and remaining ingredients to a blender and blend until creamy and smooth - about 3-4 minutes, using the \"liquify\" or \"puree\" setting if you have the option to get it really creamy. Taste and adjust sweetness\/flavors as needed.",
+// 		"Add mixture to your chilled ice cream maker bowl and churn according to manufacturer\u2019s instructions until thoroughly chilled - about 45 minutes. It should resemble thick soft serve.",
+// 		"Transfer to a freezer-safe container, cover and freeze until hard - at least 6 hours, preferably overnight. Will keep in the freezer for up to a week.",
+// 		"Take out of the freezer and thaw for 30-40 minutes - or microwave (gasp!) for 15-20 seconds - before serving to soften. Serve with brown sugar roasted pecans (see next step) and [url href=\"http:\/\/minimalistbaker.com\/creamy-no-bake-pumpkin-pie\/\" target=\"_blank\"]coconut whipped cream[\/url] for extra oomph.",
+// 		"[b]FOR THE PECANS:[\/b] Preheat oven to 350 degrees F and place pecans on a foil-lined baking sheet. Toast for about 8 minutes.",
+// 		"In the meantime, melt butter in a small skillet or in the microwave and stir in brown sugar, sea salt, cinnamon and cayenne.",
+// 		"Remove toasted pecans from oven and toss with butter and spice mixture. Spread back onto the baking sheet and toast for another 4-7 minutes or until fragrant and golden brown, being careful not to burn.",
+// 		"Let cool completely. Store leftovers in a jar for up to 1 week."
+// 	]
+// }
+
 }
 
 

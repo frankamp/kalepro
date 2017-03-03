@@ -1,3 +1,4 @@
+<script type="application/ld+json"><?=$viewhelper::ldjson($recipe)?></script>
 <div id="recipe-pro-recipe" class="rp" itemscope="" itemtype="http://schema.org/Recipe"> 
 	<div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
 		<div> 
@@ -33,11 +34,11 @@
 	<div> 
 		<div class="ingredientstitle">Ingredients</div> 
 <?php foreach( $recipe->ingredientSections as $section ): ?>
-		<?php if ( $section->name ): ?><div class="subheading"><?= $section->name ?></div> 
+		<?php if ( $section->name ): ?><div class="subheading" itemprop="recipeIngredient"><?= $section->name ?></div> 
 <?php endif; ?>
 		<ul> 
 <?php foreach($section->items as $ingredient): ?>
-			<li class="ingredients" itemprop="ingredients"><?= $ingredient->description ?></li>
+			<li class="ingredients" itemprop="recipeIngredient"><?= $ingredient->description ?></li>
 <?php endforeach; ?>
 		</ul> 
 <?php endforeach; ?>
