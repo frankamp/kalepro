@@ -648,11 +648,11 @@ class Recipe_Pro_Admin {
 				<li class="<%= currentTab == 'recipe-pro-tab-ingredient' ? 'active' : '' %>">
 					<label for="recipe-pro-tab-ingredient"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('ingredients') ?></button></label>
 				</li>
-				<li class="<%= currentTab == 'recipe-pro-tab-nutrition' ? 'active' : '' %>">
-					<label for="recipe-pro-tab-nutrition"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('nutrition_information') ?></button></label>
-				</li>
 				<li class="<%= currentTab == 'recipe-pro-tab-instruction' ? 'active' : '' %>">
 					<label for="recipe-pro-tab-instruction"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('instructions') ?></button></label>
+				</li>
+				<li class="<%= currentTab == 'recipe-pro-tab-nutrition' ? 'active' : '' %>">
+					<label for="recipe-pro-tab-nutrition"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('nutrition_information') ?></button></label>
 				</li>
 			</ul>
 			<div id="recipe-pro-content">
