@@ -1,18 +1,18 @@
 === Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: **JOSHUA** & jshltz
 Donate link: http://www.joshuafrankamp.com
-Tags: comments, spam
+Tags: recipe, recipe schema, google recipe, recipe markup, markup, schema markup
 Requires at least: 3.0.1
 Tested up to: 3.4
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Recipe Pro is a recipe plugin that enables recipe authors make great recipes.
+Recipe Pro is the best WordPress plugin to create beautiful and SEO-ready recipes – without touching a single line of code.
 
 == Description ==
 
-Schema metadata is included in your post to allow search engines such as Google to better index your site.
+Schema metadata is included in your post to allow search engines such as Google to better index your site and make your recipes go further.
 
 A few notes about the sections above:
 
@@ -41,10 +41,11 @@ This section describes how to install the plugin and get it working.
 e.g.
 
 1. Upload `recipe-pro.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
 
 == Frequently Asked Questions ==
+**We could just link to our docs page here**
 
 = A question that someone might have =
 
