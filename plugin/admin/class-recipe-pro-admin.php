@@ -686,6 +686,9 @@ class Recipe_Pro_Admin {
 						<% }); %>
 					</ul> -->
 				</div>
+				<div id="recipe-pro-tab-instruction" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-instruction' ? 'block' : 'none' %>;">
+					<?= wp_editor( "", "recipe-pro-editor-instruction", $instruction_settings  ) ?>
+				</div>
 				<div id="recipe-pro-tab-nutrition" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-nutrition' ? 'block' : 'none' %>;">
 					<div class="left">
 						<p><label for="recipepro_servingSize"><?= $this->get_label('serving_size') ?></label> <input id="recipepro_servingSize" name="servingSize" type="text" value="<%= _.escape(servingSize) %>" /></p>
@@ -701,9 +704,6 @@ class Recipe_Pro_Admin {
 						<p><label for="recipepro_proteinContent"><?= $this->get_label('protein') ?></label> <input id="recipepro_proteinContent" name="proteinContent" type="text" value="<%= _.escape(proteinContent) %>" /></p>
 					</div>
 					<div class="clear"/>
-				</div>
-				<div id="recipe-pro-tab-instruction" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-instruction' ? 'block' : 'none' %>;">
-					<?= wp_editor( "", "recipe-pro-editor-instruction", $instruction_settings  ) ?>
 				</div>
 			</div>
 		</script>
