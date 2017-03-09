@@ -63,8 +63,10 @@
 				ingredients: Ingredients
 			},
 			defaults: {
-				'currentTab': 'recipe-pro-tab-overview',
-				'title' : 'my cool recipe'
+				currentTab: 'recipe-pro-tab-overview',
+				title : 'my cool recipe',
+				missingShortcode: false,
+				shortCodeMessage: ''
 			},
 			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
 			ingestIngredients: function(ingredientDocument) {
@@ -74,6 +76,16 @@
 					target.add(new Ingredient({id: generateUUID(), description: $(this).text()}));
 				});
 				console.log("done");
+			},
+			disableForMissingShortcode: function(removed) {
+				if (removed) {
+					this.set({missingShortcode:true, shortCodeMessage: "Oops it looks like the Recipe Pro shortcode is missing from the main editor. Click the carrot icon to re-add it."});
+				} else {
+					this.set({missingShortcode:true, shortCodeMessage: "To begin entering your recipe please add a Recipe Pro shortcode by clicking the carrot icon in the main editor."});
+				}
+			},
+			enableForFoundShortcode: function() {
+				this.set({missingShortcode: false});
 			}
 		});
 		var recipe = new Recipe({id: container.attr('data-post')});
@@ -104,6 +116,7 @@
 				//this.model.bind('sync', this.render);
 				//this.render();
 				this.listenToOnce(this.model, 'change', this.render);
+				this.model.on("change:missingShortcode", function() {this.render()}.bind(this));
 			},
 			setupImage: function(jQuery) {
 				// Uploading files

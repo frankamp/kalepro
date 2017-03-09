@@ -641,6 +641,9 @@ class Recipe_Pro_Admin {
 		recipeInstructions (many)
 		-->
 		<script type="text/template" id="recipe-pro-recipe-template">
+			<div style="display: <%= missingShortcode ? 'block' : 'none' %>;">
+				<%= _.escape(shortCodeMessage) %>
+			</div>
 			<ul id="recipe-pro-tabs">
 				<li class="<%= currentTab == 'recipe-pro-tab-overview' ? 'active' : '' %>">
 					<label for="recipe-pro-tab-overview"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('overview') ?></button></label>
