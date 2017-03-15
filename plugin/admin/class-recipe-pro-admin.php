@@ -615,6 +615,7 @@ class Recipe_Pro_Admin {
 
 		$instruction_settings = array(
 			'textarea_name' => 'excerpt',
+			'external_plugins' => '{}',
 			'quicktags'     => false,
 			'tinymce'       => array(
 				'toolbar1' => 'bold,italic,link,unlink,removeformat,recipepro_media'
@@ -824,7 +825,7 @@ class Recipe_Pro_Admin {
 	}
 
 	public function register_mce_carrot_button( $buttons ) {
-		array_push( $buttons, 'recipepro_addeditrecipe' ); // dropcap', 'recentposts
+		array_push( $buttons, 'recipepro_addeditrecipe' );
 		return $buttons;
 	}
 
@@ -832,6 +833,13 @@ class Recipe_Pro_Admin {
 		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-button.js', array( 'jquery' ), $this->version, false );
 		$plugin_array['recipe-pro'] = plugin_dir_url( __FILE__ ) . 'js/recipe-pro-button.js';
 		return $plugin_array;
+	}
+
+	public function add_mce_css( $mce_css ) {
+		if ( ! empty( $mce_css ) )
+			$mce_css .= ',';
+		$mce_css .= plugin_dir_url( __FILE__ ) . 'css/recipe-pro-mce.css';
+		return $mce_css;
 	}
 
 	/**

@@ -1,0 +1,10 @@
+.recipeprocarrot {
+     background: url(carrot.svg);
+     padding: 0 2px 0 0;
+     width: 50px;
+    vertical-align: top;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-left: -2px;
+}

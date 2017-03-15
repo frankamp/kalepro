@@ -172,7 +172,7 @@ class Recipe_Pro {
 		$this->loader->add_action( 'wp_ajax_recipepro_do_import_work', $plugin_admin,  'ajax_do_import_work' );
 		$this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_mce_carrot_button_action' );
 		$this->loader->add_filter( 'mce_buttons', $plugin_admin, 'register_mce_carrot_button' );
-
+		$this->loader->add_filter( 'mce_css', $plugin_admin, 'add_mce_css' );
 	}
 
 	/**

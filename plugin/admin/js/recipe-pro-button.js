@@ -11,8 +11,49 @@
      *
      * @param {tinymce.Editor} ed Editor instance that the plugin is initialized in.
      * @param {string} url Absolute URL to where the plugin is located.
-     */
+     */        
     init : function(ed, url) {
+      // eheck to see if this editor has this particular button (recipepro_addeditrecipe) enabled in a toolbar, if not, lets not bother
+      // registering the button or command or callbacks for change events etc.
+      var getAttr = function (s, n) {
+          n = new RegExp(n + '=\"([^\"]+)\"', 'g').exec(s);
+          return n ?  window.decodeURIComponent(n[1]) : '';
+      };
+
+      var html = function ( cls, data, con ) {
+          //var placeholder = url + '/img/recipepro.jpg';
+          data = window.encodeURIComponent( data );
+          content = window.encodeURIComponent( con );
+
+          return '<img src="' + tinymce.Env.transparentSrc + '" class="mceItem recipeprocarrot ' + cls + '" data-mce-resize="false" data-mce-placeholder="1" />';
+      };
+
+      var replaceShortcodes = function ( content ) {
+          return content.replace( /\[recipepro\]/g, function( all,attr,con) {
+              return html( 'recipeproMceItem', attr , con);
+          });
+      };
+
+      var restoreShortcodes = function ( content ) {
+          return content.replace( /(?:<p(?: [^>]+)?>)*(<img [^>]+>)(?:<\/p>)*/g, function( match, image ) {
+              var data = getAttr( image, 'class' );
+              if ( data.indexOf('recipeproMceItem') != -1) {
+                  return '[recipepro]';
+              }
+              return match;
+          });
+      };
+
+      //replace from shortcode to an placeholder image
+      ed.on('BeforeSetcontent', function(event){
+          event.content = replaceShortcodes( event.content );
+      });
+      
+      //replace from placeholder image to shortcode
+      ed.on('GetContent', function(event){
+          event.content = restoreShortcodes(event.content);
+      });
+
       ed.addButton('recipepro_addeditrecipe', {
         title : 'Add Recipe',
         cmd : 'recipepro_addeditrecipe',
