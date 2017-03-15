@@ -13,6 +13,7 @@
      * @param {string} url Absolute URL to where the plugin is located.
      */        
     init : function(ed, url) {
+      if (ed.id != 'content') {return;}
       // eheck to see if this editor has this particular button (recipepro_addeditrecipe) enabled in a toolbar, if not, lets not bother
       // registering the button or command or callbacks for change events etc.
       var getAttr = function (s, n) {
