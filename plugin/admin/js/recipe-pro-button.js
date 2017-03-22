@@ -26,7 +26,7 @@
           data = window.encodeURIComponent( data );
           content = window.encodeURIComponent( con );
 
-          return '<img src="' + tinymce.Env.transparentSrc + '" class="mceItem recipeprocarrot ' + cls + '" data-mce-resize="false" data-mce-placeholder="1" />';
+          return '<img src="' + tinymce.Env.transparentSrc + '" class="mceItem recipeproplaceholder ' + cls + '" data-mce-resize="false" data-mce-placeholder="1" />';
       };
 
       var replaceShortcodes = function ( content ) {

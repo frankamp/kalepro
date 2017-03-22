@@ -1,10 +1,10 @@
-.recipeprocarrot {
-     background: url(carrot.svg);
-     padding: 0 2px 0 0;
-     width: 50px;
+.recipeproplaceholder {
+    background-image: url(logo-border.png);
+    background-size: 100% 100%;
+    width: 400px;
+    height: 100px;
     vertical-align: top;
     speak: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    margin-left: -2px;
 }
