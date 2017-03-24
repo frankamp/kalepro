@@ -1,7 +1,6 @@
 /**
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
- Party
  */
 i.mce-i-recipe_pro_carrot {
      background: url(carrot.svg);
@@ -17,15 +16,12 @@ ul#recipe-pro-tabs {
     list-style: none;
     padding: 0;
     margin: 0;
-    border: solid;
-    border-width: 0 0 0 1px;
-    border-color: #ddd;
 }
 
 ul#recipe-pro-tabs li {
     display: inline-block;
     border: solid;
-    border-width: 1px 1px 0 0;
+    border-width: 1px 1px 0 1px;
     border-color: #ddd;
     margin-bottom: 0;
 }
@@ -44,7 +40,7 @@ ul#recipe-pro-tabs li.active button {
     color: #32373c;
     position: relative;
     top: 1px;
-    background-color: #fff;
+    background-color: #fdfdfd;
 }
 
 ul#recipe-pro-tabs button {
@@ -52,8 +48,11 @@ ul#recipe-pro-tabs button {
 }
 .recipe-pro-tab {
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
-    padding: 0 20px;
     background: #fff;
+}
+#recipe-pro-tab-overview,
+#recipe-pro-tab-nutrition {
+    padding: 0 20px;
 }
 #recipe-pro-content {
     border: solid;
