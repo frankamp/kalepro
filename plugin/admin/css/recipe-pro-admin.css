@@ -17,18 +17,21 @@ ul#recipe-pro-tabs {
     list-style: none;
     padding: 0;
     margin: 0;
+    border: solid;
+    border-width: 0 0 0 1px;
+    border-color: #ddd;
 }
 
 ul#recipe-pro-tabs li {
     display: inline-block;
     border: solid;
-    border-width: 0 1px 0 0;
-    border-color: #aaa;
+    border-width: 1px 1px 0 0;
+    border-color: #ddd;
     margin-bottom: 0;
 }
 
 ul#recipe-pro-tabs li.active {
-    border-bottom-color: #fff;
+    border-bottom-color: #fdfdfd;
     z-index: 3;
 }
 
@@ -47,11 +50,17 @@ ul#recipe-pro-tabs li.active button {
 ul#recipe-pro-tabs button {
     border: hidden;
 }
-
+.recipe-pro-tab {
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    padding: 0 20px;
+    background: #fff;
+}
 #recipe-pro-content {
     border: solid;
-    border-width: 1px 0 0 0;
-    border-color: #aaa;
+    border-width: 1px;
+    border-color: #ddd;
+    background: #fdfdfd;
+    padding: 20px;
 }
 
 #recipe-pro-content .left {
