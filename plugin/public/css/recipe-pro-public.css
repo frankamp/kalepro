@@ -51,8 +51,16 @@ div.rp {
 	text-transform: uppercase;
     font-weight: 700;
 }
-
-
+.rp .overview {
+	margin: 0 5px 0 0;
+}
+.rp .description,
+.rp .author,
+.rp .recipetype,
+.rp .cuisine,
+.rp .serving {
+	margin: 0 5px 0 0;
+}
 
 .rp .ingredientstitle,
 .rp .instructionstitle,
@@ -84,7 +92,6 @@ div.rp {
 
 .rp .ratings {
     float: right;
-    width: 95px
 }
 
 .rp .star-rating .star-full:before {
