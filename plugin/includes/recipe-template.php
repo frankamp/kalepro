@@ -26,7 +26,7 @@
 			<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div> 
 		</div> 
 	</div> 
-	<div class="overview"><div class="description"><span itemprop="description"><?= $recipe->description ?></span></div> 
+	<div class="overview"><div class="description"><span itemprop="description"><?= $recipe->description ?></span></div>
 	<div class="author">Author: <span itemprop="author"><?= $recipe->author ?></span></div> 
 	<div class="recipetype">Recipe type: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div> 
 	<div class="cuisine">Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div> 
