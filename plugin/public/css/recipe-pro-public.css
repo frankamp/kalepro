@@ -54,14 +54,10 @@ div.rp {
 .rp .overview {
 	margin: 0 5px 0 0;
 }
-.rp .description,
-.rp .author,
-.rp .recipetype,
-.rp .cuisine,
-.rp .serving {
-	margin: 0 5px 0 0;
+.rp .topright {
+	flaot:right
+	margin: 0 0 0 5px;
 }
-
 .rp .ingredientstitle,
 .rp .instructionstitle,
 .rp .nutritiontitle,
