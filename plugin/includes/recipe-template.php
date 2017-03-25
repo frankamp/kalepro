@@ -8,10 +8,10 @@
 		</div> 
 	</div> 
 	<div class="name" itemprop="name"><?= $recipe->title ?></div> 
-	<div>&nbsp;<button id="recipe-pro-print">Print</button></div> 
 	<div> 
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
+	<div><button id="recipe-pro-print">Print</button></div> 
 	<div> 
 		<div> 
 			<div>Prep time</div> 
