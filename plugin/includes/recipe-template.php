@@ -1,6 +1,6 @@
 <script type="application/ld+json"><?=$viewhelper::ldjson($recipe)?></script>
 <div id="recipe-pro-recipe" class="rp" itemscope="" itemtype="http://schema.org/Recipe"> 
-	<div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
+	<div class="ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
 		<div> 
 			<div style="width: 100%"></div> 
 			<div><span ><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</span>
@@ -8,7 +8,7 @@
 		</div> 
 	</div> 
 	<div class="name" itemprop="name"><?= $recipe->title ?></div> 
-	<div> 
+	<div class="previewimage"> 
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
 	<div><button id="recipe-pro-print">Print</button></div> 
