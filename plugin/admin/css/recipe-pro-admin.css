@@ -12,6 +12,18 @@ i.mce-i-recipe_pro_carrot {
     margin-left: -2px;
  }
 
+/* for displaying the same carrot icon in the middle of our page*/
+i.recipe-pro-page-icon {
+    color: #555d66;
+    line-height: 20px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+
 ul#recipe-pro-tabs {
     list-style: none;
     padding: 0;

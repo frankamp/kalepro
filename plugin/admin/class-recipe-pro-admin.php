@@ -642,8 +642,11 @@ class Recipe_Pro_Admin {
 		recipeInstructions (many)
 		-->
 		<script type="text/template" id="recipe-pro-recipe-template">
-			<div style="display: <%= missingShortcode ? 'block' : 'none' %>;">
-				<%= _.escape(shortCodeMessage) %>
+			<div class="notice notice-info" style="display: <%= missingShortcode ? 'block' : 'none' %>;"> 
+				<p><strong>Looks like you haven't added this recipe to your post yet. Place your cursor in the post and click the "Add Recipe" button <i class="mce-i-recipe_pro_carrot recipe-pro-page-icon" /> to add your recipe!</strong></p>
+			</div>
+			<div class="notice notice-warning" style="display: <%= deletedShortcode ? 'block' : 'none' %>;"> 
+				<p><strong>Oops! Looks like you have recipe information stored but not placed in this post. Click the "Add Recipe" button <i class="mce-i-recipe_pro_carrot recipe-pro-page-icon" /> in the main editor to insert the recipe into your post!</strong></p>
 			</div>
 			<ul id="recipe-pro-tabs">
 				<li class="<%= currentTab == 'recipe-pro-tab-overview' ? 'active' : '' %>">

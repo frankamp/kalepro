@@ -66,6 +66,7 @@
 				currentTab: 'recipe-pro-tab-overview',
 				title : 'my cool recipe',
 				missingShortcode: false,
+				deletedShortcode: false,
 				shortCodeMessage: ''
 			},
 			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
@@ -79,13 +80,13 @@
 			},
 			disableForMissingShortcode: function(removed) {
 				if (removed) {
-					this.set({missingShortcode:true, shortCodeMessage: "Oops it looks like the Recipe Pro shortcode is missing from the main editor. Click the carrot icon to re-add it."});
+					this.set({missingShortcode:false, deletedShortcode:true});
 				} else {
-					this.set({missingShortcode:true, shortCodeMessage: "To begin entering your recipe please add a Recipe Pro shortcode by clicking the carrot icon in the main editor."});
+					this.set({missingShortcode:true, deletedShortcode:false});
 				}
 			},
 			enableForFoundShortcode: function() {
-				this.set({missingShortcode: false});
+				this.set({missingShortcode: false, deletedShortcode: false});
 			}
 		});
 		var recipe = new Recipe({id: container.attr('data-post')});
