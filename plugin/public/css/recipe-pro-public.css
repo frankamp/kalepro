@@ -58,6 +58,19 @@ div.rp {
 	float:right
 	margin: 0 0 0 5px;
 }
+#recipe-pro-print {
+	color: #000;
+	background: #fff;
+	font-size: 12px;
+	text-transform: uppercase;
+	margin: 0 5px;
+	padding: 5px 20px;
+}
+#recipe-pro-print::before {
+	background: no-repeat url(images/print.svg);
+	height: 16px;
+	width: 16px;
+}
 .rp .ingredientstitle,
 .rp .instructionstitle,
 .rp .nutritiontitle,
