@@ -11,7 +11,7 @@
 	<div class="topright"><div class="previewimage"> 
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
-	<div id="recipe-pro-print"><button>Print Friendly Version</button></div></div>
+	<div id="recipe-pro-print"><class="print" button>Print Friendly Version</button></div></div>
 	<div> 
 		<div> 
 			<div>Prep time</div> 

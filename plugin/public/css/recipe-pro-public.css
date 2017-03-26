@@ -58,7 +58,7 @@ div.rp {
 	float:right
 	margin: 0 0 0 5px;
 }
-#recipe-pro-print {
+.rp .print {
 	color: #000;
 	background: #fff;
 	font-size: 12px;
@@ -66,8 +66,8 @@ div.rp {
 	margin: 0 5px;
 	padding: 5px 20px;
 }
-#recipe-pro-print::before {
-	background: no-repeat url(images/print.svg);
+.rp .print::before {
+	background: no-repeat url(../images/print.svg);
 	height: 16px;
 	width: 16px;
 }
@@ -139,14 +139,6 @@ span.rpcomment,
 span.rpcomment span {
     display: block
 }
-
-div.rp .rpprint {
-    border: none;
-    color: #fff;
-    background: #666;
-    font-size: 11px
-}
-
 .rp .previewimage img {
 	width: 200px;
 	height: auto;
