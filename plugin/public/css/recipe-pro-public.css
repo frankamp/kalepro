@@ -67,7 +67,7 @@ div.rp {
 	padding: 5px 20px;
 }
 .print::before {
-	background: no-repeat url(../images/print.svg);
+	content: url(../images/print.svg);
 	height: 16px;
 	width: 16px;
 }
