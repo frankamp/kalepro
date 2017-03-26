@@ -55,7 +55,7 @@ div.rp {
 	margin: 0 5px 0 0;
 }
 .rp .topright {
-	float:right
+	float:right;
 	margin: 0 0 0 5px;
 }
 .rp .print {
@@ -66,7 +66,7 @@ div.rp {
 	margin: 0 5px;
 	padding: 5px 20px;
 }
-.rp .print::before {
+.print::before {
 	background: no-repeat url(../images/print.svg);
 	height: 16px;
 	width: 16px;
