@@ -70,8 +70,10 @@ div.rp {
 	background-image: url('../images/print.svg');
 	background-size: 16px 16px;
 	display: inline-block;
+	vertical-align: middle;
 	height: 16px;
 	width: 16px;
+	margin-right: 5px;
 	content:"";
 }
 .rp .ingredientstitle,
