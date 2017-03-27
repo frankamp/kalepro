@@ -12,25 +12,27 @@
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
 	<div id="recipe-pro-print"><button class="print">Print Friendly Version</button></div></div>
-	<div> 
-		<div> 
-			<div>Prep time</div> 
-			<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div> 
-		</div> 
-		<div> 
-			<div>Cook time</div> 
-			<div> <time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div> 
-		</div> 
-		<div>
-			<div>Total time</div> 
-			<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div> 
-		</div> 
-	</div> 
-	<div class="overview"><div class="description"><span itemprop="description"><?= $recipe->description ?></span></div>
-	<div class="author">Author: <span itemprop="author"><?= $recipe->author ?></span></div> 
-	<div class="recipetype">Recipe type: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div> 
-	<div class="cuisine">Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div> 
-	<div class="serving">Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div></div> 
+	<div class="overview">
+	<div class="recipetype">Recipe type: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
+	<div class="cuisine">Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
+	<div class="author">Author: <span itemprop="author"><?= $recipe->author ?></span></div>
+	<div>
+		<div class="preptime">
+			<div>Prep time</div>
+			<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
+		</div>
+		<div class="cooktime">
+			<div>Cook time</div>
+			<div> <time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div>
+		</div>
+		<div class="totaltime">
+			<div>Total time</div>
+			<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div>
+		</div>
+	</div>
+	<div class="serving">Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
+	<div class="description"><span itemprop="description"><?= $recipe->description ?></span></div>
+	</div>
 	<div> 
 		<div class="ingredientstitle">Ingredients</div> 
 <?php foreach( $recipe->ingredientSections as $section ): ?>

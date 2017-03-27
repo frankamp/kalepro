@@ -56,7 +56,7 @@ div.rp {
 }
 .rp .topright {
 	float:right;
-	margin: 0 0 0 5px;
+	text-align: center;
 }
 .rp .print {
 	color: #000;
@@ -68,14 +68,15 @@ div.rp {
 }
 .print::before {
 	background-image: url('../images/print.svg');
-	background-size: 16px 16px;
+	background-size: 18px 18px;
 	display: inline-block;
 	vertical-align: middle;
-	height: 16px;
-	width: 16px;
-	margin-right: 5px;
+	height: 18px;
+	width: 18px;
+	margin-right: 8px;
 	content:"";
 }
+
 .rp .ingredientstitle,
 .rp .instructionstitle,
 .rp .nutritiontitle,
@@ -89,7 +90,13 @@ div.rp {
     text-transform: uppercase;
     font-size: 14px;
 }
-
+.preptime,
+.cooktime,
+.totaltime {
+	width: 33.3%;
+	float: left;
+	text-align: center;
+}
 .rp .ingredients,
 .rp .instructions,
 .rp .nutrition,
