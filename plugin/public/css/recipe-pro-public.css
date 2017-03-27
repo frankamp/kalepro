@@ -53,15 +53,20 @@ div.rp {
 }
 .rp .overview {
 	margin: 0 5px 0 0;
+	width: 40%;
 }
 .rp .topright {
 	float:right;
 	text-align: center;
+	width: 60%;
 }
 .rp .print {
 	color: #000;
+	border: 1px solid #010101;
 	background: #fff;
 	font-size: 12px;
+	letter-spacing: 2px;
+	font-weight: 700;
 	text-transform: uppercase;
 	margin: 0 5px;
 	padding: 5px 20px;
