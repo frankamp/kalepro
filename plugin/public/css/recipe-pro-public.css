@@ -87,12 +87,18 @@ div.rp {
 	text-align: center;
 	font-size: 10px;
 }
+.recipetype::after,
+.cuisine::after {
+	content: "/";
+	margin: 0 15px;
+}
 .preptime,
 .cooktime,
 .totaltime {
 	width: 33.3%;
 	float: left;
 	text-align: center;
+	padding: 10px 0;
 }
 .serving {
 	clear: left;
@@ -116,15 +122,15 @@ div.rp {
     width: 25%;
 }
 
-.rp .star-rating .star-full:before {
+.rp .star-rating .star-full::before {
     content: "\f155";
 }
 
-.rp .star-rating .star-half:before {
+.rp .star-rating .star-half::before {
     content: "\f459";
 }
 
-.rp .star-rating .star-empty:before {
+.rp .star-rating .star-empty::before {
     content: "\f154";
 }
 
