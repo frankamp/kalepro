@@ -24,6 +24,39 @@ function test_content( $name ) {
  */
 class AdminTest extends WP_UnitTestCase {
 
+	function prevent_api_checks() {
+		global $wp_version;
+		$current = new stdClass();
+		$current->last_checked = time();
+		$current->version_checked = $wp_version;
+		set_site_transient( 'update_core', $current ); //prevent contacting wordpress api
+		set_site_transient( 'update_plugins', $current );
+		set_site_transient( 'update_themes', $current );
+	}
+
+	// function test_import() {
+	// 	$file = dirname( dirname( __FILE__ ) ) . "/tests/testdata.xml";
+
+	// 	error_log( "attempting to import $file" );
+	// 	if ( class_exists('WP_Import') && defined('WP_LOAD_IMPORTERS')  ) {
+	// 		$WP_Import = new WP_Import();
+	// 		// Not sure why these wouldn't be loaded
+	// 		if ( ! function_exists ( 'wp_insert_category' ) )
+	// 			include ( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+	// 		if ( ! function_exists ( 'post_exists' ) )
+	// 			include ( ABSPATH . 'wp-admin/includes/post.php' );
+	// 		if ( ! function_exists ( 'comment_exists' ) )
+	// 			include ( ABSPATH . 'wp-admin/includes/comment.php' );
+	// 		ob_start();
+	// 		// if ( defined('WORDPRESS_IMPORTER_EXTENDED_FETCH_ATTACHMENTS') && WORDPRESS_IMPORTER_EXTENDED_FETCH_ATTACHMENTS == true ) {
+	// 		// 	$WP_Import->fetch_attachments = true;
+	// 		// 	$WP_Import->allow_fetch_attachments();
+	// 		// }
+	// 		$WP_Import->import( $file );
+	// 		ob_end_clean();
+	// 	}
+	// }
+
 	function test_settings() {
 		register_setting( "somesetting", "someoption" );
 		// results in  in new_whitelist_options
@@ -36,6 +69,7 @@ class AdminTest extends WP_UnitTestCase {
 			 // }
 		global $new_whitelist_options;
 		$this->assertEquals( false, array_key_exists( 'recipepro_settings_group', $new_whitelist_options ));
+		$this->prevent_api_checks(); // these trigger from admin_init
 		do_action( 'admin_init' );
 		$this->assertEquals( true, array_key_exists( 'recipepro_settings_group', $new_whitelist_options ));
 	}

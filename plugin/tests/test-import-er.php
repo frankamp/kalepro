@@ -1,6 +1,6 @@
 <?php
 /**
- * Class AdminTest
+ * Class ERImportTest
  *
  * @package 
  */
@@ -10,7 +10,7 @@
  */
 
 require_once RECIPE_PRO_PLUGIN_DIR . '/import/class-recipe-pro-easyrecipe-importer.php';
-class ImportTest extends WP_UnitTestCase {
+class ERImportTest extends WP_UnitTestCase {
 
 	function get_er_post() {
 		$post = $this->factory->post->create_and_get(array(
