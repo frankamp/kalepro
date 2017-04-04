@@ -17,42 +17,54 @@
 	clear: both;
 	position: relative;
 	padding: 10px;
+	width: 100%;
 }
-
-/*I think we can make this obsolete, but didn't want to skip it if it'd be helpful. */
-#container {
-	position: relative;
-	display: none;
-	padding: 5px;
-}
-
 div.rp {
 	position: relative;
 	clear: both;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 14px;
+	font-weight: 300;
 	line-height: 125%;
 	color: #000;	
-}
-
-.rp div,
-.rp li,
-.rp ol,
-.rp p,
-.rp span,
-.rp ul {
-    padding: 0;
-    margin: 0;
-    line-height: inherit;
 }
 
 .rp .name {
 	font-size: 22px;
 	text-transform: uppercase;
     font-weight: 700;
+    width: 75%;
 }
-
-
+.rp .overview {
+	margin: 0 5px 0 0;
+	width: 60%;
+}
+.rp .topright {
+	float:right;
+	text-align: center;
+	width: 40%;
+}
+.rp .print {
+	color: #000;
+	border: 1px solid #010101;
+	background: #fff;
+	font-size: 12px;
+	letter-spacing: 2px;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin: 0 5px;
+	padding: 5px 20px;
+}
+.print::before {
+	background-image: url('../images/print.svg');
+	background-size: 18px 18px;
+	display: inline-block;
+	vertical-align: middle;
+	height: 18px;
+	width: 18px;
+	margin-right: 8px;
+	content:"";
+}
 
 .rp .ingredientstitle,
 .rp .instructionstitle,
@@ -67,13 +79,36 @@ div.rp {
     text-transform: uppercase;
     font-size: 14px;
 }
-
+.recipetype,
+.cuisine,
+.author {
+	width: 33.3%;
+	float: left;
+	text-align: center;
+	font-size: 10px;
+}
+.recipetype::after,
+.cuisine::after {
+	content: "/";
+	margin: 0 15px;
+}
+.preptime,
+.cooktime,
+.totaltime {
+	width: 33.3%;
+	float: left;
+	text-align: center;
+	padding: 10px 0;
+}
+.serving {
+	clear: left;
+}
 .rp .ingredients,
 .rp .instructions,
 .rp .nutrition,
 .rp .notes {
 	font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
-	font-weight: 400;
+	font-weight: 300;
 	margin-bottom: 10px;
 }
 
@@ -84,18 +119,18 @@ div.rp {
 
 .rp .ratings {
     float: right;
-    width: 95px
+    width: 25%;
 }
 
-.rp .star-rating .star-full:before {
+.rp .star-rating .star-full::before {
     content: "\f155";
 }
 
-.rp .star-rating .star-half:before {
+.rp .star-rating .star-half::before {
     content: "\f459";
 }
 
-.rp .star-rating .star-empty:before {
+.rp .star-rating .star-empty::before {
     content: "\f154";
 }
 
@@ -105,7 +140,7 @@ div.rp {
     font-family: dashicons;
     font-size: 20px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     height: 20px;
     line-height: 1;
     text-align: center;
@@ -123,14 +158,6 @@ span.rpcomment,
 span.rpcomment span {
     display: block
 }
-
-div.rp .rpprint {
-    border: none;
-    color: #fff;
-    background: #666;
-    font-size: 11px
-}
-
 .rp .previewimage img {
 	width: 200px;
 	height: auto;
