@@ -33,9 +33,9 @@ class WPUltimageImportTest extends WP_UnitTestCase {
 		add_post_meta($recipe->ID, 'recipe_prep_time', '1');
 		add_post_meta($recipe->ID, 'recipe_prep_time_text', 'hour');
 		add_post_meta($recipe->ID, 'recipe_cook_time', '10');
-		add_post_meta($recipe->ID, 'recipe_cook_time_text', 'minutes');
+		add_post_meta($recipe->ID, 'recipe_cook_time_text', 'mins');
 		add_post_meta($recipe->ID, 'recipe_passive_time', '3');
-		add_post_meta($recipe->ID, 'recipe_passive_time_text', 'years');
+		add_post_meta($recipe->ID, 'recipe_passive_time_text', 'hrs');
 		//add_post_meta($recipe->ID, 'recipe_alternate_image', 'My amazing recipe'); TODO
 
 		$post = $this->factory->post->create_and_get(array(
@@ -52,10 +52,18 @@ class WPUltimageImportTest extends WP_UnitTestCase {
 	}
 
 	function test_extract() {
+		register_post_type( 'recipe' );
+		import_data( 'wpudata.xml' );
+		$post = get_post(10403);
 		wp_set_current_user( null, 'admin' );
-		$this->assertEquals( "My amazing recipe", Recipe_Pro_WPUltimate_Importer::extract( $this->get_post() )->title );
-		$this->assertEquals( "My amazing recipe description", Recipe_Pro_WPUltimate_Importer::extract( $this->get_post() )->description );
-		$this->assertEquals( "7 ice creams", Recipe_Pro_WPUltimate_Importer::extract( $this->get_post() )->servingSize );
+		$log = Recipe_Pro_WPUltimate_Importer::extract( $post );
+		$recipe = $log->recipe;
+		$this->assertEquals( "Simple Tofu Quiche", $recipe->title );
+		$this->assertEquals( "The simplest tofu quiche on the block with just 10 basic ingredients and no fancy methods required. A hash brown crust keeps this dish gluten free as well as vegan! Perfect for lunch, brunch and even brinner.", $recipe->description );
+		$this->assertEquals( "8 people", $recipe->servingSize );
+		$this->assertEquals( new DateInterval("PT15M"), $recipe->prepTime );
+		$this->assertEquals( new DateInterval("PT90M"), $recipe->cookTime );
+		$this->assertEquals( "Passive time 5 hours was removed.", $log->notes[0] );
 	}
 
 	// function test_convert() {

@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__."/../includes/class-recipe-pro-service.php";
-
+require_once __DIR__."/class-recipe-pro-import-log.php";
 
 class Recipe_Pro_WPUltimate_Importer {
 	public static $shortcodePattern = "/.*\[ultimate-recipe.*?id=\"([0-9]+)\".*?\].*/";
@@ -41,6 +41,20 @@ class Recipe_Pro_WPUltimate_Importer {
 	 	}
 	}
 
+	static private function get_time_in_minutes( $time, $unit ) {
+		$minutes = intval( $time );
+
+		if ( strtolower( $unit ) === strtolower( __( 'hour', 'wp-ultimate-recipe' ) )
+				|| strtolower( $unit ) === strtolower( __( 'hours', 'wp-ultimate-recipe' ) )
+				|| strtolower( $unit ) === 'h'
+				|| strtolower( $unit ) === 'hr'
+				|| strtolower( $unit ) === 'hrs' ) {
+				$minutes = intval($time * 60);
+		}
+
+		return $minutes;
+	}
+
 	/**
 	* I take a wordpress post and transform its first recipe into a Recipe Pro Recipe and return it 
 	* non destructively. The post should already pass is_instance before this is called
@@ -72,7 +86,8 @@ class Recipe_Pro_WPUltimate_Importer {
 		// 	),
 		// );
 		$recipe = new Recipe_Pro_Recipe();
-
+		$log = new Recipe_Pro_Import_Log;
+		$log->recipe = $recipe;
 		// $alternate_image = isset( $post_meta['recipe_alternate_image'] ) ? $post_meta['recipe_alternate_image'][0] : false;
 		// $recipe['image_id'] = $alternate_image ? $alternate_image : get_post_thumbnail_id( $id );
 		$image_id = $wpu_recipe->alternate_image() ?:  $wpu_recipe->featured_image();
@@ -100,34 +115,20 @@ class Recipe_Pro_WPUltimate_Importer {
 		// $prep_time = isset( $post_meta['recipe_prep_time'] ) ? $post_meta['recipe_prep_time'][0] : '';
 		// $prep_time_unit = isset( $post_meta['recipe_prep_time_text'] ) ? $post_meta['recipe_prep_time_text'][0] : '';
 		// $recipe['prep_time'] = self::get_time_in_minutes( $prep_time, $prep_time_unit );
-
+		$recipe->prepTime = new DateInterval( "PT" . self::get_time_in_minutes($wpu_recipe->prep_time(), $wpu_recipe->prep_time_text()) . "M" );
+		
 		// $cook_time = isset( $post_meta['recipe_cook_time'] ) ? $post_meta['recipe_cook_time'][0] : '';
 		// $cook_time_unit = isset( $post_meta['recipe_cook_time_text'] ) ? $post_meta['recipe_cook_time_text'][0] : '';
 		// $recipe['cook_time'] = self::get_time_in_minutes( $cook_time, $cook_time_unit );
-
+		$recipe->cookTime = new DateInterval( "PT" . self::get_time_in_minutes($wpu_recipe->cook_time(), $wpu_recipe->cook_time_text()) . "M" );
+		
 		// $passive_time = isset( $post_meta['recipe_passive_time'] ) ? $post_meta['recipe_passive_time'][0] : '';
 		// $passive_time_unit = isset( $post_meta['recipe_passive_time_text'] ) ? $post_meta['recipe_passive_time_text'][0] : '';
 		// $passive_time_minutes = self::get_time_in_minutes( $passive_time, $passive_time_unit );
-
+		if ( $wpu_recipe->passive_time() && $wpu_recipe->passive_time() != '' && $wpu_recipe->passive_time() != '0' ) {
+			$log->addNote( "Passive time " . $wpu_recipe->passive_time() . " " . $wpu_recipe->passive_time_text() . " was removed." );
+		}
 		// $recipe['total_time'] = $recipe['prep_time'] + $recipe['cook_time'] + $passive_time_minutes;
-
-		// // Recipe Tags.
-		// $recipe['tags'] = array();
-
-		// $wprm_taxonomies = WPRM_Taxonomies::get_taxonomies();
-		// foreach ( $wprm_taxonomies as $wprm_taxonomy => $options ) {
-		// 	$wprm_key = substr( $wprm_taxonomy, 5 );
-		// 	$tag = isset( $post_data[ 'wpurp-tags-' . $wprm_key ] ) ? $post_data[ 'wpurp-tags-' . $wprm_key ] : false;
-
-		// 	if ( $tag ) {
-		// 		$terms = get_the_terms( $id, $tag );
-		// 		if ( $terms && ! is_wp_error( $terms ) ) {
-		// 			foreach ( $terms as $term ) {
-		// 				$recipe['tags'][ $wprm_key ][] = $term->name;
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 		// // Recipe Ingredients.
 		// $ingredients = isset( $post_meta['recipe_ingredients'] ) ? maybe_unserialize( $post_meta['recipe_ingredients'][0] ) : array();
@@ -276,7 +277,7 @@ class Recipe_Pro_WPUltimate_Importer {
 
         //     $metadata['recipeInstructions'] = $metadata_instructions;
         // }
-	 	return $recipe;
+	 	return $log;
 	 	//$meta_result = get_post_meta( (int) $post->ID, (string) 'recipepro_recipe', true );
 	}
 }
@@ -531,7 +532,7 @@ class Recipe_Pro_WPURP_Recipe {
             $ingredients = unserialize( preg_replace_callback ( '!s:(\d+):"(.*?)";!', array( $this, 'regex_replace_serialize' ), $this->meta( 'recipe_ingredients' ) ) );
         }
 
-        return apply_filters( 'wpurp_recipe_field_ingredients', $ingredients, $this );
+        return $ingredients;
     }
 
     public function instructions()
@@ -543,7 +544,7 @@ class Recipe_Pro_WPURP_Recipe {
             $instructions = unserialize( preg_replace_callback ( '!s:(\d+):"(.*?)";!', array( $this, 'regex_replace_serialize' ), $this->meta( 'recipe_instructions' ) ) );
         }
 
-        return apply_filters( 'wpurp_recipe_field_instructions', $instructions, $this );
+        return $instructions;
     }
 
     public function regex_replace_serialize( $match )

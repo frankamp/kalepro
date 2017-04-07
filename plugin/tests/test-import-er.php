@@ -151,7 +151,7 @@ class ERImportTest extends WP_UnitTestCase {
 		$post = $this->get_er_post();
 		$this->assertEquals( true, Recipe_Pro_EasyRecipe_Importer::is_instance( $post ) );
 		$result = Recipe_Pro_EasyRecipe_Importer::convert( $post );
-		$this->assertEquals( true, $result );
+		$this->assertEquals( true, $result->success );
 		$post = get_post($post->ID);
 		$this->assertEquals( false, Recipe_Pro_EasyRecipe_Importer::is_instance( $post ) );
 		$this->assertContains( "[recipepro]", $post->post_content );

@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__."/../includes/class-recipe-pro-service.php";
+require_once __DIR__."/class-recipe-pro-import-log.php";
 
 class Recipe_Pro_EasyRecipe_Importer {
 	
@@ -20,24 +21,39 @@ class Recipe_Pro_EasyRecipe_Importer {
 	* but rather re-retrieved from wordpress api. Destructive.
 	**/
 	static public function convert($wppost) {
+		$result = new Recipe_Pro_Import_Log();
 		// run extract on the post
-		$extracted = self::extract( $wppost );
-		// take the model and write it to the post's metadata
-		Recipe_Pro_Service::saveRecipe( $wppost->ID, $extracted );
-
-		$erdoc = new EasyRecipeDocument( $wppost->post_content );
-		// remove the ERP bits from the post + add the shortcode that renders the other bits
-		$replacement = $erdoc->createTextNode( "[recipepro]" );
-		$erdoc->getRecipe()->parentNode->replaceChild( $replacement, $erdoc->getRecipe() );
-		$post_changes = array(
-		      'ID'           => $wppost->ID,
-		      'post_content' => $erdoc->getHTML( true ),
-		);
-		$updated = wp_update_post( $post_changes );
-		if ( $updated == 0 ) {
-			return false;
+		try {
+			$extracted = self::extract( $wppost );
+		} catch (Exception $e) {
+			$result->addNote("Error extracting old recipe: " . $e->getMessage() );
 		}
-		return true;
+		// take the model and write it to the post's metadata
+		try {
+			Recipe_Pro_Service::saveRecipe( $wppost->ID, $extracted );
+		} catch (Exception $e) {
+			$result->addNote("Error saving new recipe: " . $e->getMessage() );
+		}
+
+		try {
+			$erdoc = new EasyRecipeDocument( $wppost->post_content );
+			// remove the ERP bits from the post + add the shortcode that renders the other bits
+			$replacement = $erdoc->createTextNode( "[recipepro]" );
+			$erdoc->getRecipe()->parentNode->replaceChild( $replacement, $erdoc->getRecipe() );
+			$post_changes = array(
+			      'ID'           => $wppost->ID,
+			      'post_content' => $erdoc->getHTML( true ),
+			);
+			$updated = wp_update_post( $post_changes );
+		} catch (Exception $e) {
+			$result->addNote("Error replacing old recipe: " . $e->getMessage() );
+		}
+
+		if ( $updated == 0 ) {
+			return $result;
+		}
+		$result->success = true;
+		return $result;
 	}
 
 	/**

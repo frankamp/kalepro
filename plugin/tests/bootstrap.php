@@ -16,6 +16,29 @@ function var_log() {
     error_log( ob_get_clean() );
 }
 
+function import_data( $datafile ) {
+	$file = dirname( dirname( __FILE__ ) ) . "/tests/" . $datafile;
+
+	//error_log( "attempting to import $file" );
+	if ( class_exists('WP_Import') && defined('WP_LOAD_IMPORTERS')  ) {
+		$WP_Import = new WP_Import();
+		// Not sure why these wouldn't be loaded
+		if ( ! function_exists ( 'wp_insert_category' ) )
+			include ( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+		if ( ! function_exists ( 'post_exists' ) )
+			include ( ABSPATH . 'wp-admin/includes/post.php' );
+		if ( ! function_exists ( 'comment_exists' ) )
+			include ( ABSPATH . 'wp-admin/includes/comment.php' );
+		ob_start();
+		// if ( defined('WORDPRESS_IMPORTER_EXTENDED_FETCH_ATTACHMENTS') && WORDPRESS_IMPORTER_EXTENDED_FETCH_ATTACHMENTS == true ) {
+		// 	$WP_Import->fetch_attachments = true;
+		// 	$WP_Import->allow_fetch_attachments();
+		// }
+		$WP_Import->import( $file );
+		ob_end_clean();
+	}
+}
+
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 // require_once( dirname( dirname( __FILE__ ) ) . 'wp-admin/includes/plugin.php' )

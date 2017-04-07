@@ -28,6 +28,7 @@ class Recipe_Pro_Importer {
 				'total' => 0,
 				'importer' => '',
 				'imported' => array(),
+				'notes' => array(),
 				'errored' => array(),
 				'errorMessages' => array()
 			);
@@ -77,13 +78,16 @@ class Recipe_Pro_Importer {
 					$importer = $this->get_importer( $state['importer'] );
 					//error_log( "Work: checking post " . $post_id );
 					if ( $importer::is_instance( $post ) ) {
-						error_log( "Work: converting post " . $post_id );
+						//error_log( "Work: converting post " . $post_id );
 						$result = $importer::convert($post);
-						if ( $result ) {
+						if ( $result->success ) {
 							array_push( $state['imported'], $post_id);
 						} else {
 							array_push( $state['errored'], $post_id);
-							array_push( $state['errorMessages'], "An error occurred importing the post." );
+							array_push( $state['errorMessages'], "An error occurred importing post $post_id." );
+						}
+						if ( count( $result->notes ) > 0 ) {
+							$state['notes'][$post_id] = $result->notes;
 						}
 					}
 					//error_log( "Work: updating position post " . $post_id );
@@ -91,6 +95,7 @@ class Recipe_Pro_Importer {
 						'position' => $state['position'] + 1,
 						'imported' => $state['imported'],
 						'errored' => $state['errored'],
+						'notes' => $state['notes'],
 						'errorMessages' => $state['errorMessages']
 					));
 				}
@@ -112,6 +117,7 @@ class Recipe_Pro_Importer {
 				'importer' => $importer,
 				'imported' => array(),
 				'errored' => array(),
+				'notes' => array(),
 				'errorMessages' => array()
 			));
 		}
