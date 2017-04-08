@@ -1,65 +1,65 @@
 <script type="application/ld+json"><?=$viewhelper::ldjson($recipe)?></script>
 <div id="recipe-pro-recipe" class="rp" itemscope="" itemtype="http://schema.org/Recipe"> 
-	<div class="ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
+	<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
 		<div>
 			<div><span ><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</span>
 			</div> 
 		</div> 
 	</div> 
-	<div class="name" itemprop="name"><?= $recipe->title ?></div> 
-	<div class="topright"><div class="previewimage"> 
+	<div class="rp-name" itemprop="name"><?= $recipe->title ?></div> 
+	<div class="rp-topright"><div class="rp-previewimage"> 
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
-	<div id="recipe-pro-print"><button class="print">Print</button></div></div>
+	<div id="recipe-pro-print"><button class="rp-print">Print</button></div></div>
 	<div class="overview">
-	<div class="recipetype">Recipe type: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
-	<div class="cuisine">Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
-	<div class="author">Author: <span itemprop="author"><?= $recipe->author ?></span></div>
+	<div class="rp-recipetype">Recipe type: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
+	<div class="rp-cuisine">Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
+	<div class="rp-author">Author: <span itemprop="author"><?= $recipe->author ?></span></div>
 	<div>
-		<div class="preptime">
+		<div class="rp-preptime">
 			<div>Prep time</div>
 			<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
 		</div>
-		<div class="cooktime">
+		<div class="rp-cooktime">
 			<div>Cook time</div>
 			<div> <time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div>
 		</div>
-		<div class="totaltime">
+		<div class="rp-totaltime">
 			<div>Total time</div>
 			<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div>
 		</div>
 	</div>
-	<div class="serving">Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
-	<div class="description"><span itemprop="description"><?= $recipe->description ?></span></div>
+	<div class="rp-serving">Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
+	<div class="rp-description"><span itemprop="description"><?= $recipe->description ?></span></div>
 	</div>
 	<div> 
-		<div class="ingredientstitle">Ingredients</div> 
+		<div class="rp-ingredientstitle">Ingredients</div> 
 <?php foreach( $recipe->ingredientSections as $section ): ?>
 		<?php if ( $section->name ): ?><div class="subheading" itemprop="recipeIngredient"><?= $section->name ?></div> 
 <?php endif; ?>
 		<ul> 
 <?php foreach($section->items as $ingredient): ?>
-			<li class="ingredients" itemprop="recipeIngredient"><?= $ingredient->description ?></li>
+			<li class="rp-ingredients" itemprop="recipeIngredient"><?= $ingredient->description ?></li>
 <?php endforeach; ?>
 		</ul> 
 <?php endforeach; ?>
 	</div> 
 	<div> 
-		<div>Instructions</div> 
+		<div class="rp-instructionstitle">Instructions</div> 
 		<ol> 
 <?php foreach( $recipe->instructions as $instruction ): ?>
-			<li itemprop="recipeInstructions"><?= $instruction->description ?></li>
+			<li class="rp-instructions" itemprop="recipeInstructions"><?= $instruction->description ?></li>
 <?php endforeach; ?>
 		</ol> 
 	</div> 
 	<div> 
-		<div>Notes</div> 
+		<div class="rp-notestitle">Notes</div> 
 <?php foreach( $recipe->notes as $note ): ?>
 		<div><?= $note->description ?></div> 
 <?php endforeach; ?>
 	</div> 
-	<div itemprop="nutrition" itemscope="" itemtype="http://schema.org/NutritionInformation"> 
-		<div>Nutrition Information</div> 
+	<div class="rp-nutrition" itemprop="nutrition" itemscope="" itemtype="http://schema.org/NutritionInformation"> 
+		<div class="rp-nutritionstitle">Nutrition Information</div> 
 		<div> 
 			Serving size:&nbsp;<span itemprop="servingSize"><?= $recipe->servingSize ?></span> 
 			Calories:&nbsp;<span itemprop="calories"><?= $recipe->calories ?></span> 
