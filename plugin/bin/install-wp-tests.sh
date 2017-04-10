@@ -69,7 +69,7 @@ install_wp() {
 		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
 	fi
 	download https://downloads.wordpress.org/plugin/wordpress-importer.0.6.3.zip  /tmp/wordpress-importer.0.6.3.zip
-	unzip -q /tmp/wordpress-importer.0.6.3.zip -d wordpress-importer/
+	unzip -q /tmp/wordpress-importer.0.6.3.zip -d .
 	download https://raw.github.com/markoheijnen/wp-mysqli/master/db.php $WP_CORE_DIR/wp-content/db.php
 }
 
