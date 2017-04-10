@@ -5,7 +5,7 @@
 .rp {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 100%;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: 300;	
 	line-height: 1.4;
 	color: #000;
@@ -19,7 +19,7 @@
 }
 .rp-name {
 	font-size: 22px;
-	font-size: 1.83em;
+	font-size: 1.57em;
 	text-transform: uppercase;
     font-weight: 700;
     width: 75%;
@@ -61,14 +61,14 @@
 .rp-notestitle {
 	text-transform: uppercase;
 	font-size: 18px;
-	font-size: 1.5em;
+	font-size: 1.29em;
     font-weight: 700;
 }
 
 .rp-subheading {
     text-transform: uppercase;
     font-size: 14px;
-    font-size: 1.17em;
+    font-size: 1em;
 }
 .rp-preptime,
 .rp-cooktime,
@@ -87,7 +87,8 @@
 	width: 33.3%;
 	float: left;
 	text-align: center;
-	font-size: 10px;
+	font-size: 14px;
+	font-size: 1em;
 }
 .rp-ingredients,
 .rp-nstructions,
@@ -125,7 +126,7 @@
     display: inline-block;
     font-family: dashicons;
     font-size: 20px;
-    font-size: 1.67em;
+    font-size: 1.43em;
     font-style: normal;
     font-weight: 300;
     height: 20px;
