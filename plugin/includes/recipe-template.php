@@ -11,7 +11,7 @@
 		<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205"> 
 	</div> 
 	<div id="recipe-pro-print"><button class="rp-print">Print</button></div></div>
-	<div class="overview">
+	<div class="rp-overview">
 	<div class="rp-recipetype">Recipe type: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
 	<div class="rp-cuisine">Cuisine: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
 	<div class="rp-author">Author: <span itemprop="author"><?= $recipe->author ?></span></div>
