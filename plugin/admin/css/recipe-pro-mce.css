@@ -1,7 +1,8 @@
 .recipeproplaceholder {
-    background: url("placeholder.png") no-repeat center;
-    background-size: 600px 150px;
-    height:  auto;
+    background: url("placeholder.png") no-repeat center center;
+    background-size: 400px auto;
+    height:  100px;
+    width: 100%;
     max-width: 100%;
     vertical-align: top;
     speak: none;
