@@ -1,14 +1,12 @@
 /**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
-
- /* Recipe Pro Basic Structure
+ * Recipe Pro Styling
 --------------------------------------------- */
 
 .rp {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 100%;
 	font-size: 14px;
+	font-weight: 300;	
 	line-height: 1.4;
 	color: #000;
 	border: 0; /*included in case an outline would be helpful*/
@@ -19,18 +17,9 @@
 	padding: 10px;
 	width: 100%;
 }
-div.rp {
-	position: relative;
-	clear: both;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 14px;
-	font-weight: 300;
-	line-height: 125%;
-	color: #000;	
-}
-
 .rp-name {
 	font-size: 22px;
+	font-size: 1.57em;
 	text-transform: uppercase;
     font-weight: 700;
     width: 75%;
@@ -48,7 +37,7 @@ div.rp {
 	color: #000;
 	border: 1px solid #010101;
 	background: #fff;
-	font-size: 12px;
+	font-size: 1em;
 	letter-spacing: 2px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -72,12 +61,14 @@ div.rp {
 .rp-notestitle {
 	text-transform: uppercase;
 	font-size: 18px;
+	font-size: 1.29em;
     font-weight: 700;
 }
 
 .rp-subheading {
     text-transform: uppercase;
     font-size: 14px;
+    font-size: 1em;
 }
 .rp-preptime,
 .rp-cooktime,
@@ -96,7 +87,8 @@ div.rp {
 	width: 33.3%;
 	float: left;
 	text-align: center;
-	font-size: 10px;
+	font-size: 14px;
+	font-size: 1em;
 }
 .rp-ingredients,
 .rp-nstructions,
@@ -125,7 +117,7 @@ div.rp {
     content: "\f459";
 }
 
-.rp-star-rating .rp-tar-empty::before {
+.rp-star-rating .rp-star-empty::before {
     content: "\f154";
 }
 
@@ -134,6 +126,7 @@ div.rp {
     display: inline-block;
     font-family: dashicons;
     font-size: 20px;
+    font-size: 1.43em;
     font-style: normal;
     font-weight: 300;
     height: 20px;
@@ -143,40 +136,8 @@ div.rp {
     vertical-align: top;
     width: 20px;
 }
-
-.rp-comment {
-    margin-bottom: 10px!important;
-    margin-top: 10px
-}
-
-span.rp-comment,
-span.rp-comment span {
-    display: block
-}
 .rp-previewimage img {
 	width: 200px;
 	height: auto;
 	margin: 5px;
-}
-
-@media print {
-	body { background:white; color:black; margin:0; }
-	#masthead { display: none; }
-	/*#content { display: none; }*/
-	#comments { display: none; }
-	#sidebar { display: none; }
-	#footer { display: none; }
-	#commentform { display:none }
-	.tmeals { display: none;}
-	.entry-footer { display: none;}
-	#colophon { display:none }
-	/*div.rp { 
-    position: fixed;
-    top: -20px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background-color: #ffffff;
-	}*/
 }
