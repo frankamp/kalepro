@@ -81,15 +81,8 @@ class Recipe_Pro_Admin {
 	}
 
 	public function render_recipe_shortcode( $atts ) {
-		// TODO: IT IS MY RESPONSIBILITY TO SECURE THE OUTPUT
-		// https://developer.wordpress.org/plugins/security/securing-output/
 		$post = get_post();
-		$meta_result = get_post_meta( (int) $post->ID, (string) 'recipepro_recipe', true );
-		if( ! $meta_result ) {
-			$recipe = new Recipe_Pro_Recipe();
-		} else {
-			$recipe = new Recipe_Pro_Recipe(json_decode($meta_result, true));
-		}
+		$recipe = Recipe_Pro_Service::getRecipe( $post->ID );
 		return $this->render_recipe($recipe);
 	}
 

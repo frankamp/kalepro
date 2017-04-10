@@ -3,7 +3,7 @@
 class Recipe_Pro_Import_Log {
 	public function __construct() {
 		$this->notes = array();
-		$this->successful = false;
+		$this->success = false;
 		$this->recipe = null;
 	}
 

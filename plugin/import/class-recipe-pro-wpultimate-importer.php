@@ -32,12 +32,33 @@ class Recipe_Pro_WPUltimate_Importer {
 	static public function convert($wppost) {
 		$matches = self::search_instance( $wppost );
 	 	if ( count($matches) > 1 ){
-	 		$new_recipe = self::extract($wppost);
-	 		// persist new recipe
-	 		// do replacement
-	 		return true;
+	 		$log = self::extract($wppost);
+	 		Recipe_Pro_Service::saveRecipe( $wppost->ID, $log->recipe );
+	 		try {
+				$content = $wppost->post_content;
+				$content = preg_replace( "/\[ultimate-recipe\s.*?]/im", '[recipepro]', $content );
+
+				$update_content = array(
+					'ID' => $wppost->ID,
+					'post_content' => $content,
+				);
+				wp_update_post( $update_content );
+			} catch (Exception $e) {
+				$log->success = false;
+				$log->addNote("Failed to update old post. " . $e->getMessage() );
+			}
+			// Migrate potential ER comment ratings.
+			// $comments = get_comments( array( 'post_id' => $id ) );
+
+			// foreach ( $comments as $comment ) {
+			// 	$comment_rating = intval( get_comment_meta( $comment->comment_ID, 'ERRating', true ) );
+			// 	if ( $comment_rating ) {
+			// 		update_comment_meta( $comment->comment_ID, 'wprm-comment-rating', $comment_rating );
+			// 	}
+			// }
+	 		return $log;
 	 	} else {
-	 		return false;
+	 		return new Recipe_Pro_Import_Log();
 	 	}
 	}
 
@@ -65,7 +86,8 @@ class Recipe_Pro_WPUltimate_Importer {
 		// $post_meta = get_post_custom( $id );
 		$matches = self::search_instance( $wppost );
  		$recipe_post_id = $matches[1];
- 		$wpu_recipe = new Recipe_Pro_WPURP_Recipe(get_post( (int) $recipe_post_id ));
+ 		$recipe_post = get_post( (int) $recipe_post_id );
+ 		$wpu_recipe = new Recipe_Pro_WPURP_Recipe( $recipe_post );
 		// $import_type = isset( $post_data['wpurp-import-type'] ) ? $post_data['wpurp-import-type'] : '';
 
 		// // If the import type is not set, redirect back.
@@ -102,7 +124,7 @@ class Recipe_Pro_WPUltimate_Importer {
 
 		// $recipe['servings'] = isset( $post_meta['recipe_servings'] ) ? $post_meta['recipe_servings'][0] : '';
 		// $recipe['servings_unit'] = isset( $post_meta['recipe_servings_type'] ) ? $post_meta['recipe_servings_type'][0] : '';
-		$recipe->servingSize = ($wpu_recipe->servings() ?: '1') . ' ' . ($wpu_recipe->servings_type() ?: 'serving');
+		$recipe->yield = ($wpu_recipe->servings() ?: '1') . ' ' . ($wpu_recipe->servings_type() ?: 'serving');
 
 		// $recipe['notes'] = isset( $post_meta['recipe_notes'] ) ? $post_meta['recipe_notes'][0] : '';
 		if ( $wpu_recipe->notes() ) {
@@ -129,7 +151,7 @@ class Recipe_Pro_WPUltimate_Importer {
 			$log->addNote( "Passive time " . $wpu_recipe->passive_time() . " " . $wpu_recipe->passive_time_text() . " was removed." );
 		}
 		// $recipe['total_time'] = $recipe['prep_time'] + $recipe['cook_time'] + $passive_time_minutes;
-
+		
 		// // Recipe Ingredients.
 		// $ingredients = isset( $post_meta['recipe_ingredients'] ) ? maybe_unserialize( $post_meta['recipe_ingredients'][0] ) : array();
 		// $recipe['ingredients'] = array();
@@ -155,6 +177,25 @@ class Recipe_Pro_WPUltimate_Importer {
 		// 	);
 		// }
 		// $recipe['ingredients'][] = $current_group;
+		$section = new Recipe_Pro_Ingredient_Section( "", array() );
+		foreach ( $wpu_recipe->ingredients() as $ingredient ) {
+			if ( isset( $ingredient['group'] ) && $ingredient['group'] !== $section->name ) {
+				if ( count( $section->items ) > 0 ) {
+					array_push( $recipe->ingredientSections, $section );
+				}
+				$section = new Recipe_Pro_Ingredient_Section(
+					$ingredient['group'],
+					array()
+				);
+			}
+			array_push( $section->items, new Recipe_Pro_Ingredient(
+				$ingredient['amount'],
+				$ingredient['unit'],
+				$ingredient['ingredient'],
+				$ingredient['amount'] . " " . $ingredient['unit'] . " " . $ingredient['ingredient'] . (strlen( trim( $ingredient['notes'] ) ) > 0 ? " " . $ingredient['notes'] : "")
+			));
+		}
+		array_push( $recipe->ingredientSections, $section );
 
 		// // Recipe Instructions.
 		// $instructions = isset( $post_meta['recipe_instructions'] ) ? maybe_unserialize( $post_meta['recipe_instructions'][0] ) : array();
@@ -179,58 +220,55 @@ class Recipe_Pro_WPUltimate_Importer {
 		// 	);
 		// }
 		// $recipe['instructions'][] = $current_group;
+		$current_group_name = "";
+		foreach ( $wpu_recipe->instructions() as $instruction ) {
+			if ( isset( $instruction['group'] ) && $instruction['group'] !== $current_group_name ) {
+				$current_group_name = $instruction['group'];
+				array_push( $recipe->instructions, new Recipe_Pro_Instruction( $instruction['group'] ) );
+			}
+			array_push( $recipe->instructions, new Recipe_Pro_Instruction( $instruction['description'] ) );
+		}
 
-		// // Recipe Nutrition.
-		// $recipe['nutrition'] = array();
-
-		// $nutrition_mapping = array(
-		// 	'serving_size'          => 'serving_size',
-		// 	'calories'              => 'calories',
-		// 	'carbohydrate'          => 'carbohydrates',
-		// 	'protein'               => 'protein',
-		// 	'fat'                   => 'fat',
-		// 	'saturated_fat'         => 'saturated_fat',
-		// 	'polyunsaturated_fat'   => 'polyunsaturated_fat',
-		// 	'monounsaturated_fat'   => 'monounsaturated_fat',
-		// 	'trans_fat'             => 'trans_fat',
-		// 	'cholesterol'           => 'cholesterol',
-		// 	'sodium'                => 'sodium',
-		// 	'potassium'             => 'potassium',
-		// 	'fiber'                 => 'fiber',
-		// 	'sugar'                 => 'sugar',
-		// 	'vitamin_a'             => 'vitamin_a',
-		// 	'vitamin_c'             => 'vitamin_c',
-		// 	'calcium'               => 'calcium',
-		// 	'iron'                  => 'iron',
-		// );
 
 		// $nutrition = isset( $post_meta['recipe_nutritional'] ) ? maybe_unserialize( $post_meta['recipe_nutritional'][0] ) : array();
+		$nutrition = $wpu_recipe->nutrition();
+		$recipe->servingSize = isset( $nutrition[ "serving_size" ] ) ? $nutrition[ "serving_size" ]: "";
+		$recipe->calories = isset( $nutrition[ "calories" ] ) ? $nutrition[ "calories" ]: "";
+		$recipe->cholesterolContent = isset( $nutrition[ "cholesterol" ] ) ? $nutrition[ "cholesterol" ] . "mg": "";
+		$recipe->fatContent = isset( $nutrition[ "fat" ] ) ? $nutrition[ "fat" ] . "g": "";
+		$recipe->saturatedFatContent = isset( $nutrition[ "saturated_fat" ] ) ? $nutrition[ "saturated_fat" ] . "g": "";
+		
+		if ( isset( $nutrition[ "polyunsaturated_fat" ] ) && isset( $nutrition[ "monounsaturated_fat" ] ) ) {
+			$recipe->unsaturatedFatContent = ($nutrition[ "monounsaturated_fat" ] + $nutrition[ "polyunsaturated_fat" ]) . "g";
+		} else if( isset( $nutrition[ "polyunsaturated_fat" ] )) {
+			$recipe->unsaturatedFatContent = isset( $nutrition[ "polyunsaturated_fat" ] ) ? $nutrition[ "polyunsaturated_fat" ] . "g": "";
+		} else {
+			$recipe->unsaturatedFatContent = isset( $nutrition[ "monounsaturated_fat" ] ) ? $nutrition[ "monounsaturated_fat" ] . "g": "";
+		}
 
-		// foreach ( $nutrition_mapping as $wpurp_field => $wprm_field ) {
-		// 	$recipe['nutrition'][ $wprm_field ] = isset( $nutrition[ $wpurp_field ] ) ? $nutrition[ $wpurp_field ] : '';
-		// }
+		$recipe->transFatContent = isset( $nutrition[ "trans_fat" ] ) ? $nutrition[ "trans_fat" ] . "g": "";
+		$recipe->carbohydrateContent = isset( $nutrition[ "carbohydrate" ] ) ? $nutrition[ "carbohydrate" ] . "g": "";
+		$recipe->sugarContent = isset( $nutrition[ "sugar" ] ) ? $nutrition[ "sugar" ] . "g": "";
+		$recipe->sodiumContent = isset( $nutrition[ "sodium" ] ) ? $nutrition[ "sodium" ] . "mg": "";
+		$recipe->fiberContent = isset( $nutrition[ "fiber" ] ) ? $nutrition[ "fiber" ] . "g": "";
+		$recipe->proteinContent = isset( $nutrition[ "protein" ] ) ? $nutrition[ "protein" ] . "g": "";
+		
 
-		// return $recipe;
-		
-		
-		
-		
-		// $recipe->author = $wpu_recipe->author();
-		// $recipe->type = $data->type;
+		$courses = wp_get_post_terms( $recipe_post_id, 'course', array( 'fields' => 'names' ) );
+        if( !is_wp_error( $courses ) && isset( $courses[0] ) ) {
+            $recipe->type = $courses[0];
+        }
+
+        $cuisines = wp_get_post_terms( $recipe_post_id, 'cuisine', array( 'fields' => 'names' ) );
+        if( !is_wp_error( $cuisines ) && isset( $cuisines[0] ) ) {
+            $recipe->cuisine = $cuisines[0];
+        }
+		$recipe->author = $wpu_recipe->author();
+
 		// $recipe->cuisine = $data->cuisine;
 		// $recipe->yield = $data->yield;
 		
-		// $recipe->calories = $data->calories ?: "";
-		// $recipe->cholesterolContent = $data->cholesterol ?: "";
-		// $recipe->fatContent = $data->fat ?: "";
-		// $recipe->saturatedFatContent = $data->saturatedFat ?: "";
-		// $recipe->unsaturatedFatContent = $data->unsaturatedFat ?: "";
-		// $recipe->transFatContent = $data->transFat ?: "";
-		// $recipe->carbohydrateContent = $data->carbohydrates ?: "";
-		// $recipe->sugarContent = $data->sugar ?: "";
-		// $recipe->sodiumContent = $data->sodium ?: "";
-		// $recipe->fiberContent = $data->fiber ?: "";
-		// $recipe->proteinContent = $data->protein ?: "";
+
 		// if ( $data->preptimeISO ) {
 		// 	$recipe->setPrepTimeByValue( $data->preptimeISO );
 		// }
@@ -277,8 +315,8 @@ class Recipe_Pro_WPUltimate_Importer {
 
         //     $metadata['recipeInstructions'] = $metadata_instructions;
         // }
+        $log->success = true;
 	 	return $log;
-	 	//$meta_result = get_post_meta( (int) $post->ID, (string) 'recipepro_recipe', true );
 	}
 }
 
@@ -521,6 +559,18 @@ class Recipe_Pro_WPURP_Recipe {
             $image_id = $this->featured_image();
         }
         return $image_id;
+    }
+
+	public function nutrition()
+    {
+        $nutrition = @unserialize( $this->meta( 'recipe_nutritional' ) );
+
+        // Try to fix serialize offset issues
+        if( $nutrition === false ) {
+            $nutrition = unserialize( preg_replace_callback ( '!s:(\d+):"(.*?)";!', array( $this, 'regex_replace_serialize' ), $this->meta( 'recipe_nutritional' ) ) );
+        }
+
+        return $nutrition;
     }
 
     public function ingredients()

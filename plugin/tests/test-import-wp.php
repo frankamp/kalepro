@@ -51,26 +51,55 @@ class WPUltimageImportTest extends WP_UnitTestCase {
 		$this->assertEquals( true, Recipe_Pro_WPUltimate_Importer::is_instance( $this->get_post() ) );
 	}
 
-	function test_extract() {
-		register_post_type( 'recipe' );
-		import_data( 'wpudata.xml' );
-		$post = get_post(10403);
+	function load_wpudata() {
 		wp_set_current_user( null, 'admin' );
-		$log = Recipe_Pro_WPUltimate_Importer::extract( $post );
-		$recipe = $log->recipe;
-		$this->assertEquals( "Simple Tofu Quiche", $recipe->title );
-		$this->assertEquals( "The simplest tofu quiche on the block with just 10 basic ingredients and no fancy methods required. A hash brown crust keeps this dish gluten free as well as vegan! Perfect for lunch, brunch and even brinner.", $recipe->description );
-		$this->assertEquals( "8 people", $recipe->servingSize );
-		$this->assertEquals( new DateInterval("PT15M"), $recipe->prepTime );
-		$this->assertEquals( new DateInterval("PT90M"), $recipe->cookTime );
-		$this->assertEquals( "Passive time 5 hours was removed.", $log->notes[0] );
+		register_post_type( 'recipe' );
+		register_taxonomy('course', 'recipe');
+		register_taxonomy('cuisine', 'recipe');
+		register_taxonomy_for_object_type( 'cuisine', 'recipe' );
+		register_taxonomy_for_object_type( 'course', 'recipe' );
+		import_data( 'wpudata.xml' );
+		
 	}
 
-	// function test_convert() {
-	// 	wp_set_current_user( null, 'admin' );
-	// 	$this->assertEquals( false, Recipe_Pro_WPUltimate_Importer::convert( $this->get_post_without() ) );
-	// 	$this->assertEquals( true, Recipe_Pro_WPUltimate_Importer::convert( $this->get_post() ) );
+	function test_extract() {
+		$this->load_wpudata();
+		$post = get_post(10403);
+		$log = Recipe_Pro_WPUltimate_Importer::extract( $post );
+		$this->assertEquals( "Passive time 5 hours was removed.", $log->notes[0] );
+		$this->do_recipe_assertions( $log->recipe );
+	}
 
-	// }
+	function do_recipe_assertions( $recipe ) {
+		$this->assertEquals( "Simple Tofu Quiche", $recipe->title );
+		$this->assertEquals( "The simplest tofu quiche on the block with just 10 basic ingredients and no fancy methods required. A hash brown crust keeps this dish gluten free as well as vegan! Perfect for lunch, brunch and even brinner.", $recipe->description );
+		$this->assertEquals( "", $recipe->servingSize );
+		$this->assertEquals( "8 people", $recipe->yield );
+		$this->assertEquals( new DateInterval("PT15M"), $recipe->prepTime );
+		$this->assertEquals( new DateInterval("PT90M"), $recipe->cookTime );
+		$this->assertEquals( "Crust", $recipe->ingredientSections[0]->name );
+		$this->assertEquals( "3 medium-large potatoes", $recipe->ingredientSections[0]->items[0]->description );
+		$this->assertEquals( "2 tbsp melted vegan butter (or sub olive oil with varied results)", $recipe->ingredientSections[0]->items[1]->description );
+		$this->assertEquals( 3, count( $recipe->ingredientSections[0]->items) );
+		$this->assertEquals( "Filling", $recipe->ingredientSections[1]->name );
+		$this->assertEquals( "12.3 ounces extra firm silken tofu patted dry", $recipe->ingredientSections[1]->items[0]->description );
+		$this->assertEquals( 8, count( $recipe->ingredientSections[1]->items) );
+		$this->assertEquals( 2, count( $recipe->ingredientSections) );
+		$this->assertEquals( "Preheat oven to 450 degrees F and lightly spritz a 9.5 inch pie pan with non-stick spray.", $recipe->instructions[0]->description );
+		$this->assertEquals( 8, count( $recipe->instructions) );
+		$this->assertEquals( "Vegan", $recipe->cuisine );
+		$this->assertEquals( "Breakfast", $recipe->type );
+	}
 
-}
+	function test_convert() {
+		$this->load_wpudata();
+		$post = get_post(10403);
+		$this->assertEquals( true, Recipe_Pro_WPUltimate_Importer::is_instance( $post ) );
+		$log = Recipe_Pro_WPUltimate_Importer::convert( $post );
+		$this->assertEquals( true, $log->success );
+		$post = get_post(10403);
+		$this->assertEquals( false, Recipe_Pro_WPUltimate_Importer::is_instance( $post ) );
+		$recipe = Recipe_Pro_Service::getRecipe( $post->ID );
+		$this->do_recipe_assertions( $recipe );
+	}
+}	
