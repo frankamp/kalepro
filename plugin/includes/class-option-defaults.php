@@ -47,7 +47,8 @@ class Recipe_Pro_Option_Defaults {
 				'fiber' => __('Fiber', 'recipe-pro'),
 				'sugars' => __('Sugars', 'recipe-pro'),
 				'protein' => __('Protein', 'recipe-pro'),
-				'rate_this_recipe' => __('Rate this recipe', 'recipe-pro')
+				'rate_this_recipe' => __('Rate this recipe', 'recipe-pro'),
+				'print' => __('Print', 'recipe-pro'),
 			);
 		}
 		return self::$_labels;

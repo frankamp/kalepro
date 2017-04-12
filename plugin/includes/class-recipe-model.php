@@ -9,6 +9,8 @@
  * @subpackage recipe-pro/includes
  */
 
+require_once __DIR__.'/class-option-defaults.php';
+
 class Recipe_Pro_Recipe_View_Helper {
 	public static function prettyInterval(\DateInterval $interval) {
 		$doPlural = function($nb,$str){return $nb>1?$str.'s':$str;}; // adds plurals
@@ -258,6 +260,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	public function render() {
 		$recipe = $this;
 		$viewhelper = new Recipe_Pro_Recipe_View_Helper();
+		$labels = Recipe_Pro_Option_Defaults::get_labels();
 		ob_start();
 		include('recipe-template.php');
 		return ob_get_clean();
