@@ -16,6 +16,29 @@ function var_log() {
     error_log( ob_get_clean() );
 }
 
+function _make_attachment( $upload, $parent_post_id = 0 ) {
+    $type = '';
+    if ( !empty($upload['type']) ) {
+        $type = $upload['type'];
+    } else {
+        $mime = wp_check_filetype( $upload['file'] );
+        if ($mime)
+            $type = $mime['type'];
+    }
+    $attachment = array(
+        'post_title' => basename( $upload['file'] ),
+        'post_content' => '',
+        'post_type' => 'attachment',
+        'post_parent' => $parent_post_id,
+        'post_mime_type' => $type,
+        'guid' => $upload[ 'url' ],
+    );
+    // Save the data
+    $id = wp_insert_attachment( $attachment, $upload[ 'file' ], $parent_post_id );
+    wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $upload['file'] ) );
+    return $id;
+}
+
 function import_data( $datafile ) {
 	$file = dirname( dirname( __FILE__ ) ) . "/tests/" . $datafile;
 
@@ -31,8 +54,8 @@ function import_data( $datafile ) {
 			include ( ABSPATH . 'wp-admin/includes/comment.php' );
 		ob_start();
 		// if ( defined('WORDPRESS_IMPORTER_EXTENDED_FETCH_ATTACHMENTS') && WORDPRESS_IMPORTER_EXTENDED_FETCH_ATTACHMENTS == true ) {
-		// 	$WP_Import->fetch_attachments = true;
-		// 	$WP_Import->allow_fetch_attachments();
+		$WP_Import->fetch_attachments = true;
+		$WP_Import->allow_fetch_attachments();
 		// }
 		$WP_Import->import( $file );
 		ob_end_clean();

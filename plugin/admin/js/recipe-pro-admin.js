@@ -151,6 +151,7 @@
 						var attachment = file_frame.state().get('selection').first().toJSON();
 						// Do something with attachment.id and/or attachment.url here
 						this.model.set('imageUrl', attachment.url);
+						this.model.set('imageId', attachment.id);
 						$( '#image-preview' ).attr( 'src', attachment.url ).css( 'width', 'auto' );
 						//$( '#image_attachment_id' ).val( attachment.id );
 						// Restore the main post ID

@@ -161,13 +161,14 @@ class AdminTest extends WP_UnitTestCase {
 				"prepTime": "PT15M",
 				"cookTime": "PT1H15M",
 				"ratingValue": 5.0,
-				"ratingCount": 5
+				"ratingCount": 5,
+				"imageId": 0
 			}';
 	}
 
 	function test_render_recipe() {
 		$plugin_admin = new Recipe_Pro_Admin("", "");
-		$test_data = json_decode( $this->get_test_recipe_json(), true);
+		$test_data = json_decode( $this->get_test_recipe_json(), true );
 		if ( json_last_error() != JSON_ERROR_NONE ) {
 			$this->assertEquals( "bad json", "is bad because " . json_last_error_msg());
 		}
@@ -194,6 +195,27 @@ class AdminTest extends WP_UnitTestCase {
 		$post = $this->factory->post->create_and_get(array("post_title" => "My Title BLERRRRG"));
 		$GLOBALS['post'] = $post; // this is required to get the current post set
 		$this->assertEquals( $post, get_post());
+	}
+
+	function test_image_preference_from_id() {
+		$filename = ( dirname( dirname( __FILE__ ) ) . "/tests/test-image.png" );
+		$contents = file_get_contents($filename);
+
+		$upload = wp_upload_bits( basename($filename), null, $contents );
+		$this->assertTrue( empty($upload['error']) );
+
+	    $id = _make_attachment($upload);
+		$rawobj = json_decode( $this->get_test_recipe_json(), true );
+		$rawobj['imageId'] = $id;
+		$recipe = new Recipe_Pro_Recipe( $rawobj );
+		$this->assertEquals( "http://example.org/wp-content/uploads/2017/04/test-image-", substr( $recipe->getImageUrl(), 0, 57 ) );
+		wp_delete_post( $id, true );
+	}
+
+	function test_image_preference_from_string() {
+		$rawobj = json_decode( $this->get_test_recipe_json(), true );
+		$recipe = new Recipe_Pro_Recipe( $rawobj );
+		$this->assertEquals( "http://cdn3.minimalistbaker.com/wp-content/uploads/2016/09/Curry-Ramen-SQUARE.jpg", $recipe->getImageUrl() );
 	}
 
 	// $this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );

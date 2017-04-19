@@ -59,7 +59,6 @@ class WPUltimageImportTest extends WP_UnitTestCase {
 		register_taxonomy_for_object_type( 'cuisine', 'recipe' );
 		register_taxonomy_for_object_type( 'course', 'recipe' );
 		import_data( 'wpudata.xml' );
-		
 	}
 
 	function test_extract() {

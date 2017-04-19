@@ -119,7 +119,8 @@ class ERImportTest extends WP_UnitTestCase {
 				"prepTime": "PT1H",
 				"cookTime": "PT15M",
 				"ratingValue": 0.0,
-				"ratingCount": 0
+				"ratingCount": 0,
+				"imageId": 0
 		}';
 	}
 

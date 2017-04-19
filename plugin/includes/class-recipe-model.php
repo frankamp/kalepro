@@ -94,7 +94,7 @@ class Recipe_Pro_Recipe_View_Helper {
 		$json_object['author']['@type'] = "Person";
 		$json_object['author']['name'] = "$recipe->author";
 		$json_object['datePublished'] = get_the_date('Y-m-d');
-		$json_object['image'] = $recipe->imageUrl;
+		$json_object['image'] = $recipe->getImageUrl();
 		$json_object['description'] = $recipe->description;
 		$json_object['prepTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->prepTime );
 		$json_object['cookTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->cookTime );
@@ -175,6 +175,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		$this->title = "";
 		$this->description = "";
 		$this->imageUrl = "";
+		$this->imageId = 0;
 		$this->author = "";
 		$this->type = "";
 		$this->cuisine = "";
@@ -214,7 +215,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 	}
 
 	private function inflate( $jsonObj ) {
-		foreach ( array( "title", "description", "imageUrl", "author", "type",
+		foreach ( array( "title", "description", "author", "type",
 						 "cuisine", "yield", "servingSize", "servingSize",
 						 "calories", "cholesterolContent", "fatContent", "transFatContent", "saturatedFatContent", "unsaturatedFatContent",
 						 "carbohydrateContent", "sugarContent", "sodiumContent",
@@ -222,6 +223,11 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
 				$this->{$prop} = $jsonObj[$prop];
 			}
+		}
+		if ( array_key_exists( "imageId", $jsonObj ) && is_int( $jsonObj["imageId"] ) && $jsonObj["imageId"] != 0 ) {
+			$this->imageId = $jsonObj["imageId"];
+		} else if ( array_key_exists( "imageUrl", $jsonObj ) ) {
+			$this->imageUrl = $jsonObj["imageUrl"];
 		}
 		foreach ( array( "prepTime", "cookTime" ) as $prop ) {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
@@ -246,6 +252,14 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 			array_push( $this->notes, new Recipe_Pro_Note(
 				$note['description']
 			));
+		}
+	}
+
+	public function getImageUrl() {
+		if ( is_int( $this->imageId ) && $this->imageId != 0 ) {
+			return wp_get_attachment_url( $this->imageId );
+		} else {
+			return $this->imageUrl;
 		}
 	}
 
@@ -277,6 +291,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		foreach ( array( "prepTime", "cookTime" ) as $prop ) {
 			$copy[$prop] = Recipe_Pro_Recipe_View_Helper::interval( $copy[$prop] );
 		}
+		$copy['imageUrl'] = $this->getImageUrl();
 		return $copy;
 	}
 }
