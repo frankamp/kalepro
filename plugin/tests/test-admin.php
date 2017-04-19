@@ -218,6 +218,21 @@ class AdminTest extends WP_UnitTestCase {
 		$this->assertEquals( "http://cdn3.minimalistbaker.com/wp-content/uploads/2016/09/Curry-Ramen-SQUARE.jpg", $recipe->getImageUrl() );
 	}
 
+	function test_image_from_post_gets_defaulted_on_save() {
+		$post = $this->factory->post->create_and_get( array( "post_title" => "My Title BLERRRRG" ) );
+		global $_POST;
+		$filename = ( dirname( dirname( __FILE__ ) ) . "/tests/test-image.png" );
+		$contents = file_get_contents($filename);
+		$upload = wp_upload_bits( basename( $filename ), null, $contents );
+		$this->assertTrue( empty($upload['error']) );
+	    $id = _make_attachment( $upload );
+		set_post_thumbnail( $post->ID, $id );
+		$_POST['doc'] = wp_slash($this->get_test_recipe_json());
+		wp_update_post($post);
+		$meta = get_post_meta( $post->ID, 'recipepro_recipe', true );
+		$data = json_decode( $meta, true);
+		$this->assertEquals( $id, $data['imageId'] );
+	}
 	// $this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );
 	// $this->loader->add_action( 'wp_ajax_recipepro_recipe', $plugin_admin,  'ajax_get_recipe' );
 	// $this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_button' );

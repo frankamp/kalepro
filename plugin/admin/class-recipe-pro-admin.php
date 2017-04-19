@@ -801,6 +801,13 @@ class Recipe_Pro_Admin {
 			//error_log( "inflated");
 			//error_log( "recipe back to json " . json_encode($recipe) );
 			//error_log( "Preparing to save");
+			if ($recipe->imageId == 0) {
+				$thumb = get_post_thumbnail_id( get_post( $post_id ) );
+				if ( $thumb ) {
+					$recipe->imageId = $thumb;
+				}
+			}
+			
 			$success = Recipe_Pro_Service::saveRecipe( $post_id, $recipe );
 	//		$hits = get_post_meta( (int) $post_id, (string) 'hits2', true );
 	//		error_log( "hits are " . $hits . " but type is " . gettype($hits));
