@@ -8,8 +8,10 @@ require_once __DIR__."/class-recipe-pro-import-page.php";
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * Defines the plugin name, version,
+ * enqueues the admin-specific stylesheet and JavaScript.
+ * Implements nearly all of the admin wp hooks, sets up the menu
+ * and the rest is directly supporting the edit flow.
  *
  * @package    recipe-pro
  * @subpackage recipe-pro/admin
