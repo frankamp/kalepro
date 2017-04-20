@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__."/../includes/class-option-defaults.php";
 
-class Recipe_Pro_Settings {
+class Recipe_Pro_Label_Page {
 
 	public function register_label_page() {
 		register_setting( 'recipepro_settings_group', 'recipepro_settings' ); // could santize option values on save via callback here

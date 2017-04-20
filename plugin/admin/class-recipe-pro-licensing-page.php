@@ -1,6 +1,6 @@
 <?php
 
-class Recipe_Pro_Licensing {
+class Recipe_Pro_Licensing_Page {
 	
 	public function init () {
 		$this->register_license_option();
@@ -233,6 +233,30 @@ class Recipe_Pro_Licensing {
 			$redirect = add_query_arg( array( 'recipepro_sl_activation' => 'false', 'message' => urlencode( $message ) ), $base_url );
 			wp_redirect( $redirect );
 			exit();
+		}
+	}
+
+	public function display_admin_notices() {
+		if ( isset( $_GET['recipepro_sl_activation'] ) && ! empty( $_GET['message'] ) ) {
+			$message = $_GET['message']; //urldecode()
+			switch( $_GET['recipepro_sl_activation'] ) {
+				case 'false':
+					?>
+					<div class="notice notice-error is-dismissible">
+						<p><?php echo $message; ?></p>
+					</div>
+					<?php
+					break;
+
+				case 'true':
+				default:
+					?>
+					<div class="notice notice-success is-dismissible">
+						<p><?php echo $message; ?></p>
+					</div>
+					<?php
+					break;
+			}
 		}
 	}
 	

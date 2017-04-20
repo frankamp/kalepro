@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__."/../includes/class-option-defaults.php";
 require_once __DIR__."/../includes/class-recipe-pro-service.php";
-require_once __DIR__."/../import/class-recipe-pro-importer.php";
-require_once __DIR__."/class-recipe-pro-settings.php";
-require_once __DIR__."/class-recipe-pro-licensing.php";
+require_once __DIR__."/class-recipe-pro-label-page.php";
+require_once __DIR__."/class-recipe-pro-licensing-page.php";
+require_once __DIR__."/class-recipe-pro-import-page.php";
 
 /**
  * The admin-specific functionality of the plugin.
@@ -46,9 +46,10 @@ class Recipe_Pro_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->importer = new Recipe_Pro_Importer();
-		$this->settings = new Recipe_Pro_Settings();
-		$this->licensing = new Recipe_Pro_Licensing();
+		
+		$this->import_page = new Recipe_Pro_Import_Page( $plugin_name, $version );
+		$this->label_page = new Recipe_Pro_Label_Page();
+		$this->licensing_page = new Recipe_Pro_Licensing_Page();
 	}
 
 
@@ -90,7 +91,7 @@ class Recipe_Pro_Admin {
 			'Recipe Pro',                  // The text to be displayed for this actual menu item
 			'manage_options',            // Which type of users can see this menu
 			'recipepro',                  // The unique ID - that is, the slug - for this menu item
-			array(&$this->settings, 'label_page_display'),// The name of the function to call when rendering the menu for this page
+			array(&$this->label_page, 'label_page_display'),// The name of the function to call when rendering the menu for this page
 			'dashicons-carrot'
 		);
 		add_submenu_page( 
@@ -99,7 +100,7 @@ class Recipe_Pro_Admin {
 			'License',
 			'manage_options',
 			RECIPE_PRO_LICENSE_PAGE,
-			array(&$this->licensing, 'license_page_display')
+			array(&$this->licensing_page, 'license_page_display')
 		);
 		add_submenu_page( 
 			'recipepro',
@@ -107,7 +108,7 @@ class Recipe_Pro_Admin {
 			'Import Recipes',
 			'manage_options',
 			'import-recipes-menu',
-			array(&$this, 'import_page_display')
+			array(&$this->import_page, 'import_page_display')
 		);
 	}
 
@@ -117,8 +118,8 @@ class Recipe_Pro_Admin {
 	 * @since    1.0.0
 	 */
 	public function on_admin_init(  ) { 
-		$this->licensing->init();
-		$this->settings->register_label_page();
+		$this->licensing_page->init();
+		$this->label_page->register_label_page();
 	}
 
 	/**
@@ -127,75 +128,7 @@ class Recipe_Pro_Admin {
 	 * @since    1.0.0
 	 */
 	public function display_admin_notices() {
-		if ( isset( $_GET['recipepro_sl_activation'] ) && ! empty( $_GET['message'] ) ) {
-			$message = $_GET['message']; //urldecode()
-			switch( $_GET['recipepro_sl_activation'] ) {
-				case 'false':
-					?>
-					<div class="notice notice-error is-dismissible">
-						<p><?php echo $message; ?></p>
-					</div>
-					<?php
-					break;
-
-				case 'true':
-				default:
-					?>
-					<div class="notice notice-success is-dismissible">
-						<p><?php echo $message; ?></p>
-					</div>
-					<?php
-					break;
-			}
-		}
-	}
-
-	public function import_page_display () {
-		$html = '';
-		if ( !current_user_can( 'manage_options' ) )  {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-		}
-		?>
-		<style>
-			#progressbar {
-			  background-color: grey;
-			  border-radius: 0; /* (height of inner div) / 2 + padding */
-			  padding: 3px;
-			}
-			
-		   #progressbar > div {
-			   background-color: lightblue;
-			   width: 0%; /* Adjust with JavaScript */
-			   height: 20px;
-			   border-radius: 0;
-		   }	
-		</style>
-		<div class="wrap">
-			<form action='options.php' method='post'>
-				<h2><?= __( 'Import recipes from other plugins', 'recipe-pro' ) ?></h2>
-				<div id="importer">
-					
-					<div>Import Status: {{statusValues[status]}}</div>
-					<li v-for="item in importers">
-						<strong>{{ item.name }}</strong> {{ item.description }}
-						<button v-bind:disabled="status != 'ready'" v-on:click="beginImport" v-bind:name="item.name" v-bind:tag="item.tag">Start Import</button>
-					</li>
-
-					<div v-if="importer != null">
-						Importing using {{ importer.name }}
-						<div style="width:50%; float left;">
-							<div id="progressbar">
-							  <div></div>
-							</div>
-						</div>
-						<div style="float: right;">
-							<button v-bind:disabled="status == 'ready'" v-on:click="cancel">Close</button>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-		<?php
+		$this->licensing_page->display_admin_notices();
 	}
 	
 	/**
@@ -206,28 +139,6 @@ class Recipe_Pro_Admin {
 	 */
 	public function add_meta_box ( ) {
 		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), null, 'normal', 'high' );
-	}
-
-	public function ajax_cancel_import ( ) {
-		$importer_status = $this->importer->cancel();
-		header ( "Content-Type: application/json" );
-		echo json_encode( $importer_status );
-		wp_die();
-	}
-
-	public function ajax_do_import_work ( ) {
-		$importer_status = $this->importer->do_work();
-		header ( "Content-Type: application/json" );
-		echo json_encode( $importer_status );
-		wp_die();
-	}
-
-	public function ajax_begin_import ( ) {
-		$importerName = $_POST['importerName'];
-		$importer_status = $this->importer->begin_import( $importerName );
-		header ( "Content-Type: application/json" );
-		echo json_encode( $importer_status );
-		wp_die();
 	}
 
 	public function ajax_get_recipe ( ) {
@@ -560,7 +471,7 @@ class Recipe_Pro_Admin {
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/recipe-pro-admin.js', array( 'jquery', 'backbone', 'underscore' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . "vue", plugin_dir_url( __FILE__ ) . 'js/vue.js', array(), $this->version, false );
-		wp_enqueue_script( $this->plugin_name . "importer", plugin_dir_url( __FILE__ ) . 'js/recipe-pro-importer.js', array( 'jquery' ), $this->version, false );
+		$this->import_page->enqueue_scripts();
 	}
 
 }
