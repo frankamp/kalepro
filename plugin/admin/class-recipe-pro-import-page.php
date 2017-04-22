@@ -14,7 +14,7 @@ class Recipe_Pro_Import_Page {
 		wp_enqueue_script( $this->plugin_name . "importer", plugin_dir_url( __FILE__ ) . 'js/recipe-pro-importer.js', array( 'jquery' ), $this->version, false );
 	}
 
-	public function import_page_display () {
+	public function page_display () {
 		$html = '';
 		if ( !current_user_can( 'manage_options' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__."/../includes/class-option-defaults.php";
 require_once __DIR__."/../includes/class-recipe-pro-service.php";
+require_once __DIR__."/class-recipe-pro-main-page.php";
 require_once __DIR__."/class-recipe-pro-label-page.php";
 require_once __DIR__."/class-recipe-pro-licensing-page.php";
 require_once __DIR__."/class-recipe-pro-import-page.php";
@@ -48,7 +49,7 @@ class Recipe_Pro_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		
+		$this->main_page = new Recipe_Pro_Main_Page();
 		$this->import_page = new Recipe_Pro_Import_Page( $plugin_name, $version );
 		$this->label_page = new Recipe_Pro_Label_Page();
 		$this->licensing_page = new Recipe_Pro_Licensing_Page();
@@ -93,8 +94,16 @@ class Recipe_Pro_Admin {
 			'Recipe Pro',                  // The text to be displayed for this actual menu item
 			'manage_options',            // Which type of users can see this menu
 			'recipepro',                  // The unique ID - that is, the slug - for this menu item
-			array(&$this->label_page, 'label_page_display'),// The name of the function to call when rendering the menu for this page
+			array(&$this->main_page, 'page_display'),// The name of the function to call when rendering the target page
 			'dashicons-carrot'
+		);
+		add_submenu_page( 
+			'recipepro',
+			'Label Overrides',
+			'Label Overrides',
+			'manage_options',
+			'recipepro-labels',
+			array(&$this->label_page, 'page_display')
 		);
 		add_submenu_page( 
 			'recipepro',
@@ -102,15 +111,15 @@ class Recipe_Pro_Admin {
 			'License',
 			'manage_options',
 			RECIPE_PRO_LICENSE_PAGE,
-			array(&$this->licensing_page, 'license_page_display')
+			array(&$this->licensing_page, 'page_display')
 		);
 		add_submenu_page( 
 			'recipepro',
 			'Import Recipes From Other Plugins',
 			'Import Recipes',
 			'manage_options',
-			'import-recipes-menu',
-			array(&$this->import_page, 'import_page_display')
+			'recipepro-import',
+			array(&$this->import_page, 'page_display')
 		);
 	}
 
@@ -121,16 +130,8 @@ class Recipe_Pro_Admin {
 	 */
 	public function on_admin_init(  ) { 
 		$this->licensing_page->init();
-		$this->label_page->register_label_page();
-	}
-
-	/**
-	 * Implements the admin_notices action
-	 *
-	 * @since    1.0.0
-	 */
-	public function display_admin_notices() {
-		$this->licensing_page->display_admin_notices();
+		$this->label_page->register_page();
+		$this->main_page->register_page();
 	}
 	
 	/**

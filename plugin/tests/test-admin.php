@@ -68,10 +68,10 @@ class AdminTest extends WP_UnitTestCase {
 			 //   }
 			 // }
 		global $new_whitelist_options;
-		$this->assertEquals( false, array_key_exists( 'recipepro_settings_group', $new_whitelist_options ));
+		$this->assertEquals( false, array_key_exists( 'recipepro-labels', $new_whitelist_options ));
 		$this->prevent_api_checks(); // these trigger from admin_init
 		do_action( 'admin_init' );
-		$this->assertEquals( true, array_key_exists( 'recipepro_settings_group', $new_whitelist_options ));
+		$this->assertEquals( true, array_key_exists( 'recipepro-labels', $new_whitelist_options ));
 	}
 
 	function test_create_menu() {

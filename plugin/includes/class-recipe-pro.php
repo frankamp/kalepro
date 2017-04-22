@@ -159,7 +159,7 @@ class Recipe_Pro {
 		$plugin_admin = new Recipe_Pro_Admin( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'init', $plugin_admin, 'register_shortcodes' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'on_admin_init' );
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'display_admin_notices' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin->licensing_page, 'display_admin_notices' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'create_menu' );

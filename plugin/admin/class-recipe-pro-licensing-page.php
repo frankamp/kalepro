@@ -8,7 +8,7 @@ class Recipe_Pro_Licensing_Page {
 		$this->recipepro_deactivate_license();
 	}
 
-	public function license_page_display () {
+	public function page_display () {
 		$license = get_option( RECIPE_PRO_LICENSE_OPTION );
 		$status  = get_option( RECIPE_PRO_LICENSE_OPTION . '_status' );
 		?>

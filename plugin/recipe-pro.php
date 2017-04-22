@@ -55,7 +55,7 @@ function setup_constants() {
 	// the name of your product. This is the title of your product in EDD and should match the download title in EDD exactly
 	define( 'RECIPE_PRO_EDD_SL_ITEM_NAME', 'Recipe Pro' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
 	// the name of the settings page for the license input to be displayed
-	define( 'RECIPE_PRO_LICENSE_PAGE', 'recipe-pro-license' );
+	define( 'RECIPE_PRO_LICENSE_PAGE', 'recipepro-license' );
 	define( 'RECIPE_PRO_LICENSE_OPTION', 'recipe-pro-license-key' );
 }
 

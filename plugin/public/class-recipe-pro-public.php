@@ -60,21 +60,8 @@ class Recipe_Pro_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Recipe_Pro_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Recipe_Pro_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/recipe-pro-public.css', array(), $this->version, 'all' );
-
+		$options = get_option( 'recipepro_main_settings', array() ); //TODO: replace with service call
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/' . $options['css'], array(), $this->version, 'all' );
 	}
 
 	/**
@@ -83,18 +70,6 @@ class Recipe_Pro_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Recipe_Pro_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Recipe_Pro_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_script( $this->plugin_name . "main", plugin_dir_url( __FILE__ ) . 'js/recipe-pro-public.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . "print", plugin_dir_url( __FILE__ ) . 'js/printThis.js', array( 'jquery' ), $this->version, false );
