@@ -9,10 +9,22 @@ class Recipe_Pro_Main_Page {
 		"No CSS / Custom" => ""
 	);
 
+	private $ratingOptions = array('Yes'=>'true', 'No'=>'false');
+
 	public function ensure_defaults() {
 		$options = get_option( 'recipepro_main_settings', array() );
+		$update = false;
         if (! array_key_exists('css', $options) || ! in_array( $options['css'], array_values( $this->cssOptions ) ) )  {
-        	$options['css'] = array_values( $this->cssOptions )[1];
+        	$options['css'] = array_values( $this->cssOptions )[0];
+        	$update = true;
+        }
+        if (array_key_exists('ratingsEnabled', $options)) {
+        }
+        if (! array_key_exists('ratingsEnabled', $options) || ! in_array( $options['ratingsEnabled'], array_values( $this->ratingOptions ) ) )  {
+        	$options['ratingsEnabled'] = array_values( $this->ratingOptions )[0];
+        	$update = true;
+        }
+        if ( $update ) {
         	update_option('recipepro_main_settings', $options, false);
         }
 	}
@@ -28,28 +40,36 @@ class Recipe_Pro_Main_Page {
 		add_settings_field(
 			'recipepro_css_choice',
 			'Recipe Theme Stylesheet',
-			array(&$this, 'recipepro_css_choice_render'),
+			array(&$this, 'recipepro_choice_render'),
 			'recipepro-main',
 			'recipepro-main-section',
-			array()
+			array('optionKey' => 'css', 'options' => $this->cssOptions ) 
+		);
+		add_settings_field(
+			'recipepro_ratings_choice',
+			'Enable Ratings',
+			array(&$this, 'recipepro_choice_render'),
+			'recipepro-main',
+			'recipepro-main-section',
+			array('optionKey' => 'ratingsEnabled', 'options' => $this->ratingOptions )
 		);
 	}
 
 	public function recipepro_main_settings_header(  ) { 
-		echo __( 'Label overrides', 'recipe-pro' );
+		//echo __( 'Label overrides', 'recipe-pro' );
 	}
 
-	public function recipepro_css_choice_render( $args ) {
+	public function recipepro_choice_render( $args ) {
 		$options = get_option( 'recipepro_main_settings' );
-		$default = array_values( $this->cssOptions )[1];
-		if ( $options && array_key_exists( 'css', $options) && in_array( $options['css'], array_values( $this->cssOptions ) ) ) {
-			$default = $options['css'];
+		$default = array_values($args['options'])[0];
+		if ( $options && array_key_exists( $args['optionKey'], $options) && in_array( $options[$args['optionKey']], array_values( $args['options'] ) ) ) {
+			$default = $options[$args['optionKey']];
 		}
 		?>
-		<select name='recipepro_main_settings[css]'>
-			<?php foreach ($this->cssOptions as $label => $cssFile) { ?>
-				<option value="<?=$cssFile?>" <?= $cssFile == $default ? 'selected=selected' : '' ?> ><?=$label?></option>
-			<?php } ?> 
+		<select name='recipepro_main_settings[<?=$args['optionKey']?>]'>
+			<?php foreach ($args['options'] as $label => $value) { ?>
+				<option value="<?=$value?>" <?= $value == $default ? 'selected=selected' : '' ?> ><?=$label?></option>
+			<?php } ?>
 		</select>
 		<?php
 	}

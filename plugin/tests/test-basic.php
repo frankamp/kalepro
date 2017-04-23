@@ -5,20 +5,58 @@
  * @package 
  */
 
-/**
- * Sample test case.
- */
 class BasicPluginTests extends WP_UnitTestCase {
 
-	/**
-	 * A single example test.
-	 */
 	function test_activation_sets_label_options() {
 		$options = get_option( 'recipepro_settings', false );
 		$this->assertEquals( false, $options );
 		activate_recipe_pro();
 		$options = get_option( 'recipepro_settings', false );
 		$this->assertEquals( "Overview", $options['recipepro_text_label_overview'] );
+	}
+
+	function test_activation_sets_css_option() {
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( false, $options );
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( "simple.css", $options['css'] );
+	}
+
+	function test_activation_corrects_bad_css_option() {
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( false, $options );
+		update_option( 'recipepro_main_settings', array('css' => 'other.css'));
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( "simple.css", $options['css'] );
+	}
+
+	function test_activation_sets_rating_option() {
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( false, $options );
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( 'true', $options['ratingsEnabled'] );
+	}
+
+	function test_activation_corrects_bad_rating_option() {
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( false, $options );
+		update_option( 'recipepro_main_settings', array('ratingsEnabled' => 'other'));
+		var_log("manually set ratingsEnabled");
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( 'true', $options['ratingsEnabled'] );
+	}
+
+	function test_activation_doesnt_correct_good_rating_option() {
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( false, $options );
+		update_option( 'recipepro_main_settings', array('ratingsEnabled' => 'false') );
+		activate_recipe_pro();
+		$options = get_option( 'recipepro_main_settings', false );
+		$this->assertEquals( 'false', $options['ratingsEnabled'] );
 	}
 
 	function test_activation_doesnt_override_on_reactivate() {
