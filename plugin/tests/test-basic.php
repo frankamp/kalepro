@@ -44,7 +44,6 @@ class BasicPluginTests extends WP_UnitTestCase {
 		$options = get_option( 'recipepro_main_settings', false );
 		$this->assertEquals( false, $options );
 		update_option( 'recipepro_main_settings', array('ratingsEnabled' => 'other'));
-		var_log("manually set ratingsEnabled");
 		activate_recipe_pro();
 		$options = get_option( 'recipepro_main_settings', false );
 		$this->assertEquals( 'true', $options['ratingsEnabled'] );

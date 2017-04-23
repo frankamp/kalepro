@@ -77,12 +77,28 @@ class Recipe_Pro_Public {
 	 */
 	public function save_rating_meta_data( $comment_id ) {
 		$rating = null;
-		if ( ( isset( $_POST['rating'] ) ) && ( $_POST['rating'] != '') && intval($_POST['rating']) > 0 && intval($_POST['rating']) < 6 ) {
-			$rating = strval( intval( $_POST['rating'] ) );
+		if ( ( isset( $_POST['recipepro_rating'] ) ) && ( $_POST['recipepro_rating'] != '') && intval($_POST['recipepro_rating']) > 0 && intval($_POST['recipepro_rating']) < 6 ) {
+			$rating = strval( intval( $_POST['recipepro_rating'] ) );
 		}
 		if ( $rating ) {
 			add_comment_meta( $comment_id, 'recipepro_rating', $rating );
-			// TODO: trigger recalc/rerender
+			$comment = get_comment( $comment_id );
+			$post_comments = get_comments( array('post_id'=> $comment->comment_post_ID ) );
+			$ratings = array();
+			foreach ( $post_comments as $potential_rating_comment ) {
+				$potential_rating = get_comment_meta($potential_rating_comment->comment_ID, 'recipepro_rating', true);
+				if ( $potential_rating && intval($potential_rating) > 0 && intval($potential_rating) < 6 ) {
+					$ratings[] = intval($potential_rating);
+				}
+			}
+			$total = 0;
+			foreach ( $ratings as $value ) {
+				$total += $value;
+			}
+			$recipe = Recipe_Pro_Service::getRecipe( $comment->comment_post_ID );
+			$recipe->ratingCount = count( $ratings );
+			$recipe->ratingValue = round( $total / $recipe->ratingCount, 1);
+			$recipe = Recipe_Pro_Service::saveRecipe( $comment->comment_post_ID, $recipe );
 		}
 	}
 
