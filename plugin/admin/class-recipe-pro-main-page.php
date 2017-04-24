@@ -18,8 +18,6 @@ class Recipe_Pro_Main_Page {
         	$options['css'] = array_values( $this->cssOptions )[0];
         	$update = true;
         }
-        if (array_key_exists('ratingsEnabled', $options)) {
-        }
         if (! array_key_exists('ratingsEnabled', $options) || ! in_array( $options['ratingsEnabled'], array_values( $this->ratingOptions ) ) )  {
         	$options['ratingsEnabled'] = array_values( $this->ratingOptions )[0];
         	$update = true;

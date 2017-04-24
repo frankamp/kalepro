@@ -61,13 +61,11 @@ class Recipe_Pro_Public {
 	 */
 	public function render_rating_field() {
 		echo '<p class="comment-form-rating">'.
-	  '<label for="recipepro-rating">'. __('Rating') . '<span class="required">*</span></label>
-	  <span class="commentratingbox">';
-	    //Current rating scale is 1 to 5. If you want the scale to be 1 to 10, then set the value of $i to 10.
-	    for( $i=1; $i <= 5; $i++ )
-	    echo '<span class="commentrating"><input type="radio" name="recipepro_rating" id="recipepro-rating" value="'. $i .'"/>'. $i .'</span>';
-
-	  echo'</span></p>';
+	  '<label>Please rate:</label><div class="stars">';
+	  for( $i=5; $i > 0; $i-- ) {
+	    echo '<input type="radio" class="star star-'. $i .'" style="display:none;" id="rp-star'. $i .'" name="recipepro_rating" value="'. $i .'" /><label class="star star'. $i .'" for="rp-star'. $i .'" title="'. $i .' star'. ($i > 1 ? 's' : '') .'"></label>';
+	  }
+	  echo'</div></p>';
 	}
 
 	/**
