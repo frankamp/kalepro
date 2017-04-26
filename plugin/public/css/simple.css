@@ -139,6 +139,7 @@
 .comment-form-rating {
 	float:  left;
 	font-size: 18px;
+	margin:  0;
 }
 
 div.stars {
@@ -164,8 +165,6 @@ input.star-5:checked ~ label.star:before {
   color: #FE7;
   text-shadow: 0 0 20px #952;
 }
-
-input.star-1:checked ~ label.star:before { color: #F62; }
 
 label.star:before {
   content: '\f154';
