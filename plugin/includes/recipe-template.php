@@ -1,5 +1,5 @@
 <script type="application/ld+json"><?=$viewhelper::ldjson($recipe)?></script>
-<div class="recipe-pro-recipe" class="rp" itemscope="" itemtype="http://schema.org/Recipe"> 
+<div class="recipe-pro-recipe rp" itemscope="" itemtype="http://schema.org/Recipe"> 
 	<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> 
 		<div>
 			<div><span ><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</span>
