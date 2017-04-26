@@ -136,9 +136,12 @@
     vertical-align: top;
     width: 20px;
 }
+.comment-form-rating {
+	float:  left;
+	font-size: 18px;
+}
 
 div.stars {
-  width: 270px;
   display: inline-block;
 }
 
@@ -146,8 +149,7 @@ input.star { display: none; }
 
 label.star {
   float: right;
-  padding: 10px;
-  font-size: 36px;
+  font-size: 18px;
   color: #444;
   transition: all .2s;
 }
