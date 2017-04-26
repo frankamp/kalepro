@@ -153,6 +153,7 @@ label.star {
   font-size: 18px;
   color: #444;
   transition: all .2s;
+  margin-right: 6px;
 }
 
 input.star:checked ~ label.star:before {
