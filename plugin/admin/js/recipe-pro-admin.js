@@ -57,10 +57,21 @@
 			this._isSerializing = false;
 			return json;
 		};
+		var IngredientSection = BaseNestedModel.extend({
+			model: {
+				items: Ingredients
+			},
+			defaults : {
+				name : ''
+			}
+		});
+		var IngredientSections = Backbone.Collection.extend({
+			model: IngredientSection
+		});
 		var Recipe = BaseNestedModel.extend({
 			blacklist: ['currentTab'],
 			model: {
-				ingredients: Ingredients
+				ingredientSections: IngredientSections
 			},
 			defaults: {
 				currentTab: 'recipe-pro-tab-overview',
@@ -71,10 +82,20 @@
 			},
 			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
 			ingestIngredients: function(ingredientDocument) {
-				var target = this.get('ingredients');
+				var target = this.get('ingredientSections');
 				target.reset();
-				var extracted = $(ingredientDocument).children('p').each(function(){
-					target.add(new Ingredient({id: generateUUID(), description: $(this).text()}));
+				var section = null;
+				var extracted = $(ingredientDocument).children().each(function(){
+					if (this.nodeName == 'H4') {
+						section = new IngredientSection({name: $(this).text(), items: new Ingredients()});
+						target.add(section);
+					} else if (this.nodeName == 'P') {
+						if (section == null) {
+							section = new IngredientSection({name: '', items: new Ingredients()});
+							target.add(section);
+						}
+						section.get('items').add(new Ingredient({id: generateUUID(), description: $(this).text()}));
+					}
 				});
 				console.log("done");
 			},
@@ -186,9 +207,9 @@
 					tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient'].init_instance_callback = function(editor) {
 						var content = "";
 						this.model.get('ingredientSections').forEach(function(section) {
-							content += '<h4>' + section.name + '</h4>';
-							section.items.forEach(function(item){
-								content += '<p>' + item.description + '</p>';
+							content += '<h4>' + section.get('name') + '</h4>';
+							section.get('items').forEach(function(item){
+								content += '<p>' + item.get('description') + '</p>';
 							});
 						});
 						editor.setContent(content);

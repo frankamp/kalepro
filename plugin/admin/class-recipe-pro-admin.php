@@ -170,7 +170,7 @@ class Recipe_Pro_Admin {
 				//'plugins' => 'paste',
 				'external_plugins' => "{'recipeproingredient': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-ingredient/plugin.min.js'}",
 				//'toolbar' => false,
-				'toolbar1' => 'bold,italic,link,unlink,removeformat,recipepro_media',
+				'toolbar1' => 'bold,italic,link,unlink,removeformat,recipepro_setasheader,recipepro_removeasheader',
 				'toolbar2' => '',
 				'statusbar' => false,
 				'theme_advanced_buttons1' => '',
@@ -187,8 +187,8 @@ class Recipe_Pro_Admin {
 					args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
 					args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
 					console.log(args.content);
-				}",
-				"content_style" => "body#tinymce p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; margin-bottom: 5px; }"
+				}"
+				//,"content_style" => "body#tinymce p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; margin-bottom: 5px; }"
 				//,'protect' => "[/<div class='helper'>.*?<\/div>/g]"
 			),
 			'media_buttons' => false,
@@ -222,7 +222,7 @@ class Recipe_Pro_Admin {
 			'external_plugins' => '{}',
 			'quicktags'     => false,
 			'tinymce'       => array(
-				'toolbar1' => 'bold,italic,link,unlink,removeformat,recipepro_media'
+				'toolbar1' => 'bold,italic,link,unlink,removeformat'
 			),
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
@@ -287,15 +287,6 @@ class Recipe_Pro_Admin {
 				</div>
 				<div id="recipe-pro-tab-ingredient" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-ingredient' ? 'block' : 'none' %>;">
 					<?= wp_editor( "", "recipe-pro-editor-ingredient", $ingredient_settings  ) ?>
-					<!-- <ul>
-						<% _.each(ingredients, function(ing){ %>
-						<li>
-							<input name="quantity" type="text" value="<%= _.escape(ing.quantity) %>" />
-							<input name="unit" type="text" value="<%= _.escape(ing.unit) %>" />
-							<input name="name" type="text" value="<%= _.escape(ing.name) %>" />
-						</li>
-						<% }); %>
-					</ul> -->
 				</div>
 				<div id="recipe-pro-tab-instruction" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-instruction' ? 'block' : 'none' %>;">
 					<?= wp_editor( "", "recipe-pro-editor-instruction", $instruction_settings  ) ?>
