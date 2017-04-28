@@ -1,5 +1,4 @@
-/**
- * Recipe Pro Styling
+/* Recipe Pro Styling
 --------------------------------------------- */
 .rp {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -115,13 +114,9 @@
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
 }
-.rp-star-rating .rp-star-full:hover {
-	color: #FFED85;
-}
 .rp-star-rating .rp-star-empty::before {
-    content: "\f154";
+    content: "\f155";
 }
-
 .rp-star-rating .rp-star {
     color: #0074A2;
     display: inline-block;
@@ -151,9 +146,12 @@ input.star {
 label.star {
   float: right;
   font-size: 18px;
-  color: #444;
+  color: #ddd;
   transition: all .2s;
   margin-right: 6px;
+}
+label.star:hover {
+	color: #FFED85;
 }
 input.star:checked ~ label.star::before {
   content: '\f155';
@@ -161,6 +159,6 @@ input.star:checked ~ label.star::before {
   transition: all .25s;
 }
 label.star:before {
-  content: '\f154';
+  content: '\f155';
   font-family: dashicons;
 }
