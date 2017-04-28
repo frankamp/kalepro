@@ -1,6 +1,7 @@
 /**
  * Recipe Pro Styling
 --------------------------------------------- */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 .rp {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -108,13 +109,13 @@
     float: right;
     width: 25%;
 }
-
+.rp-previewimage img {
+	width: 200px;
+	height: auto;
+	margin: 5px;
+}
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
-}
-
-.rp-star-rating .rp-star-half::before {
-    content: "\f459";
 }
 
 .rp-star-rating .rp-star-empty::before {
@@ -146,7 +147,9 @@ div.stars {
   display: inline-block;
 }
 
-input.star { display: none; }
+input.star {
+	display: none;
+}
 
 label.star {
   float: right;
@@ -161,19 +164,11 @@ input.star:checked ~ label.star:before {
   color: #FD4;
   transition: all .25s;
 }
-
-input.star-5:checked ~ label.star:before {
-  color: #FE7;
-  text-shadow: 0 0 20px #952;
+label.star:hover {
+	color: #FFED85;
 }
 
 label.star:before {
   content: '\f154';
   font-family: dashicons;
-}
-
-.rp-previewimage img {
-	width: 200px;
-	height: auto;
-	margin: 5px;
 }
