@@ -148,10 +148,11 @@ label.star {
   font-size: 18px;
   color: #ddd;
   transition: all .2s;
-  margin-right: 6px;
+  padding-right: 6px;
+  margin-right: 0px;
 }
 label.star:hover,
-label.star:checked {
+label.star:hover ~ label.star {
 	color: #FFED85;
 }
 input.star:checked ~ label.star::before {
