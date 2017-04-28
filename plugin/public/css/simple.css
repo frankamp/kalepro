@@ -1,8 +1,6 @@
 /**
  * Recipe Pro Styling
 --------------------------------------------- */
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
 .rp {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 100%;
@@ -117,7 +115,7 @@
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
 }
-.rp-star-rating .rp-star-full::hover {
+.rp-star-rating .rp-star-full:hover {
 	color: #FFED85;
 }
 .rp-star-rating .rp-star-empty::before {
