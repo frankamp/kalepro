@@ -120,6 +120,20 @@
 	list-style: disc inside;
 	margin-left: 10px;
 }
+.servingsize,
+.calories,
+.fat,
+.transfat,
+.cholesterol,
+.saturatedfat,
+.unsaturatedfat,
+.carbohydrate,
+.sugar,
+.sodium,
+.fiber,
+.protein {
+	padding: 0 10px 0 0;
+}
 .rp-detailsafter {
 	overflow: hidden;
 	border-bottom: #eee 1px solid;
