@@ -157,13 +157,24 @@
 	font-size: 18px;
 	margin:  0;
 }
-div.stars {
+div.rp-stars {
   display: inline-block;
 }
-input.star {
+span.rp-star {
+	color: #ddd;
+	font-size: 18px;
+}
+span.rp-star:before {
+	content: '\f155';
+	font-family: dashicons;
+}
+span.rp-star-active {
+	color: #FFED85;
+}
+input.rp-star {
 	display: none;
 }
-label.star {
+label.rp-star {
   float: right;
   font-size: 18px;
   color: #ddd;
@@ -171,16 +182,16 @@ label.star {
   padding-right: 6px;
   margin-right: 0px;
 }
-label.star:hover,
-label.star:hover ~ label.star {
+label.rp-star:hover,
+label.rp-star:hover ~ label.rp-star {
 	color: #FFED85;
 }
-input.star:checked ~ label.star::before {
+input.rp-star:checked ~ label.rp-star::before {
   content: '\f155';
   color: #FD4;
   transition: all .25s;
 }
-label.star:before {
+label.rp-star:before {
   content: '\f155';
   font-family: dashicons;
 }

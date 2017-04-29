@@ -61,9 +61,9 @@ class Recipe_Pro_Public {
 	 */
 	public function render_rating_field() {
 		echo '<p class="comment-form-rating">'.
-	  '<label>Please rate:</label><div class="stars">';
+	  '<label>Please rate:</label><div class="rp-stars">';
 	  for( $i=5; $i > 0; $i-- ) {
-	    echo '<input type="radio" class="star star-'. $i .'" style="display:none;" id="rp-star'. $i .'" name="recipepro_rating" value="'. $i .'" /><label class="star star'. $i .'" for="rp-star'. $i .'" title="'. $i .' star'. ($i > 1 ? 's' : '') .'"></label>';
+	    echo '<input type="radio" class="rp-star rp-star-'. $i .'" style="display:none;" id="rp-star'. $i .'" name="recipepro_rating" value="'. $i .'" /><label class="rp-star rp-star'. $i .'" for="rp-star'. $i .'" title="'. $i .' star'. ($i > 1 ? 's' : '') .'"></label>';
 	  }
 	  echo'</div></p>';
 	}
