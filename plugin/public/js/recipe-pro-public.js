@@ -32,7 +32,7 @@
 	 	var printButton = $('.recipe-pro-print');
 	 	if (printButton.length) {
 	 		printButton.on('click', function( event ){
-		 		$(event.target).closest('.recipe-pro-recipe').printThis();
+		 		$(event.target).closest('.recipe-pro-recipe').printThis({removeInline:true});
 		 	});
 	 	}
 	 });
