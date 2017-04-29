@@ -8,27 +8,6 @@
 		</div>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
 			<div>
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-				<div><div><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</div>
-				</div> 
-			</div> 
-		</div> 
-	</div>
-		<div class="rp-preptime">
-			<div><?= $labels['prep_time'] ?></div>
-			<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
-		</div>
-		<div class="rp-cooktime">
-			<div><?= $labels['cook_time'] ?></div>
-			<div> <time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div>
-		</div>
-		<div class="rp-totaltime">
-			<div><?= $labels['total_time'] ?></div>
-			<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div>
-=======
->>>>>>> Stashed changes
 				<div>
 					<div class="rp-stars">
 <?php for( $i=1; $i <= 5; $i++ ) { ?>
@@ -38,10 +17,6 @@
 					<span ><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</span>
 				</div>
 			</div>
-<<<<<<< Updated upstream
-=======
->>>>>>> origin/master
->>>>>>> Stashed changes
 		</div>
 	</div>
 	<div class="rp-preptime">
