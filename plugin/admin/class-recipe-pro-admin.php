@@ -219,10 +219,10 @@ class Recipe_Pro_Admin {
 
 		$instruction_settings = array(
 			'textarea_name' => 'excerpt',
-			'external_plugins' => '{}',
 			'quicktags'     => false,
 			'tinymce'       => array(
-				'toolbar1' => 'bold,italic,link,unlink,removeformat'
+				'toolbar1' => 'bold,italic,link,unlink,removeformat',
+				'external_plugins' => "{'recipeproinstruction': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-instruction/plugin.min.js'}"
 			),
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'

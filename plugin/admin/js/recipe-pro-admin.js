@@ -21,6 +21,14 @@
 				return (c=='x' ? r : (r&0x3|0x8)).toString(16);
 			});
 		};
+		var Instruction = Backbone.Model.extend({
+			defaults : {
+				description: ''
+			}
+		});
+		var Instructions = Backbone.Collection.extend({
+			model: Instruction
+		});
 		var Ingredient = Backbone.Model.extend({
 			defaults : {
 				quantity: 0,
@@ -71,7 +79,8 @@
 		var Recipe = BaseNestedModel.extend({
 			blacklist: ['currentTab'],
 			model: {
-				ingredientSections: IngredientSections
+				ingredientSections: IngredientSections,
+				instructions: Instructions
 			},
 			defaults: {
 				currentTab: 'recipe-pro-tab-overview',
@@ -81,11 +90,20 @@
 				shortCodeMessage: ''
 			},
 			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
-			ingestIngredients: function(ingredientDocument) {
+			ingestInstructions: function(doc) {
+				var target = this.get('instructions');
+				target.reset();
+				var extracted = $(doc).children().each(function(){
+					if (this.nodeName == 'P') {
+						target.add(new Instruction({description: $(this).text()}));
+					}
+				});
+			},
+			ingestIngredients: function(doc) {
 				var target = this.get('ingredientSections');
 				target.reset();
 				var section = null;
-				var extracted = $(ingredientDocument).children().each(function(){
+				var extracted = $(doc).children().each(function(){
 					if (this.nodeName == 'H4') {
 						section = new IngredientSection({name: $(this).text(), items: new Ingredients()});
 						target.add(section);
@@ -97,7 +115,6 @@
 						section.get('items').add(new Ingredient({id: generateUUID(), description: $(this).text()}));
 					}
 				});
-				console.log("done");
 			},
 			disableForMissingShortcode: function(removed) {
 				if (removed) {
@@ -220,7 +237,7 @@
 					tinyMCEPreInit.mceInit['recipe-pro-editor-instruction'].init_instance_callback = function(editor) {
 						var content = "";
 						this.model.get('instructions').forEach(function(inst) {
-							content += '<p>' + inst.description + '</p>';
+							content += '<p>' + inst.get('description') + '</p>';
 						});
 						editor.setContent(content);
 					}.bind(this);
