@@ -47,9 +47,6 @@
 	margin-right: 8px;
 	content:"";
 }
-.rp-times {
-	margin: 10px 0;
-}
 .rp-preptime,
 .rp-cooktime {
 	border-right: #ddd 1px solid;
@@ -61,6 +58,7 @@
 	float: left;
 	text-align: center;
 	padding: 10px 0;
+	margin: 0 0 15px 0;
 	border-top: #ddd 1px solid;
 	border-bottom: #ddd 1px solid;
 }

@@ -13,7 +13,6 @@
 			</div> 
 		</div> 
 	</div>
-	<div class="rp-times">
 		<div class="rp-preptime">
 			<div><?= $labels['prep_time'] ?></div>
 			<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
@@ -26,7 +25,6 @@
 			<div><?= $labels['total_time'] ?></div>
 			<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div>
 		</div>
-	</div>
 	<div class="rp-overview">
 	<div class="rp-cuisine"><?= $labels['cuisine'] ?>: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
 	<div class="rp-serving">Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
