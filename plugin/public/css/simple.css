@@ -121,6 +121,9 @@
 	list-style: disc inside;
 	margin-left: 10px;
 }
+.rp-detailsafter {
+	overflow: hidden;
+}
 .rp-author {
 	border-right:#eee 1px solid;
 }
@@ -134,8 +137,8 @@
 	font-style: italic;
 	border-top: #eee 1px solid;
 	border-bottom: #eee 1px solid;
-	margin: 5px 0 20px 0;
-	padding: 5px;
+	padding: 5px 5px 100% 5px;
+	margin: 5px 0 -100% 0;
 }
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
