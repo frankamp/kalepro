@@ -16,8 +16,9 @@
 	width: 100%;
 }
 .rp-name {
-	font-size: 22px;
-	font-size: 1.57em;
+	font-size: 28px;
+	font-size: 2em;
+	line-height: 1.2;
 	float: left;
 	text-transform: uppercase;
     font-weight: 700;
@@ -29,6 +30,7 @@
 	background: #fff;
 	font-size: 1em;
 	letter-spacing: 2px;
+	line-height: 1.4;
 	font-weight: 700;
 	text-transform: uppercase;
 	margin: 0 5px;
