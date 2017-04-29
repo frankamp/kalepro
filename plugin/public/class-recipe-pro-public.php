@@ -108,8 +108,9 @@ class Recipe_Pro_Public {
 	public function enqueue_styles() {
 		$options = get_option( 'recipepro_main_settings', array() ); //TODO: replace with service call
 		if (strlen( $options['css'] ) > 0 ) {
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/' . $options['css'], array(), $this->version, 'all' );	
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/' . $options['css'], array( 'dashicons' ), $this->version, 'all' );	
 		}
+		wp_enqueue_style( 'dashicons' );
 	}
 
 	/**
