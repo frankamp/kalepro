@@ -61,6 +61,7 @@
 	float: left;
 	text-align: center;
 	padding: 10px 0;
+	border-top: #ddd 1px solid;
 	border-bottom: #ddd 1px solid;
 }
 .rp-topright {
@@ -126,6 +127,7 @@
 	text-align: center;
 	font-size: 14px;
 	font-size: 1em;
+	font-style: italic;
 	border-top: #ddd 1px solid;
 	margin-top: 5px;
 	padding: 5px;
