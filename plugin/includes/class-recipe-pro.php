@@ -191,6 +191,8 @@ class Recipe_Pro {
 		$this->loader->add_action( 'comment_form_logged_in_after', $plugin_public, 'render_rating_field' );
 		$this->loader->add_action( 'comment_form_after_fields', $plugin_public, 'render_rating_field' );
 		$this->loader->add_action( 'comment_post', $plugin_public, 'save_rating_meta_data' );
+		$this->loader->add_action( 'comment_text', $plugin_public, 'display_rating' );
+
 	}
 
 	/**

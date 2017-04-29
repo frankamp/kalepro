@@ -55,6 +55,24 @@ class Recipe_Pro_Public {
 	}
 
 	/**
+	 * Implements the 'comment_text' filter
+	 *
+	 * @since    1.0.0
+	 */
+	public function display_rating( $comment_text ) {
+		$rating = get_comment_meta( get_comment_ID(), 'recipepro_rating', true );
+		if ( intval( $rating ) > 0 && intval( $rating ) < 6 ) {
+			$rating = intval( $rating );
+			$comment_text = $comment_text . '<div class="rp-stars">' ;
+			for( $i=1; $i <= 5; $i++ ) {
+				$comment_text = $comment_text . '<span class="rp-star '. ($rating >= $i ? 'rp-star-active' : '') .'" title="'. $rating . ' star'. ($rating > 1 ? 's' : '') . '"></span>';
+			}
+			$comment_text = $comment_text . '</div>';
+		}
+		return $comment_text;
+	}
+
+	/**
 	 * Implements the 'comment_form_after_fields' and 'comment_form_logged_in_after' action
 	 *
 	 * @since    1.0.0
