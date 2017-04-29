@@ -76,6 +76,8 @@
 		</div> 
 		<div></div> 
 	</div>
-	<div class="rp-author"><?= $labels['author'] ?>: <span itemprop="author"><?= $recipe->author ?></span></div>
-	<div class="rp-recipetype"><?= $labels['recipe_type'] ?>: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
+	<div class="rp-detailsafter">
+		<span class="rp-author"><?= $labels['author'] ?>: <span itemprop="author"><?= $recipe->author ?></span></span>
+		<span class="rp-recipetype"><?= $labels['recipe_type'] ?>: <span itemprop="recipeCategory"><?= $recipe->type ?></span></span>
+	</div>
 </div>
