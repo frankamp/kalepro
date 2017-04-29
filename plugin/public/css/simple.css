@@ -15,6 +15,13 @@
 	padding: 10px;
 	width: 100%;
 }
+.rp ul {
+	margin: 0;
+}
+.rp ol li,
+.rp ul li {
+	margin: 0 0 16px 32px;
+}
 .rp-name {
 	font-size: 28px;
 	font-size: 2em;
@@ -73,7 +80,6 @@
 	margin: 5px;
 }
 .rp-ratings {
-    float: right;
     margin-right: 5px;
 }
 .rp-overview {
@@ -107,7 +113,6 @@
 .rp-nstructions,
 .rp-nutrition,
 .rp-notes {
-	font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
 	font-weight: 300;
 	margin-bottom: 10px;
 }
@@ -115,10 +120,30 @@
 	list-style: disc inside;
 	margin-left: 10px;
 }
+.servingsize,
+.calories,
+.fat,
+.transfat,
+.cholesterol,
+.saturatedfat,
+.unsaturatedfat,
+.carbohydrate,
+.sugar,
+.sodium,
+.fiber,
+.protein {
+	padding: 0 10px 0 0;
+}
+.rp-detailsafter {
+	overflow: hidden;
+	border-bottom: #eee 1px solid;
+	border-top: #eee 1px solid;
+	margin: 15px 0 0 0;
+	padding: 0 0 5px 0;
+}
 .rp-author {
 	border-right:#eee 1px solid;
 }
-
 .rp-recipetype,
 .rp-author {
 	width: 50%;
@@ -127,10 +152,8 @@
 	font-size: 14px;
 	font-size: 1em;
 	font-style: italic;
-	border-top: #eee 1px solid;
-	border-bottom: #eee 1px solid;
-	margin: 5px 0 20px 0;
-	padding: 5px;
+	padding: 5px 5px 100% 5px;
+	margin: 0 0 -100% 0;
 }
 .rp-star-rating .rp-star-full::before {
     content: "\f155";

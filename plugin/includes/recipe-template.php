@@ -7,16 +7,12 @@
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
-			<div>
-				<div>
 					<div class="rp-stars">
 <?php for( $i=1; $i <= 5; $i++ ) { ?>
 					<span class="rp-star <?=($recipe->ratingValue >= $i ? 'rp-star-active' : '')?>" title="<?= $i ?> star<?=($i > 1 ? 's' : '')?>"></span>
 <?php } ?>
 					</div>
-					<span ><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</span>
-				</div>
-			</div>
+					<div class="rp-ratingvalue"><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</div>
 		</div>
 	</div>
 	<div class="rp-preptime">
@@ -63,23 +59,25 @@
 <?php endforeach; ?>
 	</div> 
 	<div class="rp-nutrition" itemprop="nutrition" itemscope="" itemtype="http://schema.org/NutritionInformation"> 
-		<div class="rp-nutritionstitle"><?= $labels['nutrition_information'] ?></div> 
+		<div class="rp-nutritiontitle"><?= $labels['nutrition_information'] ?></div> 
 		<div> 
-			<?= $labels['serving_size'] ?>:&nbsp;<span itemprop="servingSize"><?= $recipe->servingSize ?></span> 
-			<?= $labels['calories'] ?>:&nbsp;<span itemprop="calories"><?= $recipe->calories ?></span> 
-			<?= $labels['total_fat'] ?>:&nbsp;<span itemprop="fatContent"><?= $recipe->fatContent ?></span> 
-			<?= $labels['trans_fat'] ?>:&nbsp;<span itemprop="transFatContent"><?= $recipe->transFatContent ?></span> 
-			<?= $labels['cholesterol'] ?>:&nbsp;<span itemprop="cholesterolContent"><?= $recipe->cholesterolContent ?></span> 
-			<?= $labels['saturated_fat'] ?>:&nbsp;<span itemprop="saturatedFatContent"><?= $recipe->saturatedFatContent ?></span> 
-			<?= $labels['unsaturated_fat'] ?>:&nbsp;<span itemprop="unsaturatedFatContent"><?= $recipe->unsaturatedFatContent ?></span> 
-			<?= $labels['carbohydrates'] ?>:&nbsp;<span itemprop="carbohydrateContent"><?= $recipe->carbohydrateContent ?></span> 
-			<?= $labels['sugars'] ?>:&nbsp;<span itemprop="sugarContent"><?= $recipe->sugarContent ?></span> 
-			<?= $labels['sodium'] ?>:&nbsp;<span itemprop="sodiumContent"><?= $recipe->sodiumContent ?></span> 
-			<?= $labels['fiber'] ?>:&nbsp;<span itemprop="fiberContent"><?= $recipe->fiberContent ?></span> 
-			<?= $labels['protein'] ?>:&nbsp;<span itemprop="proteinContent"><?= $recipe->proteinContent ?></span> 
+			<?= $labels['serving_size'] ?>:&nbsp;<span class="servingsize" itemprop="servingSize"><?= $recipe->servingSize ?></span> 
+			<?= $labels['calories'] ?>:&nbsp;<span class="calories" itemprop="calories"><?= $recipe->calories ?></span> 
+			<?= $labels['total_fat'] ?>:&nbsp;<span class="fat" itemprop="fatContent"><?= $recipe->fatContent ?></span> 
+			<?= $labels['trans_fat'] ?>:&nbsp;<span class="transfat" itemprop="transFatContent"><?= $recipe->transFatContent ?></span> 
+			<?= $labels['cholesterol'] ?>:&nbsp;<span class="cholesterol" itemprop="cholesterolContent"><?= $recipe->cholesterolContent ?></span> 
+			<?= $labels['saturated_fat'] ?>:&nbsp;<span class="saturatedfat" itemprop="saturatedFatContent"><?= $recipe->saturatedFatContent ?></span> 
+			<?= $labels['unsaturated_fat'] ?>:&nbsp;<span class="unsaturatedfat" itemprop="unsaturatedFatContent"><?= $recipe->unsaturatedFatContent ?></span> 
+			<?= $labels['carbohydrates'] ?>:&nbsp;<span class="carbohydrate" itemprop="carbohydrateContent"><?= $recipe->carbohydrateContent ?></span> 
+			<?= $labels['sugars'] ?>:&nbsp;<span class="sugar" itemprop="sugarContent"><?= $recipe->sugarContent ?></span> 
+			<?= $labels['sodium'] ?>:&nbsp;<span class="sodium" itemprop="sodiumContent"><?= $recipe->sodiumContent ?></span> 
+			<?= $labels['fiber'] ?>:&nbsp;<span class="fiber" itemprop="fiberContent"><?= $recipe->fiberContent ?></span> 
+			<?= $labels['protein'] ?>:&nbsp;<span class="protein" itemprop="proteinContent"><?= $recipe->proteinContent ?></span> 
 		</div> 
 		<div></div> 
 	</div>
-	<div class="rp-author"><?= $labels['author'] ?>: <span itemprop="author"><?= $recipe->author ?></span></div>
-	<div class="rp-recipetype"><?= $labels['recipe_type'] ?>: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
+	<div class="rp-detailsafter">
+		<div class="rp-author"><?= $labels['author'] ?>: <span itemprop="author"><?= $recipe->author ?></span></div>
+		<div class="rp-recipetype"><?= $labels['recipe_type'] ?>: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
+	</div>
 </div>
