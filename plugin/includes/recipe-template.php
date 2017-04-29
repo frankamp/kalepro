@@ -35,7 +35,7 @@
 	<div> 
 		<div class="rp-ingredientstitle"><?= $labels['ingredients'] ?></div> 
 <?php foreach( $recipe->ingredientSections as $section ): ?>
-		<?php if ( $section->name ): ?><div class="subheading" itemprop="recipeIngredient"><?= $section->name ?></div> 
+		<?php if ( $section->name ): ?><div class="rp-subheading" itemprop="recipeIngredient"><?= $section->name ?></div> 
 <?php endif; ?>
 		<ul> 
 <?php foreach($section->items as $ingredient): ?>
