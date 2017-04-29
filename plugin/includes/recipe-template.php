@@ -13,7 +13,7 @@
 			</div> 
 		</div> 
 	</div>
-	<div>
+	<div class="rp-times">
 		<div class="rp-preptime">
 			<div><?= $labels['prep_time'] ?></div>
 			<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
