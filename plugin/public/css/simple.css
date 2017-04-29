@@ -124,6 +124,8 @@
 .rp-detailsafter {
 	overflow: hidden;
 	border-bottom: #eee 1px solid;
+	border-top: #eee 1px solid;
+	margin: 15px 0 0 0;
 }
 .rp-author {
 	border-right:#eee 1px solid;
@@ -136,9 +138,8 @@
 	font-size: 14px;
 	font-size: 1em;
 	font-style: italic;
-	border-top: #eee 1px solid;
 	padding: 5px 5px 100% 5px;
-	margin: 5px 0 -100% 0;
+	margin: 0 0 -100% 0;
 }
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
