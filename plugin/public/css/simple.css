@@ -121,30 +121,21 @@
 	list-style: disc inside;
 	margin-left: 10px;
 }
-.rp-detailsafter {
-	padding-right: 50%;
-	overflow: hidden;
-	border-top: #eee 1px solid;
-	border-bottom: #eee 1px solid;
-}
 .rp-author {
 	border-right:#eee 1px solid;
-	float: left;
-	width: 100%;
-}
-.rp-recipetype {
-	float: right;
-	margin-right: 50%;
-	width: 50%;
 }
 .rp-recipetype,
 .rp-author {
+	width: 50%;
+	float: left;
 	text-align: center;
 	font-size: 14px;
 	font-size: 1em;
 	font-style: italic;
-	padding: 5px 5px 99999px 5px;
-	margin: 5px 0 -99999px 0;
+	border-top: #eee 1px solid;
+	border-bottom: #eee 1px solid;
+	margin: 5px 0 20px 0;
+	padding: 5px;
 }
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
