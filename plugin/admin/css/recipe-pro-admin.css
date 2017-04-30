@@ -68,6 +68,7 @@ ul#recipe-pro-tabs button {
 }
 .rp-input {
     width: 100%;
+    min-width: 200px;
 }
 #recipe-pro-content {
     border: solid;
