@@ -1,6 +1,6 @@
 <script type="application/ld+json"><?=$viewhelper::ldjson($recipe)?></script>
 <div class="recipe-pro-recipe rp" itemscope="" itemtype="http://schema.org/Recipe"> 
-	<div class="rp-name" itemprop="name"><?= $recipe->title ?></div>
+	<h2 class="rp-name" itemprop="name"><?= $recipe->title ?></h2>
 	<div class="rp-topright">
 		<div class="recipe-pro-print"><button class="rp-print" style="display: inline-block"><?= $labels['print'] ?></button></div>
 		<div class="rp-previewimage">
@@ -35,7 +35,7 @@
 		<div class="rp-description"><span itemprop="description"><?= $recipe->description ?></span></div>
 	</div>
 	<div> 
-		<div class="rp-ingredientstitle"><?= $labels['ingredients'] ?></div> 
+		<h3 class="rp-ingredientstitle"><?= $labels['ingredients'] ?></h3> 
 <?php foreach( $recipe->ingredientSections as $section ): ?>
 		<?php if ( $section->name ): ?><div class="rp-subheading" itemprop="recipeIngredient"><?= $section->name ?></div> 
 <?php endif; ?>
@@ -47,7 +47,7 @@
 <?php endforeach; ?>
 	</div> 
 	<div> 
-		<div class="rp-instructionstitle"><?= $labels['instructions'] ?></div> 
+		<h3 class="rp-instructionstitle"><?= $labels['instructions'] ?></h3> 
 		<ol> 
 <?php foreach( $recipe->instructions as $instruction ): ?>
 			<li class="rp-instructions" itemprop="recipeInstructions"><?= $instruction->description ?></li>
@@ -55,7 +55,7 @@
 		</ol> 
 	</div> 
 	<div> 
-		<div class="rp-notestitle"><?= $labels['notes'] ?></div> 
+		<h3 class="rp-notestitle"><?= $labels['notes'] ?></h3> 
 <?php foreach( $recipe->notes as $note ): ?>
 		<div><?= $note->description ?></div> 
 <?php endforeach; ?>
@@ -74,7 +74,7 @@
 		|| strlen($recipe->fiberContent)
 		|| strlen($recipe->proteinContent) ) {?>
 	<div class="rp-nutrition" itemprop="nutrition" itemscope="" itemtype="http://schema.org/NutritionInformation"> 
-		<div class="rp-nutritiontitle"><?= $labels['nutrition_information'] ?></div> 
+		<h3 class="rp-nutritiontitle"><?= $labels['nutrition_information'] ?></h3> 
 <?php if (strlen($recipe->servingSize)) {?><?= $labels['serving_size'] ?>:&nbsp;<span class="servingsize" itemprop="servingSize"><?= $recipe->servingSize ?></span><?php } ?>
 <?php if (strlen($recipe->calories)) {?><?= $labels['calories'] ?>:&nbsp;<span class="calories" itemprop="calories"><?= $recipe->calories ?></span><?php } ?>
 <?php if (strlen($recipe->fatContent)) {?><?= $labels['total_fat'] ?>:&nbsp;<span class="fat" itemprop="fatContent"><?= $recipe->fatContent ?></span><?php } ?>
