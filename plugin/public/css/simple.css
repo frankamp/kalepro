@@ -1,9 +1,9 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Muli:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
 .rp {
-	font-family: 'Muli','Helvetica Neue',Helvetica,sans-serif;
+	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 100%;
 	font-size: 14px;
 	font-weight: 300;	
@@ -30,7 +30,7 @@
 	line-height: 1.2;
 	float: left;
 	text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 700;
     width: 75%;
 }
 .rp-print {
@@ -56,6 +56,13 @@
 	width: 18px;
 	margin-right: 8px;
 	content:"";
+}
+.rp .button:hover {
+	background: #fff;
+	color: #000;
+}
+.recipe-pro-print {
+	text-align: center;
 }
 .rp-preptime,
 .rp-cooktime {
@@ -102,7 +109,7 @@
 	text-transform: uppercase;
 	font-size: 18px;
 	font-size: 1.29em;
-    font-weight: 500;
+    font-weight: 700;
     margin: 10px 0;
 }
 .rp-subheading {
