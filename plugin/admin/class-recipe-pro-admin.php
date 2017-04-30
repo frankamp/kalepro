@@ -273,6 +273,8 @@ class Recipe_Pro_Admin {
 						<p><label for="recipepro_author"><?= $this->get_label('author') ?></label><input class="rp-input" id="recipepro_author" name="author" type="text" value="<%= _.escape(author) %>" /></p>
 						<p><label for="recipepro_type"><?= $this->get_label('recipe_type') ?></label><input class="rp-input" id="recipepro_type" name="type" type="text" value="<%= _.escape(type) %>" /></p>
 						<p><label for="recipepro_cuisine"><?= $this->get_label('cuisine') ?></label><input class="rp-input" id="recipepro_cuisine" name="cuisine" type="text" value="<%= _.escape(cuisine) %>" /></p>
+						<p><label for="recipepro_preptime"><?= $this->get_label('prep_time') ?></label><input class="rp-input" id="recipepro_preptime" name="prepTime" type="text" value="<%= _.escape(prepTime) %>" /></p>
+						<p><label for="recipepro_preptime"><?= $this->get_label('cook_time') ?></label><input class="rp-input" id="recipepro_cooktime" name="cookTime" type="text" value="<%= _.escape(cookTime) %>" /></p>
 					</div>
 					<div class="right">
 						<p>
