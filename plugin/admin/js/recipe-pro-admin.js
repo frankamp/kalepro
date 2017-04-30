@@ -99,13 +99,13 @@
 					}
 				});
 			},
-			ingestIngredients: function(doc) {
+ 			ingestIngredients: function(doc) {
 				var target = this.get('ingredientSections');
 				target.reset();
 				var section = null;
 				var extracted = $(doc).children().each(function(){
-					if (this.nodeName == 'H4') {
-						section = new IngredientSection({name: $(this).text(), items: new Ingredients()});
+					if (this.nodeName == 'H4' && $(this).text().trim().length > 0) {
+						section = new IngredientSection({name: $(this).text().trim(), items: new Ingredients()});
 						target.add(section);
 					} else if (this.nodeName == 'P') {
 						if (section == null) {
@@ -224,7 +224,9 @@
 					tinyMCEPreInit.mceInit['recipe-pro-editor-ingredient'].init_instance_callback = function(editor) {
 						var content = "";
 						this.model.get('ingredientSections').forEach(function(section) {
-							content += '<h4>' + section.get('name') + '</h4>';
+							if (section.get('name').length > 0 && section.get('items').length > 0) {
+								content += '<h4>' + section.get('name') + '</h4>';
+							}
 							section.get('items').forEach(function(item){
 								content += '<p>' + item.get('description') + '</p>';
 							});

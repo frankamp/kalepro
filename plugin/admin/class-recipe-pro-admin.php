@@ -188,8 +188,9 @@ class Recipe_Pro_Admin {
 					args.content = args.content.replace(new RegExp('<\/' + tag + '>','g'), \"<div class='mceNonEditable'><input type='text' value='editme' /></div>\");
 					console.log(args.content);
 				}"
-				//,"content_style" => "body#tinymce p {background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat; padding-right: 50px; margin-bottom: 5px; }"
+				,"content_style" => "body#tinymce p { margin-bottom: 5px; } body#tinymce h4 { margin: 20px 0 10px; }"
 				//,'protect' => "[/<div class='helper'>.*?<\/div>/g]"
+				//background-image: url(" . plugin_dir_url( __FILE__ ) . "css/carrot.svg); background-position: right center; background-repeat: no-repeat;
 			),
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
@@ -222,7 +223,8 @@ class Recipe_Pro_Admin {
 			'quicktags'     => false,
 			'tinymce'       => array(
 				'toolbar1' => 'bold,italic,link,unlink,removeformat',
-				'external_plugins' => "{'recipeproinstruction': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-instruction/plugin.min.js'}"
+				'external_plugins' => "{'recipeproinstruction': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-instruction/plugin.min.js'}",
+				"content_style" => "body#tinymce p { margin-bottom: 5px; }"
 			),
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
