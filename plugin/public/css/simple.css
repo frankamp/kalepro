@@ -78,6 +78,9 @@
 	border-top: #eee 1px solid;
 	border-bottom: #eee 1px solid;
 }
+.rp-times {
+	clear: left;
+}
 .rp-topright {
 	float:right;
 	text-align: center;
