@@ -1,8 +1,8 @@
 <script type="application/ld+json"><?=$viewhelper::ldjson($recipe)?></script>
 <div class="recipe-pro-recipe rp" itemscope="" itemtype="http://schema.org/Recipe"> 
 	<div class="rp-name" itemprop="name"><?= $recipe->title ?></div>
-	<div class="recipe-pro-print"><button class="rp-print" style="display: inline-block"><?= $labels['print'] ?></button></div>
 	<div class="rp-topright">
+		<div class="recipe-pro-print"><button class="rp-print" style="display: inline-block"><?= $labels['print'] ?></button></div>
 		<div class="rp-previewimage">
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
