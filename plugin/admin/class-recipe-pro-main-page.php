@@ -6,6 +6,7 @@ class Recipe_Pro_Main_Page {
 		"Simple" => "simple.css",
 		"Foodie Pro" => "foodie-pro.css",
 		"Brunch Pro" => "brunch-pro.css",
+		"Lite" => "lite.css",
 		"No CSS / Custom" => ""
 	);
 
