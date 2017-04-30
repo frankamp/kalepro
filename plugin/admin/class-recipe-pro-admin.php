@@ -269,10 +269,10 @@ class Recipe_Pro_Admin {
 			<div id="recipe-pro-content">
 				<div id="recipe-pro-tab-overview" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-overview' ? 'block' : 'none' %>;">
 					<div class="left">
-						<p><label for="recipepro_title"><?= $this->get_label('title') ?></label><input id="recipepro_title" name="title" type="text" value="<%= _.escape(title) %>" /></p>
-						<p><label for="recipepro_author"><?= $this->get_label('author') ?></label><input id="recipepro_author" name="author" type="text" value="<%= _.escape(author) %>" /></p>
-						<p><label for="recipepro_type"><?= $this->get_label('recipe_type') ?></label><input id="recipepro_type" name="type" type="text" value="<%= _.escape(type) %>" /></p>
-						<p><label for="recipepro_cuisine"><?= $this->get_label('cuisine') ?></label><input id="recipepro_cuisine" name="cuisine" type="text" value="<%= _.escape(cuisine) %>" /></p>
+						<p><label for="recipepro_title"><?= $this->get_label('title') ?></label><input class="rp-input" id="recipepro_title" name="title" type="text" value="<%= _.escape(title) %>" /></p>
+						<p><label for="recipepro_author"><?= $this->get_label('author') ?></label><input class="rp-input" id="recipepro_author" name="author" type="text" value="<%= _.escape(author) %>" /></p>
+						<p><label for="recipepro_type"><?= $this->get_label('recipe_type') ?></label><input class="rp-input" id="recipepro_type" name="type" type="text" value="<%= _.escape(type) %>" /></p>
+						<p><label for="recipepro_cuisine"><?= $this->get_label('cuisine') ?></label><input class="rp-input" id="recipepro_cuisine" name="cuisine" type="text" value="<%= _.escape(cuisine) %>" /></p>
 					</div>
 					<div class="right">
 						<p>
