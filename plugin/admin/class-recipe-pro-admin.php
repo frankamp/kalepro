@@ -281,9 +281,9 @@ class Recipe_Pro_Admin {
 					<div class="right">
 						<p>
 						<div class='image-preview-wrapper'>
-							<img id='image-preview' src='<%= _.escape(imageUrl) %>' width='150' height='150' style=' width: 150px; height: auto; max-height: 150px;'>
+							<img id='image-preview' src='<%= _.escape(imageUrl) %>' width='150' height='150' style=' width: 200px; height: auto;'>
 						</div>
-						<input id="upload_image_button" type="button" class="button" value="<?php _e( 'Select Recipe Image', 'recipe-pro' ); ?>" />
+						<input id="upload_image_button" type="button" class="button rp-image-select" value="<?php _e( 'Select Recipe Image', 'recipe-pro' ); ?>" />
 						<input type='hidden' name='recipepro_imageurl' id='imageUrl' value='<%= _.escape(imageUrl) %>' />
 						</p>
 					</div>

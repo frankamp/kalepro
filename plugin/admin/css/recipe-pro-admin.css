@@ -70,6 +70,13 @@ ul#recipe-pro-tabs button {
     width: 100%;
     min-width: 200px;
 }
+.rp-image-select {
+    width: 200px;
+}
+.rp-image-admin {
+    width: 200px;
+    height: auto;
+}
 #recipe-pro-content {
     border: solid;
     border-width: 1px;
