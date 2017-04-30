@@ -58,24 +58,36 @@
 		<div><?= $note->description ?></div> 
 <?php endforeach; ?>
 	</div> 
+<?php if ( strlen($recipe->servingSize)
+		|| strlen($recipe->calories)
+		|| strlen($recipe->fatContent)
+		|| strlen($recipe->transFatContent)
+		|| strlen($recipe->cholesterolContent)
+		|| strlen($recipe->cholesterolContent)
+		|| strlen($recipe->saturatedFatContent)
+		|| strlen($recipe->unsaturatedFatContent)
+		|| strlen($recipe->carbohydrateContent)
+		|| strlen($recipe->sugarContent)
+		|| strlen($recipe->sodiumContent)
+		|| strlen($recipe->fiberContent)
+		|| strlen($recipe->proteinContent) ) {?>
 	<div class="rp-nutrition" itemprop="nutrition" itemscope="" itemtype="http://schema.org/NutritionInformation"> 
 		<div class="rp-nutritiontitle"><?= $labels['nutrition_information'] ?></div> 
-		<div> 
-			<?= $labels['serving_size'] ?>:&nbsp;<span class="servingsize" itemprop="servingSize"><?= $recipe->servingSize ?></span> 
-			<?= $labels['calories'] ?>:&nbsp;<span class="calories" itemprop="calories"><?= $recipe->calories ?></span> 
-			<?= $labels['total_fat'] ?>:&nbsp;<span class="fat" itemprop="fatContent"><?= $recipe->fatContent ?></span> 
-			<?= $labels['trans_fat'] ?>:&nbsp;<span class="transfat" itemprop="transFatContent"><?= $recipe->transFatContent ?></span> 
-			<?= $labels['cholesterol'] ?>:&nbsp;<span class="cholesterol" itemprop="cholesterolContent"><?= $recipe->cholesterolContent ?></span> 
-			<?= $labels['saturated_fat'] ?>:&nbsp;<span class="saturatedfat" itemprop="saturatedFatContent"><?= $recipe->saturatedFatContent ?></span> 
-			<?= $labels['unsaturated_fat'] ?>:&nbsp;<span class="unsaturatedfat" itemprop="unsaturatedFatContent"><?= $recipe->unsaturatedFatContent ?></span> 
-			<?= $labels['carbohydrates'] ?>:&nbsp;<span class="carbohydrate" itemprop="carbohydrateContent"><?= $recipe->carbohydrateContent ?></span> 
-			<?= $labels['sugars'] ?>:&nbsp;<span class="sugar" itemprop="sugarContent"><?= $recipe->sugarContent ?></span> 
-			<?= $labels['sodium'] ?>:&nbsp;<span class="sodium" itemprop="sodiumContent"><?= $recipe->sodiumContent ?></span> 
-			<?= $labels['fiber'] ?>:&nbsp;<span class="fiber" itemprop="fiberContent"><?= $recipe->fiberContent ?></span> 
-			<?= $labels['protein'] ?>:&nbsp;<span class="protein" itemprop="proteinContent"><?= $recipe->proteinContent ?></span> 
-		</div> 
-		<div></div> 
+<?php if (strlen($recipe->servingSize)) {?><?= $labels['serving_size'] ?>:&nbsp;<span class="servingsize" itemprop="servingSize"><?= $recipe->servingSize ?></span><?php } ?>
+<?php if (strlen($recipe->calories)) {?><?= $labels['calories'] ?>:&nbsp;<span class="calories" itemprop="calories"><?= $recipe->calories ?></span><?php } ?>
+<?php if (strlen($recipe->fatContent)) {?><?= $labels['total_fat'] ?>:&nbsp;<span class="fat" itemprop="fatContent"><?= $recipe->fatContent ?></span><?php } ?>
+<?php if (strlen($recipe->transFatContent)) {?><?= $labels['trans_fat'] ?>:&nbsp;<span class="transfat" itemprop="transFatContent"><?= $recipe->transFatContent ?></span><?php } ?>
+<?php if (strlen($recipe->cholesterolContent)) {?><?= $labels['cholesterol'] ?>:&nbsp;<span class="cholesterol" itemprop="cholesterolContent"><?= $recipe->cholesterolContent ?></span><?php } ?>
+<?php if (strlen($recipe->saturatedFatContent)) {?><?= $labels['saturated_fat'] ?>:&nbsp;<span class="saturatedfat" itemprop="saturatedFatContent"><?= $recipe->saturatedFatContent ?></span><?php } ?>
+<?php if (strlen($recipe->unsaturatedFatContent)) {?><?= $labels['unsaturated_fat'] ?>:&nbsp;<span class="unsaturatedfat" itemprop="unsaturatedFatContent"><?= $recipe->unsaturatedFatContent ?></span><?php } ?>
+<?php if (strlen($recipe->carbohydrateContent)) {?><?= $labels['carbohydrates'] ?>:&nbsp;<span class="carbohydrate" itemprop="carbohydrateContent"><?= $recipe->carbohydrateContent ?></span><?php } ?>
+<?php if (strlen($recipe->sugarContent)) {?><?= $labels['sugars'] ?>:&nbsp;<span class="sugar" itemprop="sugarContent"><?= $recipe->sugarContent ?></span><?php } ?>
+<?php if (strlen($recipe->sodiumContent)) {?><?= $labels['sodium'] ?>:&nbsp;<span class="sodium" itemprop="sodiumContent"><?= $recipe->sodiumContent ?></span><?php } ?>
+<?php if (strlen($recipe->fiberContent)) {?><?= $labels['fiber'] ?>:&nbsp;<span class="fiber" itemprop="fiberContent"><?= $recipe->fiberContent ?></span><?php } ?>
+<?php if (strlen($recipe->proteinContent)) {?><?= $labels['protein'] ?>:&nbsp;<span class="protein" itemprop="proteinContent"><?= $recipe->proteinContent ?></span><?php } ?>
+
 	</div>
+<?php } //end if any nutrition information ?>
 	<div class="rp-detailsafter">
 		<div class="rp-author"><?= $labels['author'] ?>: <span itemprop="author"><?= $recipe->author ?></span></div>
 		<div class="rp-recipetype"><?= $labels['recipe_type'] ?>: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
