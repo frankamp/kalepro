@@ -1,7 +1,11 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
+@font-face {
+	font-family: 'Muli';
+	src: url(https://fonts.googleapis.com/css?family=Muli:400,700);
+}
 .rp {
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: 'Muli','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 100%;
 	font-size: 14px;
 	font-weight: 300;	
