@@ -1,8 +1,7 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
-@import {
-	url('https://fonts.googleapis.com/css?family=Muli:400,700');
-}
+@import url('https://fonts.googleapis.com/css?family=Muli:400,700');
+
 .rp {
 	font-family: 'Muli','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 100%;
