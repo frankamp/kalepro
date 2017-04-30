@@ -15,7 +15,7 @@
 					<div class="rp-ratingvalue"><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</div>
 		</div>
 	</div>
-	<div class="rp-times"
+	<div class="rp-times">
 	<div class="rp-preptime">
 		<div><?= $labels['prep_time'] ?></div>
 		<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
