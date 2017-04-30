@@ -28,7 +28,7 @@
 	line-height: 1.2;
 	float: left;
 	text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 500;
     width: 75%;
 }
 .rp-print {
@@ -100,7 +100,7 @@
 	text-transform: uppercase;
 	font-size: 18px;
 	font-size: 1.29em;
-    font-weight: 700;
+    font-weight: 500;
     margin: 10px 0;
 }
 .rp-subheading {
