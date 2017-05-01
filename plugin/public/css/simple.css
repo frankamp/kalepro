@@ -1,8 +1,11 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,400i,700');
 @import url('https://fonts.googleapis.com/css?family=Roboto:700')
 
+.recipe-pro-recipe {
+	margin: 20px 0;
+}
 .rp {
 	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 100%;
@@ -26,7 +29,7 @@
 	margin: 0 0 8px 32px;
 }
 .rp ul li {
-	margin: 0;
+	margin: 0 0 0 22px;
 }
 .rp-name {
 	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
@@ -71,9 +74,12 @@
 .recipe-pro-print {
 	text-align: center;
 }
+.rp-timetitle {
+	font-weight: 700;
+}
 .rp-preptime,
 .rp-cooktime {
-	border-right: #eee 1px solid;
+	border-right: #ddd 1px solid;
 }
 .rp-preptime,
 .rp-cooktime,
@@ -83,8 +89,8 @@
 	text-align: center;
 	padding: 10px 0;
 	margin: 10px 0 15px 0;
-	border-top: #eee 1px solid;
-	border-bottom: #eee 1px solid;
+	border-top: #ddd 1px solid;
+	border-bottom: #ddd 1px solid;
 }
 .rp-time {
 	font-style: italic;
@@ -95,9 +101,11 @@
 .rp-topright {
 	float:right;
 	text-align: center;
+	width: 35%;
 }
 .rp-previewimage img {
 	width: 200px;
+	max-width: 90%;
 	height: auto;
 	margin: 5px;
 	line-height: 1;
@@ -108,6 +116,10 @@
 .rp-overview {
 	margin: 0 5px 0 0;
 	width: 60%;
+}
+.rp-cuisinetitle,
+.rp-servingtitle {
+	font-weight: 700;
 }
 .rp-cuisine,
 .rp-serving {
@@ -132,6 +144,7 @@
 }
 .rp-subheading {
     text-transform: uppercase;
+    font-weight: 700;
     font-size: 14px;
     font-size: 1em;
     margin: 10px 0 5px 0;
@@ -163,13 +176,13 @@
 }
 .rp-detailsafter {
 	overflow: hidden;
-	border-bottom: #eee 1px solid;
-	border-top: #eee 1px solid;
+	border-bottom: #ddd 1px solid;
+	border-top: #ddd 1px solid;
 	margin: 15px 0 0 0;
 	padding: 0 0 15px 0;
 }
 .rp-author {
-	border-right:#eee 1px solid;
+	border-right:#ddd 1px solid;
 }
 .rp-recipetype,
 .rp-author {
@@ -188,7 +201,7 @@
 	font-weight: 700;
 	font-size: 18px;
     font-size: 1.29em;
-    margin: 12px 0;
+    margin: 24px 0;
 }
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
@@ -239,7 +252,7 @@ input.rp-star {
 label.rp-star {
   float: right;
   font-size: 18px;
-  color: #eee;
+  color: #ddd;
   transition: all .2s;
   padding-right: 6px;
   margin-right: 0px;
