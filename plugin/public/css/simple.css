@@ -1,6 +1,6 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,300i,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,300i,500');
 @import url('https://fonts.googleapis.com/css?family=Roboto:700');
 
 .recipe-pro-recipe {
@@ -28,7 +28,7 @@
 	margin: 0 0 8px 32px;
 }
 .rp ul li {
-	margin: 0 0 0 22px;
+	margin: 0 0 4px 22px;
 }
 .rp-name {
 	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
@@ -43,12 +43,12 @@
 }
 .rp-print {
 	color: #000;
-	border: 1px solid #010101;
+	border: 1px solid #000;
 	background: #fff;
 	font-size: 14px;
 	letter-spacing: 2px;
 	line-height: 1.4;
-	font-weight: 700;
+	font-weight: 500;
 	text-transform: uppercase;
 	margin: 0 5px;
 	padding: 6px 20px;
@@ -73,7 +73,7 @@
 	text-align: center;
 }
 .rp-timetitle {
-	font-weight: 700;
+	font-weight: 500;
 }
 .rp-preptime,
 .rp-cooktime {
@@ -117,7 +117,7 @@
 }
 .rp-cuisinetitle,
 .rp-servingtitle {
-	font-weight: 700;
+	font-weight: 500;
 }
 .rp-cuisine,
 .rp-serving {
@@ -141,7 +141,7 @@
 }
 .rp-subheading {
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 14px;
     margin: 10px 0 5px 0;
 }
