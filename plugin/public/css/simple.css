@@ -9,7 +9,6 @@
 .rp {
 	font-family: 'Montserrat','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 12px;
-	font-size: .86em;
 	font-weight: 300;	
 	line-height: 1.6;
 	letter-spacing: .8px;
@@ -34,7 +33,6 @@
 .rp-name {
 	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 28px;
-	font-size: 2em;
 	letter-spacing: 2px;
 	line-height: 1.2;
 	float: left;
@@ -47,7 +45,7 @@
 	color: #000;
 	border: 1px solid #010101;
 	background: #fff;
-	font-size: 1em;
+	font-size: 14px;
 	letter-spacing: 2px;
 	line-height: 1.4;
 	font-weight: 700;
@@ -135,7 +133,6 @@
 	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
 	text-transform: uppercase;
 	font-size: 18px;
-	font-size: 1.29em;
 	letter-spacing: 2px;
 	line-height: 1.6;
     font-weight: 700;
@@ -146,7 +143,6 @@
     text-transform: uppercase;
     font-weight: 700;
     font-size: 14px;
-    font-size: 1em;
     margin: 10px 0 5px 0;
 }
 .rp-ingredients,
@@ -190,7 +186,6 @@
 	float: left;
 	text-align: center;
 	font-size: 14px;
-	font-size: 1em;
 	font-style: italic;
 	padding: 15px 5px 100% 5px;
 	margin: 0 0 -100% 0;
@@ -200,7 +195,6 @@
 	text-align: center;
 	font-weight: 700;
 	font-size: 18px;
-    font-size: 1.29em;
     margin: 24px 0;
 }
 .rp-star-rating .rp-star-full::before {
@@ -214,7 +208,6 @@
     display: inline-block;
     font-family: dashicons;
     font-size: 20px;
-    font-size: 1.43em;
     font-style: normal;
     font-weight: 300;
     height: 20px;
