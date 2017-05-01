@@ -216,6 +216,31 @@
 	font-size: 18px;
 	margin:  0;
 }
+.rp-stars-partial {
+  color: #ddd;
+  font-size: 25px;
+  height: 25px;
+  width: 100px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0;
+  
+  &-top {
+    color: #FD4;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  &-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+  }
+}
 div.rp-stars {
   display: inline-block;
   line-height: 1;

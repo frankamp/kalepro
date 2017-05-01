@@ -7,9 +7,9 @@
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
-					<div class="rp-stars">
+					<div class="rp-stars-partial">
 <?php for( $i=1; $i <= 5; $i++ ) { ?>
-					<span class="rp-star <?=($recipe->ratingValue >= $i ? 'rp-star-active' : '')?>" title="<?= $i ?> star<?=($i > 1 ? 's' : '')?>"></span>
+					<span class="rp-stars-partial-top <?=($recipe->ratingValue >= $i ? 'rp-star-active' : '')?>" title="<?= $i ?> star<?=($i > 1 ? 's' : '')?>"></span>
 <?php } ?>
 					</div>
 					<div class="rp-ratingvalue"><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</div>
