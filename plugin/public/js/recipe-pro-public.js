@@ -33,6 +33,12 @@
 	 	if (printButton.length) {
 	 		printButton.on('click', function( event ){
 		 		$(event.target).closest('.recipe-pro-recipe').printThis({removeInline:true});
+		 	});
+	 	}
+	 	 $(function() {
+	 	var printButton = $('.rp-source');
+	 	if (printButton.length) {
+	 		printButton.on('click', function( event ){
 		 		$(event.target).closest('.rp-source').printThis({removeInline:true});
 		 	});
 	 	}
