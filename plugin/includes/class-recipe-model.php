@@ -135,6 +135,15 @@ class Recipe_Pro_Recipe_View_Helper {
 		$json_object['nutrition']['proteinContent'] = $recipe->proteinContent;
 		return json_encode( $json_object );
 	}
+
+	public static function intervalsAreEqual($int1, $int2) {
+		$reference = new DateTime();
+		$int1Time = clone $reference;
+		$int1Time->add($int1);
+		$int2Time = clone $reference;
+		$int2Time->add($int2);
+		return $int1Time == $int2Time;
+	}
 // 	"recipeIngredient": [
 // 		"ICE CREAM",
 // 		"1.5 cups raw cashews (soaked for 4-6 hours, or in boiling hot water for 1-2 hours*)",

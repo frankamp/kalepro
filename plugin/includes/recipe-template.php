@@ -16,18 +16,24 @@
 		</div>
 	</div>
 	<div class="rp-times">
+<?php if ( !$viewhelper::intervalsAreEqual( $recipe->prepTime, new DateInterval("PT0M") ) ): ?>
 	<div class="rp-preptime">
 		<div><?= $labels['prep_time'] ?></div>
 		<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
 	</div>
+<?php endif; ?>
+<?php if ( !$viewhelper::intervalsAreEqual( $recipe->cookTime, new DateInterval("PT0M") ) ): ?>
 	<div class="rp-cooktime">
 		<div><?= $labels['cook_time'] ?></div>
 		<div> <time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div>
 	</div>
+<?php endif; ?>
+<?php if ( !$viewhelper::intervalsAreEqual( $recipe->totalTime(), new DateInterval("PT0M") ) ): ?>
 	<div class="rp-totaltime">
 		<div><?= $labels['total_time'] ?></div>
 		<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div>
 	</div>
+<?php endif; ?>
 	</div>
 	<div class="rp-overview">
 	<div class="rp-cuisine"><?= $labels['cuisine'] ?>: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
