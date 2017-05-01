@@ -233,25 +233,25 @@ class Recipe_Pro_WPUltimate_Importer {
 		// $nutrition = isset( $post_meta['recipe_nutritional'] ) ? maybe_unserialize( $post_meta['recipe_nutritional'][0] ) : array();
 		$nutrition = $wpu_recipe->nutrition();
 		$recipe->servingSize = isset( $nutrition[ "serving_size" ] ) ? $nutrition[ "serving_size" ]: "";
-		$recipe->calories = isset( $nutrition[ "calories" ] ) ? $nutrition[ "calories" ]: "";
-		$recipe->cholesterolContent = isset( $nutrition[ "cholesterol" ] ) ? $nutrition[ "cholesterol" ] . "mg": "";
-		$recipe->fatContent = isset( $nutrition[ "fat" ] ) ? $nutrition[ "fat" ] . "g": "";
-		$recipe->saturatedFatContent = isset( $nutrition[ "saturated_fat" ] ) ? $nutrition[ "saturated_fat" ] . "g": "";
+		$recipe->calories = isset( $nutrition[ "calories" ] ) ? $nutrition[ "calories" ]: null;
+		$recipe->cholesterolContent = isset( $nutrition[ "cholesterol" ] ) ? $nutrition[ "cholesterol" ]: null;
+		$recipe->fatContent = isset( $nutrition[ "fat" ] ) ? $nutrition[ "fat" ]: null;
+		$recipe->saturatedFatContent = isset( $nutrition[ "saturated_fat" ] ) ? $nutrition[ "saturated_fat" ]: null;
 		
 		if ( isset( $nutrition[ "polyunsaturated_fat" ] ) && isset( $nutrition[ "monounsaturated_fat" ] ) ) {
-			$recipe->unsaturatedFatContent = ($nutrition[ "monounsaturated_fat" ] + $nutrition[ "polyunsaturated_fat" ]) . "g";
+			$recipe->unsaturatedFatContent = ($nutrition[ "monounsaturated_fat" ] + $nutrition[ "polyunsaturated_fat" ]);
 		} else if( isset( $nutrition[ "polyunsaturated_fat" ] )) {
-			$recipe->unsaturatedFatContent = isset( $nutrition[ "polyunsaturated_fat" ] ) ? $nutrition[ "polyunsaturated_fat" ] . "g": "";
+			$recipe->unsaturatedFatContent = isset( $nutrition[ "polyunsaturated_fat" ] ) ? $nutrition[ "polyunsaturated_fat" ]: null;
 		} else {
-			$recipe->unsaturatedFatContent = isset( $nutrition[ "monounsaturated_fat" ] ) ? $nutrition[ "monounsaturated_fat" ] . "g": "";
+			$recipe->unsaturatedFatContent = isset( $nutrition[ "monounsaturated_fat" ] ) ? $nutrition[ "monounsaturated_fat" ]: null;
 		}
 
-		$recipe->transFatContent = isset( $nutrition[ "trans_fat" ] ) ? $nutrition[ "trans_fat" ] . "g": "";
-		$recipe->carbohydrateContent = isset( $nutrition[ "carbohydrate" ] ) ? $nutrition[ "carbohydrate" ] . "g": "";
-		$recipe->sugarContent = isset( $nutrition[ "sugar" ] ) ? $nutrition[ "sugar" ] . "g": "";
-		$recipe->sodiumContent = isset( $nutrition[ "sodium" ] ) ? $nutrition[ "sodium" ] . "mg": "";
-		$recipe->fiberContent = isset( $nutrition[ "fiber" ] ) ? $nutrition[ "fiber" ] . "g": "";
-		$recipe->proteinContent = isset( $nutrition[ "protein" ] ) ? $nutrition[ "protein" ] . "g": "";
+		$recipe->transFatContent = isset( $nutrition[ "trans_fat" ] ) ? $nutrition[ "trans_fat" ]: null;
+		$recipe->carbohydrateContent = isset( $nutrition[ "carbohydrate" ] ) ? $nutrition[ "carbohydrate" ]: null;
+		$recipe->sugarContent = isset( $nutrition[ "sugar" ] ) ? $nutrition[ "sugar" ]: null;
+		$recipe->sodiumContent = isset( $nutrition[ "sodium" ] ) ? $nutrition[ "sodium" ]: null;
+		$recipe->fiberContent = isset( $nutrition[ "fiber" ] ) ? $nutrition[ "fiber" ]: null;
+		$recipe->proteinContent = isset( $nutrition[ "protein" ] ) ? $nutrition[ "protein" ]: null;
 		
 
 		$courses = wp_get_post_terms( $recipe_post_id, 'course', array( 'fields' => 'names' ) );

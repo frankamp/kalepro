@@ -110,17 +110,17 @@ class Recipe_Pro_EasyRecipe_Importer {
 		$recipe->cuisine = $data->cuisine;
 		$recipe->yield = $data->yield;
 		$recipe->servingSize = $data->servingSize;
-		$recipe->calories = $data->calories ?: "";
-		$recipe->cholesterolContent = $data->cholesterol ?: "";
-		$recipe->fatContent = $data->fat ?: "";
-		$recipe->saturatedFatContent = $data->saturatedFat ?: "";
-		$recipe->unsaturatedFatContent = $data->unsaturatedFat ?: "";
-		$recipe->transFatContent = $data->transFat ?: "";
-		$recipe->carbohydrateContent = $data->carbohydrates ?: "";
-		$recipe->sugarContent = $data->sugar ?: "";
-		$recipe->sodiumContent = $data->sodium ?: "";
-		$recipe->fiberContent = $data->fiber ?: "";
-		$recipe->proteinContent = $data->protein ?: "";
+		$recipe->calories = preg_replace('/[^0-9\.]/', '', $data->calories) ?: null;
+		$recipe->cholesterolContent = preg_replace('/[^0-9\.]/', '', $data->cholesterol) ?: null;
+		$recipe->fatContent = preg_replace('/[^0-9\.]/', '', $data->fat) ?: null;
+		$recipe->saturatedFatContent = preg_replace('/[^0-9\.]/', '', $data->saturatedFat) ?: null;
+		$recipe->unsaturatedFatContent = preg_replace('/[^0-9\.]/', '', $data->unsaturatedFat) ?: null;
+		$recipe->transFatContent = preg_replace('/[^0-9\.]/', '', $data->transFat) ?: null;
+		$recipe->carbohydrateContent = preg_replace('/[^0-9\.]/', '', $data->carbohydrates) ?: null;
+		$recipe->sugarContent = preg_replace('/[^0-9\.]/', '', $data->sugar) ?: null;
+		$recipe->sodiumContent = preg_replace('/[^0-9\.]/', '', $data->sodium) ?: null;
+		$recipe->fiberContent = preg_replace('/[^0-9\.]/', '', $data->fiber) ?: null;
+		$recipe->proteinContent = preg_replace('/[^0-9\.]/', '', $data->protein) ?: null;
 		if ( $data->preptimeISO ) {
 			$recipe->setPrepTimeByValue( $data->preptimeISO );
 		}
