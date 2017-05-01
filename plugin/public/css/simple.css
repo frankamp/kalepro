@@ -1,19 +1,19 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Lato:400,400i,700');
-@import url('https://fonts.googleapis.com/css?family=Roboto:700')
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,300i,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:700');
 
 .recipe-pro-recipe {
 	margin: 20px 0;
 }
 .rp {
-	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
-	font-size: 100%;
-	font-size: 14px;
+	font-family: 'Montserrat','Helvetica Neue',Helvetica,sans-serif;
+	font-size: 12px;
+	font-size: .86em;
 	font-weight: 300;	
 	line-height: 1.6;
+	letter-spacing: .8px;
 	color: #000;
-	border: 0; /*included in case an outline would be helpful*/
 	margin: 20px 0;
 	padding: 0;
 	clear: both;

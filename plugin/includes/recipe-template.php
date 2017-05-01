@@ -36,8 +36,8 @@
 <?php endif; ?>
 	</div>
 	<div class="rp-overview">
-	<div class="rp-cuisine"><?= $labels['cuisine'] ?>: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
-	<div class="rp-serving">Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
+	<div class="rp-cuisine"><span class="rp-cuisinetitle"><?= $labels['cuisine'] ?></span>: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
+	<div class="rp-serving"><span class="rp-servingtitle">Serves</span>: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
 		<div class="rp-description"><span itemprop="description"><?= $recipe->description ?></span></div>
 	</div>
 	<div> 
