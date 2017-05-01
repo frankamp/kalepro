@@ -216,9 +216,11 @@
 	font-size: 18px;
 	margin:  0;
 }
+.rp-stars-partial {
+	line-height: 1;
+}
 div.rp-stars {
   display: inline-block;
-  line-height: 1;
 }
 span.rp-star {
 	color: #ddd;
