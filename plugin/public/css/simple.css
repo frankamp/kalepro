@@ -1,6 +1,7 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:700')
 
 .rp {
 	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
@@ -21,12 +22,14 @@
 .rp ul {
 	margin: 0 0 20px 0;
 }
-.rp ol li,
+.rp ol li {
+	margin: 0 0 8px 32px;
+}
 .rp ul li {
-	margin: 0 0 16px 32px;
+	margin: 0;
 }
 .rp-name {
-	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 28px;
 	font-size: 2em;
 	letter-spacing: 2px;
@@ -83,6 +86,9 @@
 	border-top: #eee 1px solid;
 	border-bottom: #eee 1px solid;
 }
+.rp-time {
+	font-style: italic;
+}
 .rp-times {
 	clear: left;
 }
@@ -94,6 +100,7 @@
 	width: 200px;
 	height: auto;
 	margin: 5px;
+	line-height: 1;
 }
 .rp-ratings {
     margin-right: 5px;
@@ -113,7 +120,7 @@
 .rp-instructionstitle,
 .rp-nutritiontitle,
 .rp-notestitle {
-	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
 	text-transform: uppercase;
 	font-size: 18px;
 	font-size: 1.29em;
@@ -211,6 +218,7 @@
 }
 div.rp-stars {
   display: inline-block;
+  line-height: 1;
 }
 span.rp-star {
 	color: #ddd;
