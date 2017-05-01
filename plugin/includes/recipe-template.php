@@ -7,7 +7,7 @@
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
-					<div class="rp-stars-partial">
+					<div class="rp-stars">
 <?php for( $i=1; $i <= 5; $i++ ) { ?>
 					<span class="rp-star <?=($recipe->ratingValue >= $i ? 'rp-star-active' : '')?>" title="<?= $i ?> star<?=($i > 1 ? 's' : '')?>"></span>
 <?php } ?>
