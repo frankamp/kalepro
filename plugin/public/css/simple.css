@@ -1,7 +1,9 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
 .rp {
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 100%;
 	font-size: 14px;
 	font-weight: 300;	
@@ -15,21 +17,25 @@
 	padding: 10px;
 	width: 100%;
 }
+.rp ol,
 .rp ul {
-	margin: 0;
+	margin: 0 0 20px 0;
 }
 .rp ol li,
 .rp ul li {
 	margin: 0 0 16px 32px;
 }
 .rp-name {
+	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 28px;
 	font-size: 2em;
+	letter-spacing: 2px;
 	line-height: 1.2;
 	float: left;
 	text-transform: uppercase;
     font-weight: 700;
-    width: 75%;
+    margin: 5px 0;
+    padding: 0;
 }
 .rp-print {
 	color: #000;
@@ -55,6 +61,13 @@
 	margin-right: 8px;
 	content:"";
 }
+.rp .button:hover {
+	background: #fff;
+	color: #000;
+}
+.recipe-pro-print {
+	text-align: center;
+}
 .rp-preptime,
 .rp-cooktime {
 	border-right: #eee 1px solid;
@@ -69,6 +82,9 @@
 	margin: 10px 0 15px 0;
 	border-top: #eee 1px solid;
 	border-bottom: #eee 1px solid;
+}
+.rp-times {
+	clear: left;
 }
 .rp-topright {
 	float:right;
@@ -97,17 +113,21 @@
 .rp-instructionstitle,
 .rp-nutritiontitle,
 .rp-notestitle {
+	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
 	text-transform: uppercase;
 	font-size: 18px;
 	font-size: 1.29em;
+	letter-spacing: 2px;
+	line-height: 1.6;
     font-weight: 700;
     margin: 10px 0;
+    padding: 0;
 }
 .rp-subheading {
     text-transform: uppercase;
     font-size: 14px;
     font-size: 1em;
-    margin: 5px 0;
+    margin: 10px 0 5px 0;
 }
 .rp-ingredients,
 .rp-nstructions,
