@@ -177,6 +177,11 @@
 }
 .rp-source {
 	display: inline-block;
+	text-align: center;
+	font-weight: 700;
+	font-size: 18px;
+    font-size: 1.29em;
+    margin: 12px 0;
 }
 .rp-star-rating .rp-star-full::before {
     content: "\f155";

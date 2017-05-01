@@ -94,5 +94,5 @@
 		<div class="rp-author"><?= $labels['author'] ?>: <span itemprop="author"><?= $recipe->author ?></span></div>
 		<div class="rp-recipetype"><?= $labels['recipe_type'] ?>: <span itemprop="recipeCategory"><?= $recipe->type ?></span></div>
 	</div>
-	<div class="rp-source" style="display: none;"><?= $labels['print'] ?>Recipe from <?= $labels['author'] ?> here: <?=get_permalink() ?></div>
+	<div class="rp-source" style="display: none;">Recipe from <?= $labels['author'] ?> here: <?=get_permalink() ?></div>
 </div>
