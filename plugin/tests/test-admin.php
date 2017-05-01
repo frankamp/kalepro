@@ -208,7 +208,7 @@ class AdminTest extends WP_UnitTestCase {
 		$rawobj = json_decode( $this->get_test_recipe_json(), true );
 		$rawobj['imageId'] = $id;
 		$recipe = new Recipe_Pro_Recipe( $rawobj );
-		$this->assertEquals( "http://example.org/wp-content/uploads/2017/04/test-image", substr( $recipe->getImageUrl(), 0, 56 ) );
+		$this->assertEquals( "test-image", substr( $recipe->getImageUrl(), 46, 10 ) );
 		wp_delete_post( $id, true );
 	}
 

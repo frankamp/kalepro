@@ -148,6 +148,8 @@
 		var RecipeView = Backbone.View.extend({
 			events: {
 				"click .recipe-pro-tab-button": "tabClick",
+				"change input#recipepro_preptime": "changeTime",
+				"change input#recipepro_cooktime": "changeTime",
 				"change input" : "change"
 			},
 			initialize: function(){
@@ -206,6 +208,8 @@
 			},
 			render: function() {
 				var jsonable = this.model.toJSON();
+				jsonable.cookTime = jsonable.cookTime.replace("PT","").replace("H","h ").toLowerCase();
+				jsonable.prepTime = jsonable.prepTime.replace("PT","").replace("H","h ").toLowerCase();
 				this.$el.html(this.template(jsonable));
 				this.setupImage($);
 				return this;
@@ -252,8 +256,36 @@
 				var element = $(e.currentTarget);
 				var input = element.val();
 				var name = element.attr('name');
+				var ignored = ['prepTime', 'cookTime'];
+				if ( ignored.indexOf(name) != -1 ) {
+					return true;
+				}
 				if ( input !== this.model.get( name ) ) {
 					this.model.set(name, input);
+				}
+				return true;
+			},
+			changeTime: function(e) {
+				var element = $(e.currentTarget);
+				var input = element.val();
+				var name = element.attr('name');
+				var re = /.*?(([0-9]+).*h)?(.*?([0-9]+).*[m]?)?.*?/i;
+				var results = input.match(re);
+				if (!results) {
+					return true;
+				};
+				var duration = "PT";
+				if (results[2]) {
+					duration += results[2] + "H";
+				}
+				if (results[4]) {
+					duration += results[4] + "M";
+				}
+				if (!results[2] && !results[4]) {
+					duration += "0M";
+				}
+				if (duration !== this.model.get(name)) {
+					this.model.set(name, duration);
 				}
 				return true;
 			},
