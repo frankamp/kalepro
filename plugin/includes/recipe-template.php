@@ -7,6 +7,10 @@
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
+					<div class="star-ratings-css">
+					  <div class="star-ratings-css-top" style="width:<?=($recipe->ratingValue/5)*100?>%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+					  <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+					</div>
 					<div class="star-ratings-sprite"><span style="width:<?=($recipe->ratingValue/5)*100?>%" class="star-ratings-sprite-rating"></span></div>
 					<div class="rp-stars rp-stars-partial">
 <?php for( $i=1; $i <= 5; $i++ ) { ?>
