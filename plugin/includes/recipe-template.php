@@ -7,7 +7,7 @@
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
-					<div class="rp-stars">
+					<div class="rp-stars rp-stars-partial">
 <?php for( $i=1; $i <= 5; $i++ ) { ?>
 					<span class="rp-star <?=($recipe->ratingValue >= $i ? 'rp-star-active' : '')?>" title="<?= $i ?> star<?=($i > 1 ? 's' : '')?>"></span>
 <?php } ?>
@@ -18,26 +18,26 @@
 	<div class="rp-times">
 <?php if ( !$viewhelper::intervalsAreEqual( $recipe->prepTime, new DateInterval("PT0M") ) ): ?>
 	<div class="rp-preptime">
-		<div><?= $labels['prep_time'] ?></div>
-		<div> <time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
+		<div class="rp-timetitle"><?= $labels['prep_time'] ?></div>
+		<div class="rp-time"><time itemprop="prepTime" datetime="<?= $viewhelper::interval( $recipe->prepTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->prepTime ) ?></time> </div>
 	</div>
 <?php endif; ?>
 <?php if ( !$viewhelper::intervalsAreEqual( $recipe->cookTime, new DateInterval("PT0M") ) ): ?>
 	<div class="rp-cooktime">
-		<div><?= $labels['cook_time'] ?></div>
-		<div> <time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div>
+		<div class="rp-timetitle"><?= $labels['cook_time'] ?></div>
+		<div class="rp-time"><time itemprop="cookTime" datetime="<?=  $viewhelper::interval( $recipe->cookTime ) ?>"><?= $viewhelper::prettyInterval( $recipe->cookTime ) ?></time> </div>
 	</div>
 <?php endif; ?>
 <?php if ( !$viewhelper::intervalsAreEqual( $recipe->totalTime(), new DateInterval("PT0M") ) ): ?>
 	<div class="rp-totaltime">
-		<div><?= $labels['total_time'] ?></div>
-		<div> <time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div>
+		<div class="rp-timetitle"><?= $labels['total_time'] ?></div>
+		<div class="rp-time"><time itemprop="totalTime" datetime="<?= $viewhelper::interval( $recipe->totalTime() ) ?>"><?= $viewhelper::prettyInterval( $recipe->totalTime() ) ?></time> </div>
 	</div>
 <?php endif; ?>
 	</div>
 	<div class="rp-overview">
-	<div class="rp-cuisine"><?= $labels['cuisine'] ?>: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
-	<div class="rp-serving">Serves: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
+	<div class="rp-cuisine"><span class="rp-cuisinetitle"><?= $labels['cuisine'] ?></span>: <span itemprop="recipeCuisine"><?= $recipe->cuisine ?></span></div>
+	<div class="rp-serving"><span class="rp-servingtitle">Serves</span>: <span itemprop="recipeYield"><?= $recipe->yield ?></span></div>
 		<div class="rp-description"><span itemprop="description"><?= $recipe->description ?></span></div>
 	</div>
 	<div> 

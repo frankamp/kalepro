@@ -1,15 +1,18 @@
 /* Recipe Pro Styling
 --------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,300i,500');
+@import url('https://fonts.googleapis.com/css?family=Roboto:700');
 
+.recipe-pro-recipe {
+	margin: 20px 0;
+}
 .rp {
-	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
-	font-size: 100%;
-	font-size: 14px;
+	font-family: 'Montserrat','Helvetica Neue',Helvetica,sans-serif;
+	font-size: 12px;
 	font-weight: 300;	
-	line-height: 1.6;
+	line-height: 1.8;
+	letter-spacing: .8px;
 	color: #000;
-	border: 0; /*included in case an outline would be helpful*/
 	margin: 20px 0;
 	padding: 0;
 	clear: both;
@@ -21,14 +24,15 @@
 .rp ul {
 	margin: 0 0 20px 0;
 }
-.rp ol li,
+.rp ol li {
+	margin: 0 0 8px 32px;
+}
 .rp ul li {
-	margin: 0 0 16px 32px;
+	margin: 0 0 4px 22px;
 }
 .rp-name {
-	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
 	font-size: 28px;
-	font-size: 2em;
 	letter-spacing: 2px;
 	line-height: 1.2;
 	float: left;
@@ -39,9 +43,10 @@
 }
 .rp-print {
 	color: #000;
-	border: 1px solid #010101;
+	border: 1px solid #000;
 	background: #fff;
-	font-size: 1em;
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
+	font-size: 14px;
 	letter-spacing: 2px;
 	line-height: 1.4;
 	font-weight: 700;
@@ -68,39 +73,55 @@
 .recipe-pro-print {
 	text-align: center;
 }
+.rp-timetitle {
+	font-weight: 500;
+	padding: 10px 3px 0 3px;
+}
 .rp-preptime,
 .rp-cooktime {
-	border-right: #eee 1px solid;
+	border-right: #ddd 1px solid;
 }
 .rp-preptime,
 .rp-cooktime,
 .rp-totaltime {
-	width: 20%;
+	width: 33%;
 	float: left;
 	text-align: center;
-	padding: 10px 0;
-	margin: 10px 0 15px 0;
-	border-top: #eee 1px solid;
-	border-bottom: #eee 1px solid;
+	margin-bottom: -100%;
+	padding-bottom: 100%;
+}
+.rp-time {
+	font-style: italic;
+	padding: 0 3px 10px 3px;
 }
 .rp-times {
 	clear: left;
+	overflow: hidden;
+	border-bottom: #ddd 1px solid;
+	border-top: #ddd 1px solid;
 }
 .rp-topright {
 	float:right;
 	text-align: center;
+	width: 35%;
 }
 .rp-previewimage img {
 	width: 200px;
+	max-width: 90%;
 	height: auto;
 	margin: 5px;
+	line-height: 1;
 }
 .rp-ratings {
     margin-right: 5px;
 }
 .rp-overview {
-	margin: 0 5px 0 0;
+	margin: 15px 5px 0 0;
 	width: 60%;
+}
+.rp-cuisinetitle,
+.rp-servingtitle {
+	font-weight: 500;
 }
 .rp-cuisine,
 .rp-serving {
@@ -113,10 +134,9 @@
 .rp-instructionstitle,
 .rp-nutritiontitle,
 .rp-notestitle {
-	font-family: 'Lato','Helvetica Neue',Helvetica,sans-serif;
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
 	text-transform: uppercase;
 	font-size: 18px;
-	font-size: 1.29em;
 	letter-spacing: 2px;
 	line-height: 1.6;
     font-weight: 700;
@@ -125,8 +145,8 @@
 }
 .rp-subheading {
     text-transform: uppercase;
+    font-weight: 500;
     font-size: 14px;
-    font-size: 1em;
     margin: 10px 0 5px 0;
 }
 .rp-ingredients,
@@ -156,13 +176,13 @@
 }
 .rp-detailsafter {
 	overflow: hidden;
-	border-bottom: #eee 1px solid;
-	border-top: #eee 1px solid;
+	border-bottom: #ddd 1px solid;
+	border-top: #ddd 1px solid;
 	margin: 15px 0 0 0;
 	padding: 0 0 15px 0;
 }
 .rp-author {
-	border-right:#eee 1px solid;
+	border-right:#ddd 1px solid;
 }
 .rp-recipetype,
 .rp-author {
@@ -170,7 +190,6 @@
 	float: left;
 	text-align: center;
 	font-size: 14px;
-	font-size: 1em;
 	font-style: italic;
 	padding: 15px 5px 100% 5px;
 	margin: 0 0 -100% 0;
@@ -180,8 +199,7 @@
 	text-align: center;
 	font-weight: 700;
 	font-size: 18px;
-    font-size: 1.29em;
-    margin: 12px 0;
+    margin: 24px 0;
 }
 .rp-star-rating .rp-star-full::before {
     content: "\f155";
@@ -194,7 +212,6 @@
     display: inline-block;
     font-family: dashicons;
     font-size: 20px;
-    font-size: 1.43em;
     font-style: normal;
     font-weight: 300;
     height: 20px;
@@ -208,6 +225,9 @@
 	float:  left;
 	font-size: 18px;
 	margin:  0;
+}
+.rp-stars-partial {
+	line-height: 1;
 }
 div.rp-stars {
   display: inline-block;
@@ -229,7 +249,7 @@ input.rp-star {
 label.rp-star {
   float: right;
   font-size: 18px;
-  color: #eee;
+  color: #ddd;
   transition: all .2s;
   padding-right: 6px;
   margin-right: 0px;
@@ -247,3 +267,16 @@ label.rp-star:before {
   content: '\f155';
   font-family: dashicons;
 }
+@media only screen and (max-width: 400px) {
+	span.rp-star {
+	font-size: 12px;
+}
+.rp-detailsafter {
+	padding: 0 0 5px 0;
+}
+.rp-recipetype,
+.rp-author {
+	font-size: 12px;
+	padding: 5px 5px 100% 5px;
+}
+	}
