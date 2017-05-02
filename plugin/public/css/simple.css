@@ -75,7 +75,7 @@
 }
 .rp-timetitle {
 	font-weight: 500;
-	padding: 10px 0 0 0;
+	padding: 10px 3px 0 3px;
 }
 .rp-preptime,
 .rp-cooktime {
@@ -92,7 +92,7 @@
 }
 .rp-time {
 	font-style: italic;
-	padding: 0 0 10px 0;
+	padding: 0 3px 10px 3px;
 }
 .rp-times {
 	clear: left;
@@ -116,7 +116,7 @@
     margin-right: 5px;
 }
 .rp-overview {
-	margin: 0 5px 0 0;
+	margin: 15px 5px 0 0;
 	width: 60%;
 }
 .rp-cuisinetitle,
@@ -267,3 +267,16 @@ label.rp-star:before {
   content: '\f155';
   font-family: dashicons;
 }
+@media only screen and (max-width: 400px) {
+	span.rp-star {
+	font-size: 12px;
+}
+.rp-detailsafter {
+	padding: 0 0 5px 0;
+}
+.rp-recipetype,
+.rp-author {
+	font-size: 12px;
+	padding: 5px 5px 100% 5px;
+}
+	}
