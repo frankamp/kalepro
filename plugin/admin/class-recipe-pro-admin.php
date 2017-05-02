@@ -300,17 +300,17 @@ class Recipe_Pro_Admin {
 						<p><label for="recipepro_yield"><?= $this->get_label('yield') ?></label> <input id="recipepro_yield" name="yield" type="number" placeholder="e.g 6 (number only)" value="<%= _.escape(yield) %>" /></p>
 						<p><label for="recipepro_servingSize"><?= $this->get_label('serving_size') ?></label> <input id="recipepro_servingSize" placeholder="e.g. 1 slice" name="servingSize" type="text" value="<%= _.escape(servingSize) %>" /></p>
 						<p><label for="recipepro_calories"><?= $this->get_label('calories') ?></label> <input id="recipepro_calories" name="calories" type="number" value="<%= _.escape(calories) %>" /></p>
-						<p><label for="recipepro_fatContent"><?= $this->get_label('total_fat') ?>  (g)</label> <input id="recipepro_fatContent" name="fatContent" type="number" value="<%= _.escape(fatContent) %>" /></p>
-						<p><label for="recipepro_transFatContent"><?= $this->get_label('trans_fat') ?>  (g)</label> <input id="recipepro_transFatContent" name="transFatContent" type="number" value="<%= _.escape(transFatContent) %>" /></p>
-						<p><label for="recipepro_saturatedFatContent"><?= $this->get_label('saturated_fat') ?>  (g)</label> <input id="recipepro_saturatedFatContent" name="saturatedFatContent" type="number" value="<%= _.escape(saturatedFatContent) %>" /></p>
+						<p><label for="recipepro_fatContent"><?= $this->get_label('total_fat') ?>  (g)</label> <input id="recipepro_fatContent" name="fatContent" type="number" step="0.1" value="<%= _.escape(fatContent) %>" /></p>
+						<p><label for="recipepro_transFatContent"><?= $this->get_label('trans_fat') ?>  (g)</label> <input id="recipepro_transFatContent" name="transFatContent" step="0.1" type="number" value="<%= _.escape(transFatContent) %>" /></p>
+						<p><label for="recipepro_saturatedFatContent"><?= $this->get_label('saturated_fat') ?>  (g)</label> <input id="recipepro_saturatedFatContent" name="saturatedFatContent" type="number" step="0.1" value="<%= _.escape(saturatedFatContent) %>" /></p>
 					</div>
 					<div class="right">
-						<p><label for="recipepro_cholesterolContent"><?= $this->get_label('cholesterol') ?>  (mg)</label> <input id="recipepro_cholesterolContent" name="cholesterolContent" type="number" value="<%= _.escape(cholesterolContent) %>" /></p>
-						<p><label for="recipepro_carbohydrateContent"><?= $this->get_label('carbohydrates') ?> (g)</label> <input id="recipepro_carbohydrateContent" name="carbohydrateContent" type="number" value="<%= _.escape(carbohydrateContent) %>" /></p>
-						<p><label for="recipepro_sugarContent"><?= $this->get_label('sugars') ?> (g)</label> <input id="recipepro_sugarContent" name="sugarContent" type="number" value="<%= _.escape(sugarContent) %>" /></p>
+						<p><label for="recipepro_cholesterolContent"><?= $this->get_label('cholesterol') ?>  (mg)</label> <input id="recipepro_cholesterolContent" name="cholesterolContent" type="number" step="0.1" value="<%= _.escape(cholesterolContent) %>" /></p>
+						<p><label for="recipepro_carbohydrateContent"><?= $this->get_label('carbohydrates') ?> (g)</label> <input id="recipepro_carbohydrateContent" name="carbohydrateContent" type="number" step="0.1" value="<%= _.escape(carbohydrateContent) %>" /></p>
+						<p><label for="recipepro_sugarContent"><?= $this->get_label('sugars') ?> (g)</label> <input id="recipepro_sugarContent" name="sugarContent" type="number" step="0.1" value="<%= _.escape(sugarContent) %>" /></p>
 						<p><label for="recipepro_sodiumContent"><?= $this->get_label('sodium') ?> (mg)</label> <input id="recipepro_sodiumContent" name="sodiumContent" type="number" value="<%= _.escape(sodiumContent) %>" /></p>
-						<p><label for="recipepro_fiberContent"><?= $this->get_label('fiber') ?> (g)</label> <input id="recipepro_fiberContent" name="fiberContent" type="number" value="<%= _.escape(fiberContent) %>" /></p>
-						<p><label for="recipepro_proteinContent"><?= $this->get_label('protein') ?> (g)</label> <input id="recipepro_proteinContent" name="proteinContent" type="number" value="<%= _.escape(proteinContent) %>" /></p>
+						<p><label for="recipepro_fiberContent"><?= $this->get_label('fiber') ?> (g)</label> <input id="recipepro_fiberContent" name="fiberContent" type="number" step="0.1" value="<%= _.escape(fiberContent) %>" /></p>
+						<p><label for="recipepro_proteinContent"><?= $this->get_label('protein') ?> (g)</label> <input id="recipepro_proteinContent" name="proteinContent" type="number" step="0.1" value="<%= _.escape(proteinContent) %>" /></p>
 					</div>
 					<div class="clear"/>
 				</div>

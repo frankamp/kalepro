@@ -20,4 +20,7 @@ class Recipe_Pro_Service {
 		}
 		return $recipe;
 	}
+
+	// save undo data?
+	// get undo data? -> importer revert() -> calls importer impl revert()
 }
