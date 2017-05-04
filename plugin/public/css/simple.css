@@ -104,6 +104,7 @@
 	float:right;
 	text-align: center;
 	width: 35%;
+	line-height: 1;
 }
 .rp-previewimage img {
 	width: 200px;
@@ -271,13 +272,14 @@ label.rp-star:before {
 	content: '\f155';
 	font-family: dashicons;
 	color: #FFED85;
+	margin: 0 1px;
 }
 .rp-ratings-total {
   unicode-bidi: bidi-override;
   color: #ddd;
   font-size: 18px;
   height: 25px;
-  width: 94px;
+  width: 103px;
   margin: 0 auto;
   position: relative;
   padding: 0;
@@ -286,6 +288,7 @@ label.rp-star:before {
 	color: #ddd;
 	content: '\f155';
 	font-family: dashicons;
+	margin: 0 1px;
 }
 .rp-ratings-total-top {
     color: #FFED85;

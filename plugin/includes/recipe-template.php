@@ -11,12 +11,6 @@
 					  <div class="rp-ratings-total-top" style="width:<?=($recipe->ratingValue/5)*100?>%"><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span></div>
 					  <div class="rp-ratings-total-bottom"><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span></div>
 					</div>
-					<div class="star-ratings-sprite"><span style="width:<?=($recipe->ratingValue/5)*100?>%" class="star-ratings-sprite-rating"></span></div>
-					<div class="rp-stars rp-stars-partial">
-<?php for( $i=1; $i <= 5; $i++ ) { ?>
-					<span class="rp-star <?=($recipe->ratingValue >= $i ? 'rp-star-active' : '')?>" title="<?= $i ?> star<?=($i > 1 ? 's' : '')?>"></span>
-<?php } ?>
-					</div>
 					<div class="rp-ratingvalue"><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</div>
 		</div>
 	</div>
