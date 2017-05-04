@@ -270,9 +270,9 @@ label.rp-star:before {
 .rp-rating-top:before {
 	content: '\f155';
 	font-family: dashicons;
-	color: #ddd;
+	color: #FFED85;
 }
-.star-ratings-css {
+.rp-ratings-total {
   unicode-bidi: bidi-override;
   color: #ddd;
   font-size: 18px;
@@ -283,9 +283,11 @@ label.rp-star:before {
   padding: 0;
  }
 .rp-rating-bottom:before {
-	color: #FFED85;
+	color: #ddd;
+	content: '\f155';
+	font-family: dashicons;
 }
-.star-ratings-css-top {
+.rp-ratings-total-top {
     color: #FFED85;
     padding: 0;
     position: absolute;
@@ -295,10 +297,11 @@ label.rp-star:before {
     left: 0;
     overflow: hidden;
  }
-.star-ratings-css-bottom {
+.rp-ratings-total-bottom {
     padding: 0;
     display: block;
     z-index: 0;
+    width: 100%;
 }
 @media only screen and (max-width: 400px) {
 	span.rp-star {

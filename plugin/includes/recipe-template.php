@@ -7,9 +7,9 @@
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
-					<div class="star-ratings-css">
-					  <div class="star-ratings-css-top" style="width:<?=($recipe->ratingValue/5)*100?>%"><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span></div>
-					  <div class="star-ratings-css-bottom"><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span></div>
+					<div class="rp-ratings-total">
+					  <div class="rp-ratings-total-top" style="width:<?=($recipe->ratingValue/5)*100?>%"><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span></div>
+					  <div class="rp-ratings-total-bottom"><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span><span class="rp-rating-bottom"></span></div>
 					</div>
 					<div class="star-ratings-sprite"><span style="width:<?=($recipe->ratingValue/5)*100?>%" class="star-ratings-sprite-rating"></span></div>
 					<div class="rp-stars rp-stars-partial">
