@@ -4,7 +4,7 @@ require_once __DIR__."/../includes/class-recipe-pro-service.php";
 require_once __DIR__."/class-recipe-pro-import-log.php";
 
 class Recipe_Pro_WPUltimate_Importer {
-	public static $shortcodePattern = "/.*\[ultimate-recipe.*?id=\"([0-9]+)\".*?\].*/";
+	public static $shortcodePattern = "/.*(\[ultimate-recipe.*?id=\"([0-9]+)\".*?\]).*/";
 	/**
 	* I return a boolean: whether or not the wppost is an instance of the foreign recipe type
 	* e.g. an ER recipe. Semantically this should return true before a convert() for a 
@@ -36,7 +36,10 @@ class Recipe_Pro_WPUltimate_Importer {
 	 		Recipe_Pro_Service::saveRecipe( $wppost->ID, $log->recipe );
 	 		try {
 				$content = $wppost->post_content;
-				$content = preg_replace( "/\[ultimate-recipe\s.*?]/im", '[recipepro]', $content );
+				$matches = array();
+	 			preg_match( self::$shortcodePattern, $wppost->post_content, $matches);
+	 			$old_shortcode = $matches[1];
+				$content = str_replace( $old_shortcode, '[recipepro]', $content );
 
 				$update_content = array(
 					'ID' => $wppost->ID,
@@ -85,7 +88,7 @@ class Recipe_Pro_WPUltimate_Importer {
 		// $post = get_post( $id );
 		// $post_meta = get_post_custom( $id );
 		$matches = self::search_instance( $wppost );
- 		$recipe_post_id = $matches[1];
+ 		$recipe_post_id = $matches[2];
  		$recipe_post = get_post( (int) $recipe_post_id );
  		$wpu_recipe = new Recipe_Pro_WPURP_Recipe( $recipe_post );
 		// $import_type = isset( $post_data['wpurp-import-type'] ) ? $post_data['wpurp-import-type'] : '';
