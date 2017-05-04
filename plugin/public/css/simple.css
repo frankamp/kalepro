@@ -267,7 +267,7 @@ label.rp-star:before {
   content: '\f155';
   font-family: dashicons;
 }
-span.star-ratings-css:before {
+.rp-rating-top:before {
 	content: '\f155';
 	font-family: dashicons;
 	color: #ddd;
@@ -282,7 +282,7 @@ span.star-ratings-css:before {
   position: relative;
   padding: 0;
  }
-span.star-ratings-css-top:before {
+.rp-rating-bottom:before {
 	color: #FFED85;
 }
 .star-ratings-css-top {
