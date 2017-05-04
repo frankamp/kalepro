@@ -267,6 +267,11 @@ label.rp-star:before {
   content: '\f155';
   font-family: dashicons;
 }
+span.star-ratings-css:before {
+	content: '\f155';
+	font-family: dashicons;
+	color: #ddd;
+}
 .star-ratings-css {
   unicode-bidi: bidi-override;
   color: #ddd;
@@ -277,6 +282,9 @@ label.rp-star:before {
   position: relative;
   padding: 0;
  }
+span.star-ratings-css-top:before {
+	color: #FFED85;
+}
 .star-ratings-css-top {
     color: #FFED85;
     padding: 0;
