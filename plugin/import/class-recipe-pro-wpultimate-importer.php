@@ -4,6 +4,7 @@ require_once __DIR__."/../includes/class-recipe-pro-service.php";
 require_once __DIR__."/class-recipe-pro-import-log.php";
 
 class Recipe_Pro_WPUltimate_Importer {
+	public static $shortname = 'wpultimate';
 	public static $shortcodePattern = "/.*(\[ultimate-recipe.*?id=\"([0-9]+)\".*?\]).*/";
 	/**
 	* I return a boolean: whether or not the wppost is an instance of the foreign recipe type
@@ -24,6 +25,23 @@ class Recipe_Pro_WPUltimate_Importer {
 	 	return $matches;
 	}
 
+	static public function undo( $wppost ) {
+		$undo = Recipe_Pro_Service::getUndoInformation( $wppost->ID );
+		if ( $undo['importer'] != self::$shortname ) {
+			return false;
+		} else {
+			$content = str_replace( '[recipepro]', $undo['old_shortcode'], $wppost->post_content );
+			$update_content = array(
+				'ID' => $wppost->ID,
+				'post_content' => $content,
+			);
+			wp_update_post( $update_content );
+			Recipe_Pro_Service::removeUndoInformation( $wppost->ID );
+			Recipe_Pro_Service::removeRecipe( $wppost->ID );
+			return true;
+		}
+	}
+
 	/**
 	* I take a wordpress post and transform the content from the source to the target
 	* It should not be assumed that the object can be used after this function is called
@@ -40,12 +58,12 @@ class Recipe_Pro_WPUltimate_Importer {
 	 			preg_match( self::$shortcodePattern, $wppost->post_content, $matches);
 	 			$old_shortcode = $matches[1];
 				$content = str_replace( $old_shortcode, '[recipepro]', $content );
-
 				$update_content = array(
 					'ID' => $wppost->ID,
 					'post_content' => $content,
 				);
 				wp_update_post( $update_content );
+				Recipe_Pro_Service::saveUndoInformation( $wppost->ID, array( 'importer'=> self::$shortname, 'old_shortcode' => $old_shortcode ));
 			} catch (Exception $e) {
 				$log->success = false;
 				$log->addNote("Failed to update old post. " . $e->getMessage() );

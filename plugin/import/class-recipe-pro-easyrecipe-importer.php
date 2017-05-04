@@ -4,7 +4,7 @@ require_once __DIR__."/../includes/class-recipe-pro-service.php";
 require_once __DIR__."/class-recipe-pro-import-log.php";
 
 class Recipe_Pro_EasyRecipe_Importer {
-	
+	public static $shortname = 'easyrecipe';
 	/**
 	* I return a boolean: whether or not the wppost is an instance of the foreign recipe type
 	* e.g. an ER recipe. Semantically this should return true before a convert() for a 

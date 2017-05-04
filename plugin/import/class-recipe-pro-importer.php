@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__."/../import/class-recipe-pro-easyrecipe-importer.php";
+require_once __DIR__."/../import/class-recipe-pro-wpultimate-importer.php";
 
 class Recipe_Pro_Importer {
 
@@ -8,13 +9,17 @@ class Recipe_Pro_Importer {
 	private $optionName = 'recipepro_importer_status';
 
 	private function get_importer( $name ) {
-		switch ($name):
-			case 'easyrecipe':
-				return "Recipe_Pro_EasyRecipe_Importer";
-				break;
-			default:
-				wp_die( "Attempted to import an unregistered type", 500 );
-		endswitch;
+		$rp = 'Recipe_Pro_EasyRecipe_Importer';
+		$wpu = 'Recipe_Pro_WPUltimate_Importer';
+		$importers = array(
+			$rp::shortname => $rp,
+			$wpu::shortname => $wpu
+		);
+		if ( array_key_exists( $name, $importers ) ) {
+			return $importers[$name];
+		} else {
+			wp_die( "Attempted to import an unregistered type", 500 );
+		}
 	}
 
 	private function get_state( $default ) {

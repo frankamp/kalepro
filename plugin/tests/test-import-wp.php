@@ -101,4 +101,16 @@ class WPUltimageImportTest extends WP_UnitTestCase {
 		$recipe = Recipe_Pro_Service::getRecipe( $post->ID );
 		$this->do_recipe_assertions( $recipe );
 	}
+
+	function test_undo() {
+		$this->load_wpudata();
+		$post = get_post(10403);
+		Recipe_Pro_WPUltimate_Importer::convert( $post );
+		$undo = Recipe_Pro_Service::getUndoInformation( $post->ID );
+		$this->assertEquals( 'wpultimate', $undo['importer'] );
+		$this->assertEquals( '[ultimate-recipe', substr( $undo['old_shortcode'], 0, 16 ) );
+		Recipe_Pro_WPUltimate_Importer::undo( $post );
+		$post = get_post(10403);
+		$this->assertEquals( true, Recipe_Pro_WPUltimate_Importer::is_instance( $post ) );
+	}
 }	
