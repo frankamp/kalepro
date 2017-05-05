@@ -1,1 +1,319 @@
-lite.css
+/* Recipe Pro Styling: Brunch Pro Theme
+--------------------------------------------- */
+
+.recipe-pro-recipe {
+	margin: 20px 0;
+}
+.rp {
+	font-family: 'Montserrat','Helvetica Neue',Helvetica,sans-serif;
+	font-size: 12px;
+	font-weight: 300;	
+	line-height: 1.8;
+	letter-spacing: .8px;
+	color: #000;
+	margin: 20px 0;
+	padding: 0;
+	clear: both;
+	position: relative;
+	padding: 10px;
+	width: 100%;
+}
+.rp ol,
+.rp ul {
+	margin: 0 0 20px 0;
+}
+.rp ol li {
+	margin: 0 0 8px 32px;
+}
+.rp ul li {
+	margin: 0 0 4px 22px;
+}
+.rp-name {
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
+	font-size: 28px;
+	letter-spacing: 2px;
+	line-height: 1.2;
+	float: left;
+	text-transform: uppercase;
+    font-weight: 700;
+    margin: 5px 0;
+    padding: 0;
+}
+.rp-print {
+	color: #000;
+	border: 1px solid #000;
+	background: #fff;
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
+	font-size: 14px;
+	letter-spacing: 2px;
+	line-height: 1.4;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin: 0 5px;
+	padding: 6px 20px;
+	clear: both;
+	display: none;
+}
+.rp-print::before {
+	background-image: url('../images/print.svg');
+	background-size: 18px 18px;
+	display: inline-block;
+	vertical-align: middle;
+	height: 18px;
+	width: 18px;
+	margin-right: 8px;
+	content:"";
+}
+.rp .button:hover {
+	background: #fff;
+	color: #000;
+}
+.recipe-pro-print {
+	text-align: center;
+}
+.rp-timetitle {
+	font-weight: 500;
+	padding: 10px 3px 0 3px;
+}
+.rp-preptime,
+.rp-cooktime {
+	border-right: #ddd 1px solid;
+}
+.rp-preptime,
+.rp-cooktime,
+.rp-totaltime {
+	width: 33%;
+	float: left;
+	text-align: center;
+	margin-bottom: -100%;
+	padding-bottom: 100%;
+}
+.rp-time {
+	font-style: italic;
+	padding: 0 3px 10px 3px;
+}
+.rp-times {
+	clear: left;
+	overflow: hidden;
+	border-bottom: #ddd 1px solid;
+	border-top: #ddd 1px solid;
+}
+.rp-topright {
+	float:right;
+	text-align: center;
+	width: 35%;
+	line-height: 1;
+}
+.rp-previewimage img {
+	width: 200px;
+	max-width: 90%;
+	height: auto;
+	margin: 5px;
+	line-height: 1;
+}
+.rp-ratings {
+    margin-right: 5px;
+}
+.rp-overview {
+	margin: 15px 5px 0 0;
+	width: 60%;
+}
+.rp-cuisinetitle,
+.rp-servingtitle {
+	font-weight: 500;
+}
+.rp-cuisine,
+.rp-serving {
+	clear: left;
+}
+.rp-description {
+	margin: 12px 0;
+}
+.rp-ingredientstitle,
+.rp-instructionstitle,
+.rp-nutritiontitle,
+.rp-notestitle {
+	font-family: 'Roboto','Helvetica Neue',Helvetica,sans-serif;
+	text-transform: uppercase;
+	font-size: 18px;
+	letter-spacing: 2px;
+	line-height: 1.6;
+    font-weight: 700;
+    margin: 10px 0;
+    padding: 0;
+}
+.rp-subheading {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 10px 0 5px 0;
+}
+.rp-ingredients,
+.rp-nstructions,
+.rp-nutrition,
+.rp-notes {
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+.rp-ingredients {
+	list-style: disc inside;
+	margin-left: 10px;
+}
+.servingsize,
+.calories,
+.fat,
+.transfat,
+.cholesterol,
+.saturatedfat,
+.unsaturatedfat,
+.carbohydrate,
+.sugar,
+.sodium,
+.fiber,
+.protein {
+	padding: 0 16px 0 0;
+}
+.rp-detailsafter {
+	overflow: hidden;
+	border-bottom: #ddd 1px solid;
+	border-top: #ddd 1px solid;
+	margin: 15px 0 0 0;
+	padding: 0 0 15px 0;
+}
+.rp-author {
+	border-right:#ddd 1px solid;
+}
+.rp-recipetype,
+.rp-author {
+	width: 50%;
+	float: left;
+	text-align: center;
+	font-size: 14px;
+	font-style: italic;
+	padding: 15px 5px 100% 5px;
+	margin: 0 0 -100% 0;
+}
+.rp-source {
+	display: inline-block;
+	text-align: center;
+	font-weight: 700;
+	font-size: 18px;
+    margin: 24px 0;
+}
+.rp-star-rating .rp-star-full::before {
+    content: "\f155";
+}
+.rp-star-rating .rp-star-empty::before {
+    content: "\f155";
+}
+.rp-star-rating .rp-star {
+    color: #0074A2;
+    display: inline-block;
+    font-family: dashicons;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    height: 20px;
+    line-height: 1;
+    text-align: center;
+    text-decoration: inherit;
+    vertical-align: top;
+    width: 20px;
+}
+.comment-form-rating {
+	float:  left;
+	font-size: 18px;
+	margin:  0;
+}
+.rp-stars-partial {
+	line-height: 1;
+}
+div.rp-stars {
+  display: inline-block;
+}
+span.rp-star {
+	color: #ddd;
+	font-size: 18px;
+}
+span.rp-star:before {
+	content: '\f155';
+	font-family: dashicons;
+}
+span.rp-star-active {
+	color: #FFED85;
+}
+input.rp-star {
+	display: none;
+}
+label.rp-star {
+  float: right;
+  font-size: 18px;
+  color: #ddd;
+  transition: all .2s;
+  padding-right: 6px;
+  margin-right: 0px;
+}
+label.rp-star:hover,
+label.rp-star:hover ~ label.rp-star {
+	color: #FFED85;
+}
+input.rp-star:checked ~ label.rp-star::before {
+  content: '\f155';
+  color: #FD4;
+  transition: all .25s;
+}
+label.rp-star:before {
+  content: '\f155';
+  font-family: dashicons;
+}
+.rp-rating-top:before {
+	content: '\f155';
+	font-family: dashicons;
+	color: #FFED85;
+	margin: 0 1px;
+}
+.rp-ratings-total {
+  unicode-bidi: bidi-override;
+  color: #ddd;
+  font-size: 18px;
+  height: 25px;
+  width: 103px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0;
+ }
+.rp-rating-bottom:before {
+	color: #ddd;
+	content: '\f155';
+	font-family: dashicons;
+	margin: 0 1px;
+}
+.rp-ratings-total-top {
+    color: #FFED85;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+ }
+.rp-ratings-total-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+    width: 100%;
+}
+@media only screen and (max-width: 400px) {
+	span.rp-star {
+	font-size: 12px;
+}
+.rp-detailsafter {
+	padding: 0 0 5px 0;
+}
+.rp-recipetype,
+.rp-author {
+	font-size: 12px;
+	padding: 5px 5px 100% 5px;
+}
+	}
