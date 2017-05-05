@@ -1,4 +1,4 @@
-/* Recipe Pro Styling
+/* Recipe Pro Styling: Simple Theme
 --------------------------------------------- */
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,300i,500');
 @import url('https://fonts.googleapis.com/css?family=Roboto:700');
@@ -155,7 +155,7 @@
 .rp-nutrition,
 .rp-notes {
 	font-weight: 300;
-	margin-bottom: 10px;
+	margin: 10px 0;
 }
 .rp-ingredients {
 	list-style: disc inside;
