@@ -158,4 +158,16 @@ class ERImportTest extends WP_UnitTestCase {
 		$this->assertContains( "[recipepro]", $post->post_content );
 	}
 
+	function test_undo() {
+		wp_set_current_user( null, 'admin' );
+		$post = $this->get_er_post();
+		$result = Recipe_Pro_EasyRecipe_Importer::convert( $post );
+		$undo = Recipe_Pro_Service::getUndoInformation( $post->ID );
+		$this->assertEquals( 'easyrecipe', $undo['importer'] );
+		$this->assertEquals( '<div class="easyrecipe"', substr( $undo['old_recipe'], 0, 23 ) );
+		$result = Recipe_Pro_EasyRecipe_Importer::undo( $post );
+		$post = get_post($post->ID);
+		$this->assertEquals( true, Recipe_Pro_EasyRecipe_Importer::is_instance( $post ) );
+	}
+
 }

@@ -15,6 +15,24 @@ class Recipe_Pro_EasyRecipe_Importer {
 		return $erdoc->isEasyRecipe;
 	}
 
+
+	static public function undo( $wppost ) {
+		$undo = Recipe_Pro_Service::getUndoInformation( $wppost->ID );
+		if ( $undo['importer'] != self::$shortname ) {
+			return false;
+		} else {
+			$content = str_replace( '[recipepro]', $undo['old_recipe'], $wppost->post_content );
+			$update_content = array(
+				'ID' => $wppost->ID,
+				'post_content' => $content,
+			);
+			wp_update_post( $update_content );
+			Recipe_Pro_Service::removeUndoInformation( $wppost->ID );
+			Recipe_Pro_Service::removeRecipe( $wppost->ID );
+			return true;
+		}
+	}
+
 	/**
 	* I take a wordpress post and transform the content from the source to the target
 	* It should not be assumed that the object can be used after this function is called
@@ -39,12 +57,14 @@ class Recipe_Pro_EasyRecipe_Importer {
 			$erdoc = new EasyRecipeDocument( $wppost->post_content );
 			// remove the ERP bits from the post + add the shortcode that renders the other bits
 			$replacement = $erdoc->createTextNode( "[recipepro]" );
+			$old_recipe = $erdoc->saveHTML($erdoc->getRecipe());
 			$erdoc->getRecipe()->parentNode->replaceChild( $replacement, $erdoc->getRecipe() );
 			$post_changes = array(
 			      'ID'           => $wppost->ID,
 			      'post_content' => $erdoc->getHTML( true ),
 			);
 			$updated = wp_update_post( $post_changes );
+			Recipe_Pro_Service::saveUndoInformation( $wppost->ID, array( 'importer'=> self::$shortname, 'old_recipe' => $old_recipe ));
 		} catch (Exception $e) {
 			$result->addNote("Error replacing old recipe: " . $e->getMessage() );
 		}
