@@ -42,6 +42,7 @@
     padding: 0;
 }
 .rp-print {
+	cursor: pointer;
 	color: #000;
 	border: 1px solid #000;
 	background: #fff;
@@ -141,7 +142,7 @@
 	letter-spacing: 2px;
 	line-height: 1.6;
     font-weight: 700;
-    margin: 10px 0;
+    margin: 20px 0 10px 0;
     padding: 0;
 }
 .rp-subheading {

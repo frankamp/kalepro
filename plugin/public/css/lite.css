@@ -5,7 +5,6 @@
 	margin: 20px 0;
 }
 .rp {
-	font-family: inherit;
 	margin: 20px 0;
 	padding: 0;
 	clear: both;
@@ -24,7 +23,6 @@
 	margin: 0 0 4px 22px;
 }
 .rp-name {
-	font-family: inherit;
 	float: left;
 	text-transform: uppercase;
     font-weight: 700;
@@ -32,10 +30,10 @@
     padding: 0;
 }
 .rp-print {
+	cursor: pointer;
 	color: #000;
 	border: 1px solid #000;
 	background: #fff;
-	font-family: inherit;
 	font-weight: 700;
 	text-transform: uppercase;
 	margin: 0 5px;
@@ -122,9 +120,8 @@
 .rp-instructionstitle,
 .rp-nutritiontitle,
 .rp-notestitle {
-	font-family: inherit;
 	text-transform: uppercase;
-    margin: 10px 0;
+    margin: 20px 0 10px 0;
     padding: 0;
 }
 .rp-subheading {
