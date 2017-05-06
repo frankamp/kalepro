@@ -233,7 +233,7 @@ div.rp-stars {
   display: inline-block;
 }
 span.rp-star {
-	color: #eee;
+	color: #ddd;
 	font-size: 18px;
 }
 span.rp-star:before {
@@ -249,7 +249,7 @@ input.rp-star {
 label.rp-star {
   float: right;
   font-size: 18px;
-  color: #eee;
+  color: #ddd;
   transition: all .2s;
   padding-right: 6px;
   margin-right: 0px;
@@ -277,7 +277,7 @@ label.rp-star:before {
   line-height: 1;
   letter-spacing: 0px;
   text-align: left;
-  color: #eee;
+  color: #ddd;
   font-size: 18px;
   height: 25px;
   width: 103px;
@@ -301,7 +301,7 @@ label.rp-star:before {
     overflow: hidden;
  }
  .rp-rating-bottom:before {
-	color: #eee;
+	color: #ddd;
 	content: '\f155';
 	font-family: dashicons;
 	margin: 0 1px;
