@@ -247,11 +247,6 @@ label.rp-star:before {
   content: '\f155';
   font-family: dashicons;
 }
-.rp-rating-top:before {
-	content: '\f155';
-	color: #FFED85;
-	margin: 0 1px;
-}
 .rp-ratings-total {
   font-family: dashicons;
   word-wrap: normal;
@@ -261,7 +256,7 @@ label.rp-star:before {
   height: 20px;
   line-height: 1;
   letter-spacing: 0px;
-  text-align: center;
+  text-align: left;
   color: #ddd;
   font-size: 18px;
   height: 25px;
@@ -270,10 +265,9 @@ label.rp-star:before {
   position: relative;
   padding: 0;
  }
-.rp-rating-bottom:before {
-	color: #ddd;
+.rp-rating-top:before {
 	content: '\f155';
-	font-family: dashicons;
+	color: #FFED85;
 	margin: 0 1px;
 }
 .rp-ratings-total-top {
@@ -286,6 +280,12 @@ label.rp-star:before {
     left: 0;
     overflow: hidden;
  }
+ .rp-rating-bottom:before {
+	color: #ddd;
+	content: '\f155';
+	font-family: dashicons;
+	margin: 0 1px;
+}
 .rp-ratings-total-bottom {
     padding: 0;
     display: block;
