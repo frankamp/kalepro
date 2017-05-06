@@ -4,9 +4,9 @@ class Recipe_Pro_Main_Page {
 
 	private $cssOptions = array(
 		"Simple" => "simple.css",
+		"Lite" => "lite.css",
 		"Foodie Pro" => "foodie-pro.css",
 		"Brunch Pro" => "brunch-pro.css",
-		"Lite" => "lite.css",
 		"No CSS / Custom" => ""
 	);
 
