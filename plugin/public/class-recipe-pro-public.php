@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__."/../includes/class-recipe-pro-service.php";
 /**
  * The public-facing functionality of the plugin.
  *
@@ -60,7 +60,7 @@ class Recipe_Pro_Public {
 	 * @since    1.0.0
 	 */
 	public function display_rating( $comment_text ) {
-		$rating = get_comment_meta( get_comment_ID(), 'recipepro_rating', true );
+		$rating = Recipe_Pro_Service::getRating( get_comment_ID() );
 		if ( intval( $rating ) > 0 && intval( $rating ) < 6 ) {
 			$rating = intval( $rating );
 			$comment_text = $comment_text . '<div class="rp-stars">' ;
@@ -96,12 +96,12 @@ class Recipe_Pro_Public {
 			$rating = strval( intval( $_POST['recipepro_rating'] ) );
 		}
 		if ( $rating ) {
-			add_comment_meta( $comment_id, 'recipepro_rating', $rating );
+			Recipe_Pro_Service::saveRating( $comment_id , $rating );
 			$comment = get_comment( $comment_id );
 			$post_comments = get_comments( array('post_id'=> $comment->comment_post_ID ) );
 			$ratings = array();
 			foreach ( $post_comments as $potential_rating_comment ) {
-				$potential_rating = get_comment_meta($potential_rating_comment->comment_ID, 'recipepro_rating', true);
+				$potential_rating = Recipe_Pro_Service::getRating( $potential_rating_comment->comment_ID );
 				if ( $potential_rating && intval($potential_rating) > 0 && intval($potential_rating) < 6 ) {
 					$ratings[] = intval($potential_rating);
 				}

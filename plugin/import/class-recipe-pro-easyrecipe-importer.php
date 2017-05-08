@@ -48,6 +48,21 @@ class Recipe_Pro_EasyRecipe_Importer {
 		}
 		// take the model and write it to the post's metadata
 		try {
+			$comments = get_comments( array( 'post_id' => $wppost->ID ) );
+			$ratings = 0;
+			$aggregate = 0;
+			foreach ( $comments as $comment ) {
+				$comment_rating = intval( get_comment_meta( $comment->comment_ID, 'ERRating', true ) );
+				if ( $comment_rating && $comment_rating > 0 && $comment_rating < 6 ) {
+					update_comment_meta( $comment->comment_ID, 'recipepro_rating', strval( $comment_rating ) );
+					$ratings += 1;
+					$aggregate += $comment_rating;
+				}
+			}
+			if ( $ratings > 0 ) {
+				$extracted->ratingValue = round( $aggregate / $ratings, 1);
+				$extracted->ratingCount = $ratings;
+			}
 			Recipe_Pro_Service::saveRecipe( $wppost->ID, $extracted );
 		} catch (Exception $e) {
 			$result->addNote("Error saving new recipe: " . $e->getMessage() );
@@ -56,6 +71,8 @@ class Recipe_Pro_EasyRecipe_Importer {
 		try {
 			$erdoc = new EasyRecipeDocument( $wppost->post_content );
 			// remove the ERP bits from the post + add the shortcode that renders the other bits
+			
+
 			$replacement = $erdoc->createTextNode( "[recipepro]" );
 			$old_recipe = $erdoc->saveHTML($erdoc->getRecipe());
 			$erdoc->getRecipe()->parentNode->replaceChild( $replacement, $erdoc->getRecipe() );
@@ -185,7 +202,6 @@ class Recipe_Pro_EasyRecipe_Importer {
 		array_push( $recipe->notes, new Recipe_Pro_Note(
 			EasyRecipeDocument::convertShortcodes( $data->notes )
 		));
-
 		
 		//$recipe->totalTime = $data->totaltimeISO ?: "";
 		// data looks like

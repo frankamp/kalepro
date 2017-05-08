@@ -65,6 +65,8 @@ class ERImportTest extends WP_UnitTestCase {
 				<div class=\"endeasyrecipe\" style=\"display: none;\">3.5.3208</div>
 				</div>"
 		));
+		$comments = $this->factory->comment->create_post_comments( $post->ID );
+		update_comment_meta( $comments[0], 'ERRating', '4' );
 		return $post;
 	}
 
@@ -156,6 +158,8 @@ class ERImportTest extends WP_UnitTestCase {
 		$post = get_post($post->ID);
 		$this->assertEquals( false, Recipe_Pro_EasyRecipe_Importer::is_instance( $post ) );
 		$this->assertContains( "[recipepro]", $post->post_content );
+		$comments = get_comments( array( 'post_id' => $post->ID ) );
+		$this->assertEquals( "4", get_comment_meta( $comments[0]->comment_ID, 'recipepro_rating', true ) );
 	}
 
 	function test_undo() {
@@ -168,6 +172,8 @@ class ERImportTest extends WP_UnitTestCase {
 		$result = Recipe_Pro_EasyRecipe_Importer::undo( $post );
 		$post = get_post($post->ID);
 		$this->assertEquals( true, Recipe_Pro_EasyRecipe_Importer::is_instance( $post ) );
+		$comments = get_comments( array( 'post_id' => $post->ID ) );
+		$this->assertEquals( false, get_comment_meta( $comments[0]->comment_ID, 'recipepro_rating', true ) );
 	}
 
 }
