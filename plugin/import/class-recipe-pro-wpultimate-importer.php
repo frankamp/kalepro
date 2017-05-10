@@ -145,7 +145,7 @@ class Recipe_Pro_WPUltimate_Importer {
 
 		// $recipe['servings'] = isset( $post_meta['recipe_servings'] ) ? $post_meta['recipe_servings'][0] : '';
 		// $recipe['servings_unit'] = isset( $post_meta['recipe_servings_type'] ) ? $post_meta['recipe_servings_type'][0] : '';
-		$recipe->yield = ($wpu_recipe->servings() ?: '1') . ' ' . ($wpu_recipe->servings_type() ?: 'serving');
+		$recipe->yield = (intval($wpu_recipe->servings()) ?: 0 );
 
 		// $recipe['notes'] = isset( $post_meta['recipe_notes'] ) ? $post_meta['recipe_notes'][0] : '';
 		if ( $wpu_recipe->notes() ) {

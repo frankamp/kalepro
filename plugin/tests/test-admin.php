@@ -105,7 +105,7 @@ class AdminTest extends WP_UnitTestCase {
 				"author":"Minimalist Baker",
 				"type":"Entrée, Soup",
 				"cuisine":"Vegan, Gluten Free",
-				"yield":"2-3",
+				"yield":"2",
 				"ingredientSections": [
 					{
 						"name": "BROTH",

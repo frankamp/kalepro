@@ -73,7 +73,7 @@ class WPUltimageImportTest extends WP_UnitTestCase {
 		$this->assertEquals( "Simple Tofu Quiche", $recipe->title );
 		$this->assertEquals( "The simplest tofu quiche on the block with just 10 basic ingredients and no fancy methods required. A hash brown crust keeps this dish gluten free as well as vegan! Perfect for lunch, brunch and even brinner.", $recipe->description );
 		$this->assertEquals( "", $recipe->servingSize );
-		$this->assertEquals( "8 people", $recipe->yield );
+		$this->assertEquals( 8, $recipe->yield );
 		$this->assertEquals( new DateInterval("PT15M"), $recipe->prepTime );
 		$this->assertEquals( new DateInterval("PT90M"), $recipe->cookTime );
 		$this->assertEquals( "Crust", $recipe->ingredientSections[0]->name );

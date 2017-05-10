@@ -105,7 +105,7 @@ class Recipe_Pro_Recipe_View_Helper {
 		$json_object['aggregateRating']['ratingCount'] = $recipe->ratingCount;
 		$json_object['recipeCategory'] = $recipe->type;
 		$json_object['recipeCuisine'] = $recipe->cuisine;
-		$json_object['recipeYield'] = $recipe->yield;
+		$json_object['recipeYield'] = $recipe->yield . " servings";
 		$json_object['recipeIngredient'] = array();
 		foreach ( $recipe->ingredientSections as $section ) {
 			if ( $section->name ) {
@@ -188,7 +188,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		$this->author = "";
 		$this->type = "";
 		$this->cuisine = "";
-		$this->yield = "";
+		$this->yield = 0;
 		$this->ingredientSections = array();
 		$this->instructions = array();
 		$this->notes = array();
@@ -225,12 +225,17 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 
 	private function inflate( $jsonObj ) {
 		foreach ( array( "title", "description", "author", "type",
-						 "cuisine", "yield", "servingSize", "servingSize",
+						 "cuisine", "servingSize", "servingSize",
 						 "calories", "cholesterolContent", "fatContent", "transFatContent", "saturatedFatContent", "unsaturatedFatContent",
 						 "carbohydrateContent", "sugarContent", "sodiumContent",
 						 "fiberContent", "proteinContent", "ratingCount", "ratingValue" ) as $prop ) {
 			if ( array_key_exists( $prop, $jsonObj ) ) {
 				$this->{$prop} = $jsonObj[$prop];
+			}
+		}
+		foreach ( array( "yield" ) as $prop ) {
+			if ( array_key_exists( $prop, $jsonObj ) ) {
+				$this->{$prop} = intval( $jsonObj[$prop] );
 			}
 		}
 		if ( array_key_exists( "imageId", $jsonObj ) && is_int( $jsonObj["imageId"] ) && $jsonObj["imageId"] != 0 ) {
