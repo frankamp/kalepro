@@ -85,7 +85,7 @@ class Recipe_Pro_Recipe_View_Helper {
 		return $specString;
 	}
 
-	public static function ldjson($recipe) {
+	public static function ldjson($recipe, $ratingsEnabled) {
 		$json_object = array();
 		$json_object['@context'] = "http://schema.org/";
 		$json_object['@type'] = "Recipe";
@@ -99,10 +99,12 @@ class Recipe_Pro_Recipe_View_Helper {
 		$json_object['prepTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->prepTime );
 		$json_object['cookTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->cookTime );
 		$json_object['totalTime'] = Recipe_Pro_Recipe_View_Helper::interval( $recipe->cookTime );
-		$json_object['aggregateRating'] = array();
-		$json_object['aggregateRating']['@type'] = 'AggregateRating';
-		$json_object['aggregateRating']['ratingValue'] = $recipe->ratingValue;
-		$json_object['aggregateRating']['ratingCount'] = $recipe->ratingCount;
+		if ( $ratingsEnabled && $recipe->ratingCount > 0 ) {
+			$json_object['aggregateRating'] = array();
+			$json_object['aggregateRating']['@type'] = 'AggregateRating';
+			$json_object['aggregateRating']['ratingValue'] = $recipe->ratingValue;
+			$json_object['aggregateRating']['ratingCount'] = $recipe->ratingCount;			
+		}
 		$json_object['recipeCategory'] = $recipe->type;
 		$json_object['recipeCuisine'] = $recipe->cuisine;
 		$json_object['recipeYield'] = $recipe->yield . " servings";
@@ -133,6 +135,9 @@ class Recipe_Pro_Recipe_View_Helper {
 		if ($recipe->sodiumContent) $json_object['nutrition']['sodiumContent'] = $recipe->sodiumContent . " mg";
 		if ($recipe->fiberContent) $json_object['nutrition']['fiberContent'] = $recipe->fiberContent . " g";
 		if ($recipe->proteinContent) $json_object['nutrition']['proteinContent'] = $recipe->proteinContent . " g";
+		if ( count( $json_object['nutrition'] ) == 1 ) { // not any real info, so unset
+			unset( $json_object['nutrition'] );
+		}
 		return json_encode( $json_object );
 	}
 
@@ -289,6 +294,7 @@ class Recipe_Pro_Recipe implements JsonSerializable {
 		$recipe = $this;
 		$viewhelper = new Recipe_Pro_Recipe_View_Helper();
 		$labels = Recipe_Pro_Option_Defaults::get_labels();
+		$ratingsEnabled = Recipe_Pro_Service::isRatingsEnabled();
 		ob_start();
 		include('recipe-template.php');
 		return ob_get_clean();

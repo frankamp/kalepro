@@ -1,11 +1,14 @@
-<script type="application/ld+json"><?=$viewhelper::ldjson($recipe)?></script>
+<script type="application/ld+json"><?=$viewhelper::ldjson($recipe, $ratingsEnabled)?></script>
 <div class="recipe-pro-recipe rp" itemscope="" itemtype="http://schema.org/Recipe"> 
 	<h2 class="rp-name" itemprop="name"><?= $recipe->title ?></h2>
 	<div class="rp-topright">
 		<div class="recipe-pro-print"><button class="rp-print" style="display: inline-block"><?= $labels['print'] ?></button></div>
+<?php if ( strlen( $recipe->imageUrl) ): ?>
 		<div class="rp-previewimage">
 			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
 		</div>
+<?php endif; ?>
+<?php if ($ratingsEnabled): ?>
 		<div class="rp-ratings" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
 					<div class="rp-ratings-total">
 					  <div class="rp-ratings-total-top" style="width:<?=($recipe->ratingValue/5)*100?>%"><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span><span class="rp-rating-top"></span></div>
@@ -13,6 +16,7 @@
 					</div>
 					<div class="rp-ratingvalue"><span itemprop="ratingValue"><?= number_format($recipe->ratingValue, 1) ?></span> from <span itemprop="ratingCount"><?= $recipe->ratingCount ?></span> reviews</div>
 		</div>
+<?php endif; ?>
 	</div>
 	<div class="rp-times">
 <?php if ( !$viewhelper::intervalsAreEqual( $recipe->prepTime, new DateInterval("PT0M") ) ): ?>

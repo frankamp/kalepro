@@ -60,7 +60,7 @@
 			this._isSerializing = true;
 			var json = _.clone(this.attributes);
 			_.each(json, function(value, name) {
-				_.isFunction(value.toJSON) && (json[name] = value.toJSON());
+				value && _.isFunction(value.toJSON) && (json[name] = value.toJSON());
 			});
 			this._isSerializing = false;
 			return json;

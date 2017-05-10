@@ -60,14 +60,16 @@ class Recipe_Pro_Public {
 	 * @since    1.0.0
 	 */
 	public function display_rating( $comment_text ) {
-		$rating = Recipe_Pro_Service::getRating( get_comment_ID() );
-		if ( intval( $rating ) > 0 && intval( $rating ) < 6 ) {
-			$rating = intval( $rating );
-			$comment_text = $comment_text . '<div class="rp-stars">' ;
-			for( $i=1; $i <= 5; $i++ ) {
-				$comment_text = $comment_text . '<span class="rp-star '. ($rating >= $i ? 'rp-star-active' : '') .'" title="'. $rating . ' star'. ($rating > 1 ? 's' : '') . '"></span>';
-			}
-			$comment_text = $comment_text . '</div>';
+		if (Recipe_Pro_Service::isRatingsEnabled()) {
+			$rating = Recipe_Pro_Service::getRating( get_comment_ID() );
+			if ( intval( $rating ) > 0 && intval( $rating ) < 6 ) {
+				$rating = intval( $rating );
+				$comment_text = $comment_text . '<div class="rp-stars">' ;
+				for( $i=1; $i <= 5; $i++ ) {
+					$comment_text = $comment_text . '<span class="rp-star '. ($rating >= $i ? 'rp-star-active' : '') .'" title="'. $rating . ' star'. ($rating > 1 ? 's' : '') . '"></span>';
+				}
+				$comment_text = $comment_text . '</div>';
+			}			
 		}
 		return $comment_text;
 	}
@@ -78,11 +80,13 @@ class Recipe_Pro_Public {
 	 * @since    1.0.0
 	 */
 	public function render_rating_field() {
-	  echo '<p class="comment-form-rating"><label>Please rate:</label><div class="rp-stars">';
-	  for( $i=5; $i > 0; $i-- ) {
-	    echo '<input type="radio" class="rp-star rp-star-'. $i .'" style="display:none;" id="rp-star'. $i .'" name="recipepro_rating" value="'. $i .'" /><label class="rp-star rp-star'. $i .'" for="rp-star'. $i .'" title="'. $i .' star'. ($i > 1 ? 's' : '') .'"></label>';
-	  }
-	  echo'</div></p>';
+		if (Recipe_Pro_Service::isRatingsEnabled()) {
+			echo '<p class="comment-form-rating"><label>Please rate:</label><div class="rp-stars">';
+			for( $i=5; $i > 0; $i-- ) {
+				echo '<input type="radio" class="rp-star rp-star-'. $i .'" style="display:none;" id="rp-star'. $i .'" name="recipepro_rating" value="'. $i .'" /><label class="rp-star rp-star'. $i .'" for="rp-star'. $i .'" title="'. $i .' star'. ($i > 1 ? 's' : '') .'"></label>';
+			}
+			echo'</div></p>';
+		}
 	}
 
 	/**
@@ -124,7 +128,7 @@ class Recipe_Pro_Public {
 	 */
 	public function enqueue_styles() {
 		$options = get_option( 'recipepro_main_settings', array() ); //TODO: replace with service call
-		if (strlen( $options['css'] ) > 0 ) {
+		if ( array_key_exists( 'css', $options) && strlen( $options['css'] ) > 0 ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/' . $options['css'], array( 'dashicons' ), $this->version, 'all' );	
 		}
 	}
