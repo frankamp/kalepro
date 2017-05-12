@@ -11,10 +11,6 @@
     var app = new Vue({
       el: '#importer',
       data: {
-        importers: [
-          { name: 'EasyRecipe', tag: 'easyrecipe', description: "Converts the recipe markup to RecipePro data and replaces the markup with a shortcode." }
-        ],
-        importer: null,
         status: 'ready',
         statusValues: statusValues
       },
@@ -22,19 +18,16 @@
         this.doImportWork();
       },
       methods: {
-        importerByTag: function(tag) {
-          return this.importers.find(function(element) {return element.tag === tag});
-        },
         beginImport: function (event) {
           event.preventDefault();
           $.post({
             url: ajaxurl + '?action=recipepro_begin_import',
-            data: {importerName: event.target.attributes.tag.value},
+            data: {},
             context: this,
             dataType: 'json',
             success: function(response) {
               this.status = response.status;
-              setTimeout(this.doImportWork, 100);
+              setTimeout(this.doImportWork, 1000);
             }
           });
         },
@@ -48,11 +41,10 @@
               success: function(response) {
                 //alert('Got this from the server: ' + response);
                 this.status = response.status;
-                this.importer = this.importerByTag(response.importer);
                 var progress = Math.round((response.position/response.total) * 100);
                 $('#progressbar div').width(progress + "%");
                 if (this.status == 'importing' && response.position != response.total) {
-                  setTimeout(this.doImportWork, 100);
+                  setTimeout(this.doImportWork, 1000);
                 }
               }
           });
@@ -67,7 +59,6 @@
               success: function(response) {
                 //alert('Got this from the server: ' + response);
                 this.status = response.status;
-                this.importer = null;
               }
           });
         }

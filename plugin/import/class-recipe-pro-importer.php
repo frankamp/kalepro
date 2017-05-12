@@ -7,20 +7,16 @@ class Recipe_Pro_Importer {
 	const STATUS_READY = 'ready';
 	const STATUS_IMPORTING = 'importing';
 	private $optionName = 'recipepro_importer_status';
-
-	private function get_importer( $name ) {
+	
+	private function get_importers() {
 		$rp = 'Recipe_Pro_EasyRecipe_Importer';
 		$wpu = 'Recipe_Pro_WPUltimate_Importer';
-		$importers = array(
-			$rp::shortname => $rp,
-			$wpu::shortname => $wpu
+		return array(
+			$rp::$shortname => $rp,
+			$wpu::$shortname => $wpu
 		);
-		if ( array_key_exists( $name, $importers ) ) {
-			return $importers[$name];
-		} else {
-			wp_die( "Attempted to import an unregistered type", 500 );
-		}
 	}
+	
 
 	private function get_state( $default ) {
 		$importer_state = get_option( $this->optionName );
@@ -31,7 +27,6 @@ class Recipe_Pro_Importer {
 				'status' => $default,
 				'position' => 0,
 				'total' => 0,
-				'importer' => '',
 				'imported' => array(),
 				'notes' => array(),
 				'errored' => array(),
@@ -80,19 +75,22 @@ class Recipe_Pro_Importer {
 				} else {
 					$post_id = $posts[$state['position']];
 					$post = get_post( $post_id );
-					$importer = $this->get_importer( $state['importer'] );
-					//error_log( "Work: checking post " . $post_id );
-					if ( $importer::is_instance( $post ) ) {
-						//error_log( "Work: converting post " . $post_id );
-						$result = $importer::convert($post);
-						if ( $result->success ) {
-							array_push( $state['imported'], $post_id);
-						} else {
-							array_push( $state['errored'], $post_id);
-							array_push( $state['errorMessages'], "An error occurred importing post $post_id." );
-						}
-						if ( count( $result->notes ) > 0 ) {
-							$state['notes'][$post_id] = $result->notes;
+
+					foreach ( $this->get_importers() as $shortname => $importer ) {
+						//error_log( "checking if " . $shortname . " importer thinks its an instance");
+						if ( $importer::is_instance( $post ) ) {
+							//error_log( "Work: converting " . $shortname . " post " . $post_id );
+							$result = $importer::convert( $post );
+							if ( $result->success ) {
+								array_push( $state['imported'], $post_id);
+							} else {
+								array_push( $state['errored'], $post_id);
+								array_push( $state['errorMessages'], "An error occurred importing post $post_id." );
+							}
+							if ( count( $result->notes ) > 0 ) {
+								$state['notes'][$post_id] = $result->notes;
+							}
+							break;
 						}
 					}
 					//error_log( "Work: updating position post " . $post_id );
@@ -112,14 +110,13 @@ class Recipe_Pro_Importer {
 		return $this->get_state( self::STATUS_READY );
 	}
 
-	public function begin_import( $importer ) {
+	public function begin_import() {
 		$state = $this->get_state( self::STATUS_READY );
 		if ( $state['status'] == self::STATUS_READY ) {
 			$total = count( $this->get_all_post_ids() );
 			$this->set_status(self::STATUS_IMPORTING, array(
 				'total' => $total,
 				'position' => 0,
-				'importer' => $importer,
 				'imported' => array(),
 				'errored' => array(),
 				'notes' => array(),

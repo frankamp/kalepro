@@ -36,17 +36,18 @@ class Recipe_Pro_Import_Page {
 		</style>
 		<div class="wrap">
 			<form action='options.php' method='post'>
-				<h2><?= __( 'Import recipes from other plugins', 'recipe-pro' ) ?></h2>
+				<h2><?= __( 'Import Recipes', 'recipe-pro' ) ?></h2>
 				<div id="importer">
 					
 					<div>Import Status: {{statusValues[status]}}</div>
-					<li v-for="item in importers">
+					<button v-bind:disabled="status != 'ready'" v-on:click="beginImport">Start Import</button>
+					<!-- <li v-for="item in importers">
 						<strong>{{ item.name }}</strong> {{ item.description }}
 						<button v-bind:disabled="status != 'ready'" v-on:click="beginImport" v-bind:name="item.name" v-bind:tag="item.tag">Start Import</button>
-					</li>
+					</li> -->
 
-					<div v-if="importer != null">
-						Importing using {{ importer.name }}
+					<div v-if="status != 'ready'">
+						Importing
 						<div style="width:50%; float left;">
 							<div id="progressbar">
 							  <div></div>
@@ -77,8 +78,7 @@ class Recipe_Pro_Import_Page {
 	}
 
 	public function ajax_begin_import ( ) {
-		$importerName = $_POST['importerName'];
-		$importer_status = $this->importer->begin_import( $importerName );
+		$importer_status = $this->importer->begin_import();
 		header ( "Content-Type: application/json" );
 		echo json_encode( $importer_status );
 		wp_die();
