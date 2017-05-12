@@ -9,7 +9,7 @@
       importing: "Importing..."
     };
     var Item = {
-      template: '<div><a href="{{link}}">{{name}}</a></div>',
+      template: '<div><a v-bind:href="link">{{name}}</a></div>',
       data: function() {
         return {
           name: '',
@@ -72,7 +72,10 @@
                 if (this.status == 'importing' && response.position != response.total) {
                   setTimeout(this.doImportWork, 100);
                 }
-                Array.prototype.push.apply(this.posts, response.imported.slice(this.posts.length));
+                var items = response.imported.slice(this.posts.length);
+                for (var i = 0; i < items.length; i++) {
+                  this.posts.push(items[i]);
+                }
               }
           });
         },
