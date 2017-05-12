@@ -166,10 +166,14 @@ class Recipe_Pro_EasyRecipe_Importer {
 		}
 		if ( $data->INGREDIENTSECTIONS ) {
 			foreach ( $data->INGREDIENTSECTIONS as $section ) {
-				foreach ( $section as $name => $ingredients ) {
+				$name = '';
+				if ( property_exists( $section, 'heading' ) && strlen( $section->heading ) > 0 ) {
+					$name = $section->heading;
+				}
+				if ( property_exists( $section, 'INGREDIENTS' ) && count( $section->INGREDIENTS ) > 0 ) {
 					array_push( $recipe->ingredientSections, new Recipe_Pro_Ingredient_Section(
 						$name,
-						self::convertIngredients( $ingredients )
+						self::convertIngredients( $section->INGREDIENTS )
 					));
 				}
 			}

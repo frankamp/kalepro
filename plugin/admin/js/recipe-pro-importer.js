@@ -27,7 +27,7 @@
             dataType: 'json',
             success: function(response) {
               this.status = response.status;
-              setTimeout(this.doImportWork, 1000);
+              setTimeout(this.doImportWork, 100);
             }
           });
         },
@@ -44,7 +44,7 @@
                 var progress = Math.round((response.position/response.total) * 100);
                 $('#progressbar div').width(progress + "%");
                 if (this.status == 'importing' && response.position != response.total) {
-                  setTimeout(this.doImportWork, 1000);
+                  setTimeout(this.doImportWork, 100);
                 }
               }
           });
