@@ -8,9 +8,35 @@
       ready: "Ready to Import",
       importing: "Importing..."
     };
+    var Item = {
+      template: '<div><a href="{{link}}">{{name}}</a></div>',
+      data: function() {
+        return {
+          name: '',
+          link: ''
+        }
+      },
+      props: ['itemId'],
+      created: function () {
+        $.post({
+            url: ajaxurl + '?action=recipepro_item_data',
+            data: {item_id: this.itemId},
+            context: this,
+            dataType: 'json',
+            success: function(response) {
+              this.name = response.name;
+              this.link = response.link;
+            }
+          });
+      }
+    };
     var app = new Vue({
       el: '#importer',
+      components: {
+        'item': Item
+      },
       data: {
+        posts: [],
         status: 'ready',
         statusValues: statusValues
       },
@@ -46,6 +72,7 @@
                 if (this.status == 'importing' && response.position != response.total) {
                   setTimeout(this.doImportWork, 100);
                 }
+                Array.prototype.push.apply(this.posts, response.imported.slice(this.posts.length));
               }
           });
         },

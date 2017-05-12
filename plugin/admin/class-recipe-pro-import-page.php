@@ -38,7 +38,6 @@ class Recipe_Pro_Import_Page {
 			<form action='options.php' method='post'>
 				<h2><?= __( 'Import Recipes', 'recipe-pro' ) ?></h2>
 				<div id="importer">
-					
 					<div>Import Status: {{statusValues[status]}}</div>
 					<button v-bind:disabled="status != 'ready'" v-on:click="beginImport">Start Import</button>
 					<!-- <li v-for="item in importers">
@@ -57,10 +56,22 @@ class Recipe_Pro_Import_Page {
 							<button v-bind:disabled="status == 'ready'" v-on:click="cancel">Close</button>
 						</div>
 					</div>
+					<div v-for="itemId in posts">
+						<item v-bind:item-id="itemId"/>
+					</div>
 				</div>
 			</form>
 		</div>
 		<?php
+	}
+
+	public function ajax_item_data ( ) {
+		$item_id = $_POST['item_id'];
+		$post = get_post( $item_id );
+		$data = array('name' => $post->post_title, 'link' => get_permalink($post) );
+		header ( "Content-Type: application/json" );
+		echo json_encode( $data );
+		wp_die();
 	}
 
 	public function ajax_cancel_import ( ) {

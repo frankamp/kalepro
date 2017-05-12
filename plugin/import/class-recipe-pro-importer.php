@@ -48,7 +48,7 @@ class Recipe_Pro_Importer {
 	}
 
 	private function get_all_post_ids() {
-		return get_posts( array( 'numberposts' => -1, 'fields' => 'ids') );
+		return array_merge( get_posts( array( 'numberposts' => -1, 'fields' => 'ids') ),  get_all_page_ids() );
 	}
 
 	public function cancel() {
