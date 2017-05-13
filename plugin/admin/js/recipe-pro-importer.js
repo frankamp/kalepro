@@ -9,14 +9,23 @@
       importing: "Importing..."
     };
     var Item = {
-      template: '<div><a v-bind:href="link">{{name}}</a></div>',
+      template: '<div>' +
+                  '<a v-bind:href="link">{{name}}</a> <span v-if="errorMessage.length"> - </span> {{errorMessage}}' +
+                  '<li v-for="note in notes">{{note}}</li>' +
+                '</div>',
       data: function() {
         return {
           name: '',
-          link: ''
+          link: '',
+          notes: []
         }
       },
-      props: ['itemId'],
+      props: {
+          itemId: Number,
+          errorMessage: {
+            default: ''
+          }
+      },
       created: function () {
         $.post({
             url: ajaxurl + '?action=recipepro_item_data',
@@ -26,6 +35,7 @@
             success: function(response) {
               this.name = response.name;
               this.link = response.link;
+              this.notes = response.notes;
             }
           });
       }
@@ -37,6 +47,7 @@
       },
       data: {
         posts: [],
+        errored: [],
         status: 'ready',
         statusValues: statusValues
       },
@@ -75,6 +86,11 @@
                 var items = response.imported.slice(this.posts.length);
                 for (var i = 0; i < items.length; i++) {
                   this.posts.push(items[i]);
+                }
+                items = response.errored.slice(this.errored.length);
+                var messages = response.errorMessages.slice(this.errored.length);
+                for (var i = 0; i < items.length; i++) {
+                  this.errored.push({itemId: items[i], errorMessage: messages[i]});
                 }
               }
           });

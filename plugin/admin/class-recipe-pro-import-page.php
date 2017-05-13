@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__."/../import/class-recipe-pro-importer.php";
-
+require_once __DIR__."/../includes/class-recipe-pro-service.php";
 class Recipe_Pro_Import_Page {
 
 	public function __construct( $plugin_name, $version ) {
@@ -59,6 +59,9 @@ class Recipe_Pro_Import_Page {
 					<div v-for="itemId in posts">
 						<item v-bind:item-id="itemId"/>
 					</div>
+					<div v-for="item in errored">
+						<item v-bind:item-id="item.itemId" v-bind:error-message="item.errorMessage" />
+					</div>
 				</div>
 			</form>
 		</div>
@@ -68,7 +71,13 @@ class Recipe_Pro_Import_Page {
 	public function ajax_item_data ( ) {
 		$item_id = $_POST['item_id'];
 		$post = get_post( $item_id );
-		$data = array('name' => $post->post_title, 'link' => get_permalink($post) );
+		$undo = Recipe_Pro_Service::getUndoInformation( $item_id );
+		if ( $undo ) {
+			$notes = $undo['notes'];
+		} else {
+			$notes = array();
+		}
+		$data = array('name' => $post->post_title, 'link' => get_permalink($post), 'notes' => $notes );
 		header ( "Content-Type: application/json" );
 		echo json_encode( $data );
 		wp_die();

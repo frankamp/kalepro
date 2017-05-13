@@ -28,7 +28,6 @@ class Recipe_Pro_Importer {
 				'position' => 0,
 				'total' => 0,
 				'imported' => array(),
-				'notes' => array(),
 				'errored' => array(),
 				'errorMessages' => array()
 			);
@@ -70,6 +69,7 @@ class Recipe_Pro_Importer {
 				$posts = $this->get_all_post_ids();
 				if ( count( $posts ) != $state['total'] ) {
 					$this->set_status(self::STATUS_READY, array(
+						'errored' => array(1),
 						'errorMessages' => array( "The number of posts changed during import. Run the import again to ensure everything is converted." )
 					));
 				} else {
@@ -85,10 +85,11 @@ class Recipe_Pro_Importer {
 								array_push( $state['imported'], $post_id);
 							} else {
 								array_push( $state['errored'], $post_id);
-								array_push( $state['errorMessages'], "An error occurred importing post $post_id." );
-							}
-							if ( count( $result->notes ) > 0 ) {
-								$state['notes'][$post_id] = $result->notes;
+								$note = "";
+								if ( count($result->notes) > 0 ) {
+									$note = $result->notes[0];
+								}
+								array_push( $state['errorMessages'], "An error occurred importing post $post_id. " . $note );
 							}
 							break;
 						}
@@ -98,7 +99,6 @@ class Recipe_Pro_Importer {
 						'position' => $state['position'] + 1,
 						'imported' => $state['imported'],
 						'errored' => $state['errored'],
-						'notes' => $state['notes'],
 						'errorMessages' => $state['errorMessages']
 					));
 				}
@@ -119,7 +119,6 @@ class Recipe_Pro_Importer {
 				'position' => 0,
 				'imported' => array(),
 				'errored' => array(),
-				'notes' => array(),
 				'errorMessages' => array()
 			));
 		}

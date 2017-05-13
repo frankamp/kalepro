@@ -63,10 +63,10 @@ class Recipe_Pro_WPUltimate_Importer {
 					'post_content' => $content,
 				);
 				wp_update_post( $update_content );
-				Recipe_Pro_Service::saveUndoInformation( $wppost->ID, array( 'importer'=> self::$shortname, 'old_shortcode' => $old_shortcode ));
+				Recipe_Pro_Service::saveUndoInformation( $wppost->ID, array( 'importer'=> self::$shortname, 'old_shortcode' => $old_shortcode, 'notes' => $log->notes ));
 			} catch (Exception $e) {
 				$log->success = false;
-				$log->addNote("Failed to update old post. " . $e->getMessage() );
+				$log->addNote("Failed to convert old post. " . $e->getMessage() );
 			}
 			// Migrate potential ER comment ratings.
 			// $comments = get_comments( array( 'post_id' => $id ) );

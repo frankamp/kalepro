@@ -39,11 +39,13 @@ class Recipe_Pro_EasyRecipe_Importer {
 	* but rather re-retrieved from wordpress api. Destructive.
 	**/
 	static public function convert($wppost) {
-		$result = new Recipe_Pro_Import_Log();
 		// run extract on the post
 		try {
-			$extracted = self::extract( $wppost );
+			$result = self::extract( $wppost );
+			$extracted = $result->recipe;
 		} catch (Exception $e) {
+			$result = new Recipe_Pro_Import_Log();
+			$result->success = false;
 			$result->addNote("Error extracting old recipe: " . $e->getMessage() );
 		}
 		// take the model and write it to the post's metadata
@@ -65,6 +67,7 @@ class Recipe_Pro_EasyRecipe_Importer {
 			}
 			Recipe_Pro_Service::saveRecipe( $wppost->ID, $extracted );
 		} catch (Exception $e) {
+			$result->success = false;
 			$result->addNote("Error saving new recipe: " . $e->getMessage() );
 		}
 
@@ -81,8 +84,9 @@ class Recipe_Pro_EasyRecipe_Importer {
 			      'post_content' => $erdoc->getHTML( true ),
 			);
 			$updated = wp_update_post( $post_changes );
-			Recipe_Pro_Service::saveUndoInformation( $wppost->ID, array( 'importer'=> self::$shortname, 'old_recipe' => $old_recipe ));
+			Recipe_Pro_Service::saveUndoInformation( $wppost->ID, array( 'importer'=> self::$shortname, 'old_recipe' => $old_recipe, 'notes' => $result->notes ));
 		} catch (Exception $e) {
+			$result->success = false;
 			$result->addNote("Error replacing old recipe: " . $e->getMessage() );
 		}
 
@@ -139,12 +143,17 @@ class Recipe_Pro_EasyRecipe_Importer {
 		$erdoc->setSettings( $settings );
 		$data = $erdoc->extractData( $erdoc->getRecipe(), new stdClass() );
 		$recipe = new Recipe_Pro_Recipe();
+		$result = new Recipe_Pro_Import_Log();
+		$result->recipe = $recipe;
 		$recipe->title = $data->name;
 		$recipe->description = $data->summary;
 		$recipe->author = $data->author;
 		$recipe->imageUrl = $data->photoURL;
 		$recipe->type = $data->type;
 		$recipe->cuisine = $data->cuisine;
+		if ( substr_count( $data->yield, '-') > 0 ) {
+			$result->addNote('Yield contained a range with a dash, the first number will be used.');
+		}
 		$recipe->yield = $data->yield;
 		$recipe->servingSize = $data->servingSize;
 		$recipe->calories = preg_replace('/[^0-9\.]/', '', $data->calories) ?: null;
@@ -455,7 +464,7 @@ class Recipe_Pro_EasyRecipe_Importer {
 		//   ["hasInstructions"]=>
 		//   bool(true)
 		// }
-		return $recipe;
+		return $result;
 	}
 }
 

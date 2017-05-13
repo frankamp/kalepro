@@ -259,13 +259,13 @@ class ERImportTest extends WP_UnitTestCase {
 
 	function test_extract_easyrecipe() {
 		wp_set_current_user( null, 'admin' );
-		$recipe = Recipe_Pro_EasyRecipe_Importer::extract( $this->get_er_post() );
+		$recipe = Recipe_Pro_EasyRecipe_Importer::extract( $this->get_er_post() )->recipe;
 		$this->assertEquals( json_decode( $this->get_test_recipe_json(), true ), json_decode(json_encode( $recipe ), true) );
 	}
 
 	function test_extract_easyrecipe_with_sections() {
 		wp_set_current_user( null, 'admin' );
-		$recipe = Recipe_Pro_EasyRecipe_Importer::extract( $this->get_er_post_with_sections() );
+		$recipe = Recipe_Pro_EasyRecipe_Importer::extract( $this->get_er_post_with_sections() )->recipe;
 		$this->assertEquals( json_decode( $this->get_test_recipe_with_sections_json(), true ), json_decode(json_encode( $recipe ), true) );
 	}
 
