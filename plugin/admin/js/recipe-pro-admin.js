@@ -128,10 +128,11 @@
 			}
 		});
 		var recipe = new Recipe({id: container.attr('data-post')});
-		recipe.fetch();
-		window.RecipePro = {
-			currentRecipe: recipe
-		};
+		recipe.fetch({success: function(){
+			window.RecipePro = {
+				currentRecipe: recipe
+			};
+		}});
 		var RecipeViewModelEmitter = Backbone.View.extend({
 			initialize: function(){
 				_.bindAll(this, "render");

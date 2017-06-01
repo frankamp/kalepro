@@ -75,6 +75,9 @@
       }.bind(ed);
       var updateShortcodeTracking = function () {
         var currentlyHasCode = contentHasCode();
+        if (!window.RecipePro) {
+          return;
+        }
         if (!currentlyHasCode && this.plugins.recipepro.data.hadShortcode) {
           window.RecipePro.currentRecipe.disableForMissingShortcode(true);
         } else if (!currentlyHasCode) {
