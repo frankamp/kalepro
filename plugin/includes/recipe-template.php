@@ -3,9 +3,9 @@
 	<h2 class="rp-name" itemprop="name"><?= $recipe->title ?></h2>
 	<div class="rp-topright">
 		<div class="recipe-pro-print"><button class="rp-print" style="display: inline-block"><?= $labels['print'] ?></button></div>
-<?php if ( strlen( $recipe->imageUrl) ): ?>
+<?php if ( strlen( $recipe->getImageUrl()) ): ?>
 		<div class="rp-previewimage">
-			<img itemprop="image" src="<?= $recipe->imageUrl ?>" width="205" />
+			<img itemprop="image" src="<?= $recipe->getImageUrl() ?>" width="205" />
 		</div>
 <?php endif; ?>
 <?php if ($ratingsEnabled): ?>
