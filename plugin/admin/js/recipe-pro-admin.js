@@ -77,7 +77,7 @@
 			model: IngredientSection
 		});
 		var Recipe = BaseNestedModel.extend({
-			blacklist: ['currentTab'],
+			blacklist: ['currentTab', 'updatedAt'],
 			model: {
 				ingredientSections: IngredientSections,
 				instructions: Instructions
@@ -87,7 +87,8 @@
 				title : 'my cool recipe',
 				missingShortcode: false,
 				deletedShortcode: false,
-				shortCodeMessage: ''
+				shortCodeMessage: '',
+				updatedAt: Date.now()
 			},
 			urlRoot: ajaxurl + '?action=recipepro_recipe&postid=',
 			ingestInstructions: function(doc) {
@@ -98,6 +99,7 @@
 						target.add(new Instruction({description: $(this).text()}));
 					}
 				});
+				this.set('updateAt', Date.now());
 			},
  			ingestIngredients: function(doc) {
 				var target = this.get('ingredientSections');
@@ -115,6 +117,7 @@
 						section.get('items').add(new Ingredient({id: generateUUID(), description: $(this).text()}));
 					}
 				});
+				this.set('updateAt', Date.now());
 			},
 			disableForMissingShortcode: function(removed) {
 				if (removed) {
