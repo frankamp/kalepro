@@ -27,6 +27,8 @@
 }
 .rp ul li {
 	margin: 0 0 4px 22px;
+	text-indent: -26px;
+	padding-left: 26px;
 }
 .rp-name {
 	font-family: "Karla","Helvetica Neue",sans-serif;

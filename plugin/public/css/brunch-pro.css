@@ -27,6 +27,8 @@
 }
 .rp ul li {
 	margin: 0 0 4px 22px;
+	text-indent: -24px;
+	padding-left: 24px;
 }
 .rp-name {
 	font-family:  "Lato", Helvetica, sans-serif;
