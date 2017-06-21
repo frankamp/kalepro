@@ -63,12 +63,12 @@
 <?php endforeach; ?>
 		</ol> 
 	</div> 
-	<div> 
-		<h3 class="rp-notestitle"><?= $labels['notes'] ?></h3> 
+<?php if ( $recipe->notes ): ?>
+	<h3 class="rp-notestitle"><?= $labels['notes'] ?></h3>
+<?php endif; ?>
 <?php foreach( $recipe->notes as $note ): ?>
-		<div><?= $note->description ?></div> 
+	<div><?= $note->description ?></div> 
 <?php endforeach; ?>
-	</div> 
 <?php if ( $recipe->servingSize
 		|| $recipe->calories
 		|| $recipe->fatContent

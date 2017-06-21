@@ -21,6 +21,14 @@
 				return (c=='x' ? r : (r&0x3|0x8)).toString(16);
 			});
 		};
+		var Note = Backbone.Model.extend({
+			defaults : {
+				description: ''
+			}
+		});
+		var Notes = Backbone.Collection.extend({
+			model: Note
+		});
 		var Instruction = Backbone.Model.extend({
 			defaults : {
 				description: ''
@@ -80,7 +88,8 @@
 			blacklist: ['currentTab', 'updatedAt'],
 			model: {
 				ingredientSections: IngredientSections,
-				instructions: Instructions
+				instructions: Instructions,
+				notes: Notes
 			},
 			defaults: {
 				currentTab: 'recipe-pro-tab-overview',
@@ -97,6 +106,16 @@
 				var extracted = $(doc).children().each(function(){
 					if (this.nodeName == 'P') {
 						target.add(new Instruction({description: $(this).text()}));
+					}
+				});
+				this.set('updateAt', Date.now());
+			},
+			ingestNotes: function(doc) {
+				var target = this.get('notes');
+				target.reset();
+				var extracted = $(doc).children().each(function(){
+					if (this.nodeName == 'P') {
+						target.add(new Note({description: $(this).text()}));
 					}
 				});
 				this.set('updateAt', Date.now());
@@ -226,6 +245,9 @@
 				if (this.model.get('currentTab') == 'recipe-pro-tab-instruction') {
 					tinyMCE.EditorManager.remove('#recipe-pro-editor-instruction');
 				}
+				if (this.model.get('currentTab') == 'recipe-pro-tab-notes') {
+					tinyMCE.EditorManager.remove('#recipe-pro-editor-notes');
+				}
 				this.model.set({'currentTab': toggleTo});
 				this.render();
 				if (toggleTo == 'recipe-pro-tab-ingredient') {
@@ -253,7 +275,16 @@
 					}.bind(this);
 					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-instruction']);
 				}
-
+				if (toggleTo == 'recipe-pro-tab-notes') {
+					tinyMCEPreInit.mceInit['recipe-pro-editor-notes'].init_instance_callback = function(editor) {
+						var content = "";
+						this.model.get('notes').forEach(function(inst) {
+							content += '<p>' + inst.get('description') + '</p>';
+						});
+						editor.setContent(content);
+					}.bind(this);
+					tinyMCE.init(tinyMCEPreInit.mceInit['recipe-pro-editor-notes']);
+				}
 				//$('#' + toggleTo).show().siblings('.recipe-pro-tab').hide();
 			},
 			change : function(e) {

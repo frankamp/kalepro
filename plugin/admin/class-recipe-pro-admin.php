@@ -218,12 +218,12 @@ class Recipe_Pro_Admin {
 // 					console.log(args.content);
 // 				}"
 
-		$instruction_settings = array(
+		$simple_edit_settings = array(
 			'textarea_name' => 'excerpt',
 			'quicktags'     => false,
 			'tinymce'       => array(
 				'toolbar1' => 'bold,italic,link,unlink,removeformat',
-				'external_plugins' => "{'recipeproinstruction': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-instruction/plugin.min.js'}",
+				'external_plugins' => "{'recipeprosimpleedit': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-simple-edit/plugin.min.js'}",
 				"content_style" => "body#tinymce p { margin-bottom: 5px; }"
 			),
 			'media_buttons' => false,
@@ -267,6 +267,9 @@ class Recipe_Pro_Admin {
 				<li class="<%= currentTab == 'recipe-pro-tab-nutrition' ? 'active' : '' %>">
 					<label for="recipe-pro-tab-nutrition"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('nutrition_information') ?></button></label>
 				</li>
+				<li class="<%= currentTab == 'recipe-pro-tab-notes' ? 'active' : '' %>">
+					<label for="recipe-pro-tab-notes"><button class="recipe-pro-tab-button" type="button"><?= $this->get_label('notes') ?></button></label>
+				</li>
 			</ul>
 			<div id="recipe-pro-content">
 				<div id="recipe-pro-tab-overview" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-overview' ? 'block' : 'none' %>;">
@@ -293,7 +296,7 @@ class Recipe_Pro_Admin {
 					<?= wp_editor( "", "recipe-pro-editor-ingredient", $ingredient_settings  ) ?>
 				</div>
 				<div id="recipe-pro-tab-instruction" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-instruction' ? 'block' : 'none' %>;">
-					<?= wp_editor( "", "recipe-pro-editor-instruction", $instruction_settings  ) ?>
+					<?= wp_editor( "", "recipe-pro-editor-instruction", $simple_edit_settings  ) ?>
 				</div>
 				<div id="recipe-pro-tab-nutrition" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-nutrition' ? 'block' : 'none' %>;">
 					<div class="left">
@@ -313,6 +316,9 @@ class Recipe_Pro_Admin {
 						<p><label for="recipepro_proteinContent"><?= $this->get_label('protein') ?> (g)</label> <input id="recipepro_proteinContent" name="proteinContent" type="number" step="0.1" value="<%= _.escape(proteinContent) %>" /></p>
 					</div>
 					<div class="clear"/>
+				</div>
+				<div id="recipe-pro-tab-notes" class="recipe-pro-tab" style="display: <%= currentTab == 'recipe-pro-tab-notes' ? 'block' : 'none' %>;">
+					<?= wp_editor( "", "recipe-pro-editor-notes", $simple_edit_settings  ) ?>
 				</div>
 			</div>
 		</script>
