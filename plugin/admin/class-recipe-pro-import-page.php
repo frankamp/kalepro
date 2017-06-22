@@ -33,7 +33,7 @@ class Recipe_Pro_Import_Page {
 			   height: 20px;
 			   border-radius: 0;
 		   }
-		   #importer {
+		   #importing {
 		   	margin: 20px 0;
 		   }	
 		</style>
@@ -41,7 +41,7 @@ class Recipe_Pro_Import_Page {
 			<form action='options.php' method='post'>
 				<h2><?= __( 'Import Recipes', 'recipe-pro' ) ?></h2>
 				<div id="importer">
-					<div>Import Status: {{statusValues[status]}}</div>
+					<div id="importing">Import Status: {{statusValues[status]}}</div>
 					<button v-bind:disabled="status != 'ready'" v-on:click="beginImport">Start Import</button>
 					<!-- <li v-for="item in importers">
 						<strong>{{ item.name }}</strong> {{ item.description }}
