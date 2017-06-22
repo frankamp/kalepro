@@ -106,7 +106,7 @@ ul#recipe-pro-tabs button {
     padding: 20px 15px;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 768px) {
     ul#recipe-pro-tabs li {
         display: block;
         border-width: 1px;
