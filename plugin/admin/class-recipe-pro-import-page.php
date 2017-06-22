@@ -22,16 +22,19 @@ class Recipe_Pro_Import_Page {
 		?>
 		<style>
 			#progressbar {
-			  background-color: grey;
+			  background-color: #aaa;
 			  border-radius: 0; /* (height of inner div) / 2 + padding */
-			  padding: 3px;
+			  padding: 2px;
 			}
 			
 		   #progressbar > div {
-			   background-color: lightblue;
+			   background-color: #afd87a;
 			   width: 0%; /* Adjust with JavaScript */
 			   height: 20px;
 			   border-radius: 0;
+		   }
+		   #importer {
+		   	margin: 20px 0;
 		   }	
 		</style>
 		<div class="wrap">
