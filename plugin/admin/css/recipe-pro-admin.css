@@ -87,19 +87,16 @@ ul#recipe-pro-tabs button {
     background: #fdfdfd;
     padding: 20px;
 }
-
 #recipe-pro-content .left {
   float: left;
   width: 55%;
   padding-right: 5%;
 }
-
 #recipe-pro-content .right {
   float: left;
   width: 35%;
   padding-left: 5%;
 }
-
 #recipe-pro-content label {
     width: 160px;
     padding-right: 20px;
@@ -107,4 +104,23 @@ ul#recipe-pro-tabs button {
 }
 #recipe-pro-admin-container {
     padding: 20px 15px;
+}
+
+@media only screen and (max-width: 400px) {
+    ul#recipe-pro-tabs li {
+        display: block;
+        border-width: 1px;
+        padding: 3px;
+    }
+    #recipe-pro-content .left {
+      float: none;
+      width: 100%;
+      padding-right: 5%;
+    }
+    #recipe-pro-content .right {
+      float: none;
+      width: 100%;
+      padding-left: 0;
+      padding-bottom: 8px;
+    }
 }
