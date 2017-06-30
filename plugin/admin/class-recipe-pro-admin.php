@@ -144,6 +144,12 @@ class Recipe_Pro_Admin {
 		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), null, 'normal', 'high' );
 	}
 
+	public function metabox_order( $order ) {
+	    return array(
+	        'normal' => 'recipe-pro-recipe-data'
+	    );
+	}
+
 	public function ajax_get_recipe ( ) {
 		header ( "Content-Type: application/json" );
 		$postid = str_replace('/', '', $_GET['postid']);
@@ -260,7 +266,9 @@ class Recipe_Pro_Admin {
 					<div class="right">
 						<p>
 						<div class='image-preview-wrapper'>
+							<% if (imageUrl.length > 0) { %>
 							<img id='image-preview' class='rp-image-admin' src='<%= _.escape(imageUrl) %>'>
+							<% } %>
 						</div>
 						<input id="upload_image_button" type="button" class="button rp-image-select" value="<?php _e( 'Select Recipe Image', 'recipe-pro' ); ?>" />
 						<input type='hidden' name='recipepro_imageurl' id='imageUrl' value='<%= _.escape(imageUrl) %>' />
