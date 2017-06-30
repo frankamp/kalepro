@@ -22,23 +22,26 @@ class Recipe_Pro_Import_Page {
 		?>
 		<style>
 			#progressbar {
-			  background-color: grey;
+			  background-color: #aaa;
 			  border-radius: 0; /* (height of inner div) / 2 + padding */
-			  padding: 3px;
+			  padding: 2px;
 			}
 			
 		   #progressbar > div {
-			   background-color: lightblue;
+			   background-color: #afd87a;
 			   width: 0%; /* Adjust with JavaScript */
 			   height: 20px;
 			   border-radius: 0;
+		   }
+		   #importing {
+		   	margin: 20px 0;
 		   }	
 		</style>
 		<div class="wrap">
 			<form action='options.php' method='post'>
 				<h2><?= __( 'Import Recipes', 'recipe-pro' ) ?></h2>
 				<div id="importer">
-					<div>Import Status: {{statusValues[status]}}</div>
+					<div id="importing">Import Status: {{statusValues[status]}}</div>
 					<button v-bind:disabled="status != 'ready'" v-on:click="beginImport">Start Import</button>
 					<!-- <li v-for="item in importers">
 						<strong>{{ item.name }}</strong> {{ item.description }}
