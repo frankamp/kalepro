@@ -104,7 +104,7 @@
 				var target = this.get('instructions');
 				target.reset();
 				var extracted = $(doc).children().each(function(){
-					if (this.nodeName == 'P') {
+					if (this.nodeName == 'P' && $(this).text().length > 0) {
 						target.add(new Instruction({description: $(this).text()}));
 					}
 				});
@@ -114,7 +114,7 @@
 				var target = this.get('notes');
 				target.reset();
 				var extracted = $(doc).children().each(function(){
-					if (this.nodeName == 'P') {
+					if (this.nodeName == 'P' && $(this).text().length > 0) {
 						target.add(new Note({description: $(this).text()}));
 					}
 				});
