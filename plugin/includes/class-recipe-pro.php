@@ -155,7 +155,6 @@ class Recipe_Pro {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-
 		$plugin_admin = new Recipe_Pro_Admin( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'init', $plugin_admin, 'register_shortcodes' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'on_admin_init' );
@@ -174,6 +173,8 @@ class Recipe_Pro {
 		$this->loader->add_filter( 'mce_external_plugins', $plugin_admin, 'add_mce_carrot_button_action' );
 		$this->loader->add_filter( 'mce_buttons', $plugin_admin, 'register_mce_carrot_button' );
 		$this->loader->add_filter( 'mce_css', $plugin_admin, 'add_mce_css' );
+		$this->loader->add_filter( 'get_user_option_meta-box-order_post', $plugin_admin, 'metabox_order' );
+		$this->loader->add_filter( 'get_user_option_meta-box-order_page', $plugin_admin, 'metabox_order' );
 	}
 
 	/**
