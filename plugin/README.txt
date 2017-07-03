@@ -2,9 +2,9 @@
 Contributors: **JOSHUA** & jshltz
 Donate link: http://www.joshuafrankamp.com
 Tags: recipe, recipe schema, google recipe, recipe markup, markup, schema markup
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
+Requires at least: 4.4
+Tested up to: 4.6
+Stable Tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

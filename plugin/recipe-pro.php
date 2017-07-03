@@ -16,7 +16,7 @@
  * Plugin Name:       RecipePro
  * Plugin URI:        recipeproplugin.com
  * Description:       The best recipe plugin for Wordpress.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Josh Frankamp
  * Author URI:        https://recipeproplugin.com
  * License:           GPL-2.0+
@@ -33,7 +33,7 @@ if ( ! defined( 'WPINC' ) ) {
 function setup_constants() {
 	// Plugin version.
 	if ( ! defined( 'RECIPE_PRO_VERSION' ) ) {
-		define( 'RECIPE_PRO_VERSION', '1.0.0' );
+		define( 'RECIPE_PRO_VERSION', '1.0.1' );
 	}
 
 	// Plugin Folder Path.
