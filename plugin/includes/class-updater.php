@@ -86,18 +86,20 @@ class EDD_SL_Plugin_Updater {
 		if ( ! is_object( $_transient_data ) ) {
 			$_transient_data = new stdClass;
 		}
-
+		error_log("doing check update");
 		if ( 'plugins.php' == $pagenow && is_multisite() ) {
 			return $_transient_data;
 		}
-
+		error_log("still doing check update");
 		if ( ! empty( $_transient_data->response ) && ! empty( $_transient_data->response[ $this->name ] ) && false === $this->wp_override ) {
 			return $_transient_data;
 		}
 
 		$version_info = $this->get_cached_version_info();
+		error_log("checking version info");
 
 		if ( false === $version_info ) {
+			error_log("really checking version info");
 			$version_info = $this->api_request( 'plugin_latest_version', array( 'slug' => $this->slug, 'beta' => $this->beta ) );
 
 			$this->set_version_info_cache( $version_info );
@@ -107,6 +109,7 @@ class EDD_SL_Plugin_Updater {
 		if ( false !== $version_info && is_object( $version_info ) && isset( $version_info->new_version ) ) {
 
 			if ( version_compare( $this->version, $version_info->new_version, '<' ) ) {
+				error_log("new version found");
 
 				$_transient_data->response[ $this->name ] = $version_info;
 
