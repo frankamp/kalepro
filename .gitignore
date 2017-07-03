@@ -17,3 +17,6 @@ wp-content/plugins/hello.php
 /license.txt
 .idea
 docker-wordpress-phpunit
+target
+testdata
+plugin/notes.txt
