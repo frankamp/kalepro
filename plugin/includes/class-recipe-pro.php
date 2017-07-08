@@ -162,8 +162,8 @@ class Recipe_Pro {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'create_menu' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_meta_box' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_meta_box' );
+		$this->loader->add_action( 'add_meta_boxes_post', $plugin_admin, 'add_meta_box' );
+		$this->loader->add_action( 'add_meta_boxes_page', $plugin_admin, 'add_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin,  'save_meta_box', 10, 2);
 		$this->loader->add_action( 'wp_ajax_recipepro_recipe', $plugin_admin,  'ajax_get_recipe' );
 		$this->loader->add_action( 'wp_ajax_recipepro_item_data', $plugin_admin->import_page,  'ajax_item_data' );
