@@ -141,8 +141,8 @@ class Recipe_Pro_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_meta_box ( ) {
-		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'high' );
-		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), 'page', 'normal', 'high' );
+		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), 'post', 'normal', 'core' );
+		add_meta_box( 'recipe-pro-recipe-data', __( 'Recipe', 'recipe-pro' ), array( $this, "render_editor_markup" ), 'page', 'normal', 'core' );
 	}
 
 	public function ajax_get_recipe ( ) {
