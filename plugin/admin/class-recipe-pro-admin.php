@@ -179,7 +179,7 @@ class Recipe_Pro_Admin {
 				'paste_preprocess' =>  "function(plugin, args) {
 					console.log('before its: ' + args.content);
 					var tag = 'p';
-					args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
+					args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').replace(/<br>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
 					args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
 				}"
 				,"content_style" => "body#tinymce p { margin-bottom: 5px; } body#tinymce h4 { margin: 20px 0 10px; }"
@@ -216,7 +216,18 @@ class Recipe_Pro_Admin {
 			'tinymce'       => array(
 				'toolbar1' => 'bold,italic,link,unlink,removeformat',
 				'external_plugins' => "{'recipeprosimpleedit': '" . plugin_dir_url( __FILE__ ) . "js/mce-recipe-pro-simple-edit/plugin.min.js'}",
-				"content_style" => "body#tinymce p { margin-bottom: 5px; }"
+				"content_style" => "body#tinymce p { margin-bottom: 5px; }",
+				'force_p_newlines' => true,
+				'paste_remove_styles' => true,
+				'paste_remove_spans' => true,
+				'paste_strip_class_attributes' => 'none',
+				'paste_as_text' => true,
+				'paste_preprocess' =>  "function(plugin, args) {
+					console.log('before its: ' + args.content);
+					var tag = 'p';
+					args.content = '<' + tag + '>' + args.content.replace(/<p>/g,'').replace(/<\/p>/g, '<br />').replace(/<br>/g, '<br />').split('<br />').join('</' + tag + '><' + tag + '>') + '</' + tag +'>';
+					args.content = args.content.replace(new RegExp('<' + tag + '>\\s*<\/' + tag + '>','g'),'');
+				}"
 			),
 			'media_buttons' => false,
 			'editor_css'    => '<style>#wp-excerpt-editor-container .wp-editor-area{height:175px; width:100%;}</style>'
