@@ -84,7 +84,7 @@
 		|| $recipe->proteinContent ) {?>
 	<div class="rp-nutrition" itemprop="nutrition" itemscope="" itemtype="http://schema.org/NutritionInformation"> 
 		<h3 class="rp-nutritiontitle"><?= $labels['nutrition_information'] ?></h3> 
-<?php if (strlen($recipe->servingSize)) {?><?= $labels['serving_size'] ?>:&nbsp;<span class="servingsize" itemprop="servingSize"><?= $recipe->servingSize ?></span><?php } ?>
+<div class="rp-nutrition-continuous"><?php if (strlen($recipe->servingSize)) {?><?= $labels['serving_size'] ?>:&nbsp;<span class="servingsize" itemprop="servingSize"><?= $recipe->servingSize ?></span><?php } ?>
 <?php if ($recipe->calories) {?><?= $labels['calories'] ?>:&nbsp;<span class="calories" itemprop="calories"><?= $recipe->calories ?></span><?php } ?>
 <?php if ($recipe->fatContent) {?><?= $labels['total_fat'] ?>:&nbsp;<span class="fat" itemprop="fatContent"><?= $recipe->fatContent ?> g</span><?php } ?>
 <?php if ($recipe->transFatContent) {?><?= $labels['trans_fat'] ?>:&nbsp;<span class="transfat" itemprop="transFatContent"><?= $recipe->transFatContent ?> g</span><?php } ?>
@@ -96,7 +96,7 @@
 <?php if ($recipe->sodiumContent) {?><?= $labels['sodium'] ?>:&nbsp;<span class="sodium" itemprop="sodiumContent"><?= $recipe->sodiumContent ?> mg</span><?php } ?>
 <?php if ($recipe->fiberContent) {?><?= $labels['fiber'] ?>:&nbsp;<span class="fiber" itemprop="fiberContent"><?= $recipe->fiberContent ?> g</span><?php } ?>
 <?php if ($recipe->proteinContent) {?><?= $labels['protein'] ?>:&nbsp;<span class="protein" itemprop="proteinContent"><?= $recipe->proteinContent ?> g</span><?php } ?>
-
+</div>
 	</div>
 <?php } //end if any nutrition information ?>
 	<div class="rp-detailsafter">
