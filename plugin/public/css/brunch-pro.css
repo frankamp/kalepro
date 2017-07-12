@@ -176,6 +176,9 @@
 .protein {
 	padding: 0 16px 0 0;
 }
+.rp-nutrition-continuous {
+	display: inline-block;
+}
 .rp-detailsafter {
 	overflow: hidden;
 	border-bottom: #eee 1px solid;

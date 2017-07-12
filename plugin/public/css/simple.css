@@ -179,8 +179,7 @@
 	padding: 0 16px 0 0;
 }
 .rp-nutrition-continuous {
-	white-space: nowrap;
-	display: inline;
+	display: inline-block;
 }
 .rp-detailsafter {
 	overflow: hidden;
